@@ -1,4 +1,4 @@
-package com.xq.crowd_funding.beans.pojo;
+package com.xq.crowd_funding.beans.raisefunding.pojo;
 
 import lombok.Data;
 

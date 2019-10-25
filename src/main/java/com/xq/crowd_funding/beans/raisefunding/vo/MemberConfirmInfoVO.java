@@ -1,4 +1,4 @@
-package com.xq.crowd_funding.beans.vo;/*
+package com.xq.crowd_funding.beans.raisefunding.vo;/*
     @auther yangjie
 */
 
