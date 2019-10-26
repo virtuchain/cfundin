@@ -7,9 +7,10 @@ import com.xq.crowd_funding.myutils.CrowdUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
-
+@Component
 public class RedisOperation {
 
      @Autowired
@@ -22,7 +23,7 @@ public class RedisOperation {
      * @return
      */
     // 保存数据
-     ResultEntity<String> saveRedisKeyAndValue(
+    public  ResultEntity<String> saveRedisKeyAndValue(
              String normalKey, String normalValue, Integer timeoutMinute){
          // 首先判断 key value 是否是有效字符
          if ( !CrowdUtils.strEffectiveCheck(normalKey) ||!CrowdUtils.strEffectiveCheck(normalValue)){
@@ -65,7 +66,7 @@ public class RedisOperation {
      * 根据key 查询对应的value
      * 传入参数 normalKey
      */
-    ResultEntity<String> readRedisValueByKey(String normalKey){
+    public  ResultEntity<String> readRedisValueByKey(String normalKey){
         // 首先判断 key 是否是有效字符
         if ( !CrowdUtils.strEffectiveCheck(normalKey)){
             // 无效字符返回失败
@@ -86,7 +87,7 @@ public class RedisOperation {
      *  传入参数 normalKey
      */
 
-    ResultEntity<String>  removeRedisByKey(String normalKey){
+    public  ResultEntity<String>  removeRedisByKey(String normalKey){
         // 首先判断 key 是否是有效字符
         if ( !CrowdUtils.strEffectiveCheck(normalKey)){
             // 无效字符返回失败

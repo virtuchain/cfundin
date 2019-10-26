@@ -6,4 +6,6 @@ package com.xq.crowd_funding.servicepackage;/*
  *  发起众筹
  */
 public interface IRaiseFundingService {
+
+
 }
