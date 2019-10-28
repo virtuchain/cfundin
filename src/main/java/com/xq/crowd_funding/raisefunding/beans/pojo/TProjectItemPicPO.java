@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class TProjectItemPicPO {
 
-  private long id;
-  private long projectid;
+  private Long id;
+  private Long projectid;
   private String itemPicPath;
 }

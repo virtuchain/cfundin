@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class TTagPO {
 
-  private long id;
-  private long pid;
+  private Long id;
+  private Long pid;
   private String name;
 
 }

@@ -104,6 +104,11 @@ public class RaiseFundingController {
         return redisOperation.saveRedisKeyAndValue(proToken,projectStr,-1);
     }
 
+    /**
+     * 保存用户信息
+     * @param memberConfirmInfoVO
+     * @return
+     */
     public  ResultEntity<String> saveMemberConfirmInfo(@RequestBody MemberConfirmInfoVO memberConfirmInfoVO){
         // 得到 project
         String proToken = memberConfirmInfoVO.getProjectTempToken();
@@ -116,9 +121,37 @@ public class RaiseFundingController {
         // 转化为 project
         ProjectVO projectVO = JSON.parseObject(resultEntity.getData(),ProjectVO.class);
         // 将 projectVOFront里面的属性值放入到  project里面
-        BeanUtils.copyProperties(memberConfirmInfoVO,projectVO);
+        projectVO.setMemberConfirmInfoVO(memberConfirmInfoVO);
         // 将  projectVO 转化成 JSON数据，存入 redis
         String ProjectJSON = JSON.toJSONString(projectVO);
         return redisOperation.saveRedisKeyAndValue(proToken,ProjectJSON,-1);
+    }
+
+    /**
+     *  保存 projectpro到数据库
+     *
+     * @param memberSignToken
+     * @param projectTempToken
+     * @return
+     */
+    public  ResultEntity<String> saveAllProjectPro(
+            @RequestParam("memberSignToken") String memberSignToken,
+            @RequestParam("projectTempToken") String projectTempToken){
+        // 验证用户是否登录
+
+        // 从 projectTempToken
+        ResultEntity<String> resultEntity = redisOperation.readRedisValueByKey(projectTempToken);
+
+        if (ResultEntity.FAILED.equals(resultEntity.getMessage())){
+            return  ResultEntity.failed(resultEntity.getMessage());
+        }
+
+        // 得到 JSON数据，转化 成peojectpo对象
+
+        ProjectVO projectVO = JSON.parseObject(resultEntity.getData(),ProjectVO.class);
+
+        // 调用srevice 保存到数据库
+
+        return raiseFundingImp.saveAllProToDatabase(projectVO);
     }
 }

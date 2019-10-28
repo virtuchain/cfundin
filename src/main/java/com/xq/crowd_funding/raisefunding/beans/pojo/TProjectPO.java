@@ -5,18 +5,18 @@ import lombok.Data;
 @Data
 public class TProjectPO {
 
-  private long id;
+  private Long id;
   private String name;
   private String remark;
-  private long money;
-  private long day;
+  private Long money;
+  private Long day;
   private String status;
   private String deploydate;
-  private long supportmoney;
-  private long supporter;
-  private long completion;
-  private long memberid;
+  private Long supportmoney;
+  private Long supporter;
+  private Long completion;
+  private Long memberid;
   private String createdate;
-  private long follower;
+  private Long follower;
 
 }
