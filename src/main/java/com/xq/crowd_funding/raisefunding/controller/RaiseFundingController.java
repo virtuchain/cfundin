@@ -1,7 +1,6 @@
 package com.xq.crowd_funding.raisefunding.controller;/*
     @auther yangjie
 */
-
 import com.alibaba.fastjson.JSON;
 import com.xq.crowd_funding.common.ResultEntity;
 import com.xq.crowd_funding.common.utils.TokenKeyUtils;
