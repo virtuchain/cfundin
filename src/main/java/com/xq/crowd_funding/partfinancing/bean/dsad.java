@@ -3,4 +3,6 @@ package com.xq.crowd_funding.partfinancing.bean;/*
 */
 
 public class dsad {
+
+    private String KJ;
 }
