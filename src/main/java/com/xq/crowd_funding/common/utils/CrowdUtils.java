@@ -2,6 +2,8 @@ package com.xq.crowd_funding.common.utils;/*
     @auther yangjie
 */
 
+import java.util.Collection;
+
 /**
  *  众筹项目一些常用的工具
  */
@@ -16,5 +18,12 @@ public class CrowdUtils {
      */
     public static boolean strEffectiveCheck(String str){
          return (str !=null) && (str.length()>0) ;
+    }
+
+    /**
+     * 判断集合类是否是有效的集合
+     */
+    public static  <E> boolean conllectionCkeck(Collection<E> c){
+        return (c !=null) && (c.size()>0) ;
     }
 }

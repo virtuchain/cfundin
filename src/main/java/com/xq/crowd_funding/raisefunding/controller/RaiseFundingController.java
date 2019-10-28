@@ -4,6 +4,7 @@ package com.xq.crowd_funding.raisefunding.controller;/*
 
 import com.alibaba.fastjson.JSON;
 import com.xq.crowd_funding.common.ResultEntity;
+import com.xq.crowd_funding.common.utils.CrowdUtils;
 import com.xq.crowd_funding.common.utils.TokenKeyUtils;
 import com.xq.crowd_funding.common.utils.myconfigration.redisconfigration.RedisOperation;
 import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
@@ -12,6 +13,10 @@ import com.xq.crowd_funding.raisefunding.servieces.IRaiseFundingService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 发起众筹
  */
@@ -68,7 +73,6 @@ public class RaiseFundingController {
         String ProjectJSON = JSON.toJSONString(projectVO);
         return redisOperation.saveRedisKeyAndValue(projectTempToken,ProjectJSON,-1);
     }
-
     /**
      * 这里是将回报加入redis
      * @param returnVO
@@ -83,8 +87,17 @@ public class RaiseFundingController {
         if (ResultEntity.FAILED.equals(resultEntity.getMessage())){
             return  ResultEntity.failed(resultEntity.getMessage());
         }
+
         // 转化为 project
         ProjectVO projectVO = JSON.parseObject(resultEntity.getData(),ProjectVO.class);
+
+        List<ReturnVO> returnVOList = projectVO.getReturnVOList();
+
+        if (!CrowdUtils.conllectionCkeck(returnVOList)){
+            returnVOList = new ArrayList<>();
+        }
+        returnVOList.add(returnVO);
+
         // 将  returnVO 放到  projectVO
         BeanUtils.copyProperties(returnVO,projectVO);
         // 转化为 JSON 放入 redis
