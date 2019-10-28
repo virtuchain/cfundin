@@ -3,4 +3,5 @@ package com.xq.crowd_funding.manager.bean;/*
 */
 
 public class sa {
+    private  String name;
 }
