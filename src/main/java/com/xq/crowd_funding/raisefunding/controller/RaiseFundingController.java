@@ -145,7 +145,6 @@ public class RaiseFundingController {
         if (ResultEntity.FAILED.equals(resultEntity.getMessage())){
             return  ResultEntity.failed(resultEntity.getMessage());
         }
-
         // 得到 JSON数据，转化 成peojectpo对象
 
         ProjectVO projectVO = JSON.parseObject(resultEntity.getData(),ProjectVO.class);
