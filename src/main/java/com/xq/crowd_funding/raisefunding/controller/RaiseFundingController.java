@@ -1,11 +1,13 @@
 package com.xq.crowd_funding.raisefunding.controller;/*
     @auther yangjie
 */
+
 import com.alibaba.fastjson.JSON;
 import com.xq.crowd_funding.common.ResultEntity;
 import com.xq.crowd_funding.common.utils.TokenKeyUtils;
 import com.xq.crowd_funding.common.utils.myconfigration.redisconfigration.RedisOperation;
 import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
+import com.xq.crowd_funding.raisefunding.beans.vo.ReturnVO;
 import com.xq.crowd_funding.raisefunding.servieces.IRaiseFundingService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,26 +47,51 @@ public class RaiseFundingController {
     }
     /**
      *  将start-step -1 里面的信息放入到 projectvo里面
-     * @param projectVOFront
+     * @param projectVOFront 页面一的vo 数据
      * @return  ResultEntity<String>
      */
-    @RequestMapping("raisefunding/saveinfo")
-    public  ResultEntity<String> saveProjectInfo(@RequestBody ProjectVO projectVOFront ){
+    @RequestMapping("raisefunding/saveinfostepone")
+    public  ResultEntity<String> saveProjectInfo(
+                             @RequestBody ProjectVO projectVOFront ){
         // 从 projectVOFront 获取 projectTempToken
         String projectTempToken = projectVOFront.getProjectTempToken();
-       // 判断是否是失败的状态
+        // 判断是否是失败的状态
         ResultEntity<String> resultEntity = redisOperation.readRedisValueByKey(projectTempToken);
         if (ResultEntity.FAILED.equals(resultEntity.getMessage())){
             return  ResultEntity.failed(resultEntity.getMessage());
         }
-        // 获取 data
-        String getProjectJSON =  resultEntity.getData();
         // 转化为 project 对象
-       ProjectVO projectVO =  JSON.parseObject(getProjectJSON,ProjectVO.class);
+       ProjectVO projectVO =  JSON.parseObject(resultEntity.getData(),ProjectVO.class);
        // 将 projectVOFront里面的属性值放入到  project里面
         BeanUtils.copyProperties(projectVOFront,projectVO);
         // 将  projectVO 转化成 JSON数据，存入 redis
-        String setProjectJSON = JSON.toJSONString(projectVO);
-        return redisOperation.saveRedisKeyAndValue(projectTempToken,setProjectJSON,-1);
+        String ProjectJSON = JSON.toJSONString(projectVO);
+        return redisOperation.saveRedisKeyAndValue(projectTempToken,ProjectJSON,-1);
     }
+
+    /**
+     * 这里是将回报加入redis
+     * @param returnVO
+     * @return  ResultEntity<String>
+     */
+    public  ResultEntity<String> saveProjectReturn(@RequestBody ReturnVO returnVO){
+        // 得到 project
+        String proToken = returnVO.getProjectTempToken();
+        //  从redis取出 pro
+        ResultEntity<String> resultEntity  = redisOperation.readRedisValueByKey(proToken);
+        // 判断状态
+        if (ResultEntity.FAILED.equals(resultEntity.getMessage())){
+            return  ResultEntity.failed(resultEntity.getMessage());
+        }
+        // 转化为 project
+        ProjectVO projectVO = JSON.parseObject(resultEntity.getData(),ProjectVO.class);
+        // 将  returnVO 放到  projectVO
+        BeanUtils.copyProperties(returnVO,projectVO);
+        // 转化为 JSON 放入 redis
+        String  projectStr = JSON.toJSONString(projectVO);
+        return redisOperation.saveRedisKeyAndValue(proToken,projectStr,-1);
+    }
+
+
+
 }
