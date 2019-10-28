@@ -7,6 +7,7 @@ import com.xq.crowd_funding.common.ResultEntity;
 import com.xq.crowd_funding.common.utils.CrowdUtils;
 import com.xq.crowd_funding.common.utils.TokenKeyUtils;
 import com.xq.crowd_funding.common.utils.myconfigration.redisconfigration.RedisOperation;
+import com.xq.crowd_funding.raisefunding.beans.vo.MemberConfirmInfoVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ReturnVO;
 import com.xq.crowd_funding.raisefunding.servieces.IRaiseFundingService;
@@ -87,7 +88,6 @@ public class RaiseFundingController {
         if (ResultEntity.FAILED.equals(resultEntity.getMessage())){
             return  ResultEntity.failed(resultEntity.getMessage());
         }
-
         // 转化为 project
         ProjectVO projectVO = JSON.parseObject(resultEntity.getData(),ProjectVO.class);
 
@@ -97,14 +97,28 @@ public class RaiseFundingController {
             returnVOList = new ArrayList<>();
         }
         returnVOList.add(returnVO);
-
-        // 将  returnVO 放到  projectVO
-        BeanUtils.copyProperties(returnVO,projectVO);
+        // 将  returnVOList set 到  returnVO
+        projectVO.setReturnVOList(returnVOList);
         // 转化为 JSON 放入 redis
         String  projectStr = JSON.toJSONString(projectVO);
         return redisOperation.saveRedisKeyAndValue(proToken,projectStr,-1);
     }
 
-
-
+    public  ResultEntity<String> saveMemberConfirmInfo(@RequestBody MemberConfirmInfoVO memberConfirmInfoVO){
+        // 得到 project
+        String proToken = memberConfirmInfoVO.getProjectTempToken();
+        // 从redis 取出
+        ResultEntity<String> resultEntity  = redisOperation.readRedisValueByKey(proToken);
+        // 判断状态
+        if (ResultEntity.FAILED.equals(resultEntity.getMessage())){
+            return  ResultEntity.failed(resultEntity.getMessage());
+        }
+        // 转化为 project
+        ProjectVO projectVO = JSON.parseObject(resultEntity.getData(),ProjectVO.class);
+        // 将 projectVOFront里面的属性值放入到  project里面
+        BeanUtils.copyProperties(memberConfirmInfoVO,projectVO);
+        // 将  projectVO 转化成 JSON数据，存入 redis
+        String ProjectJSON = JSON.toJSONString(projectVO);
+        return redisOperation.saveRedisKeyAndValue(proToken,ProjectJSON,-1);
+    }
 }

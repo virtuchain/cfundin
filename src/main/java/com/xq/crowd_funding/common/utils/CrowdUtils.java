@@ -22,6 +22,8 @@ public class CrowdUtils {
 
     /**
      * 判断集合类是否是有效的集合
+     * *有效 返回true
+     *  无效 返回 false
      */
     public static  <E> boolean conllectionCkeck(Collection<E> c){
         return (c !=null) && (c.size()>0) ;

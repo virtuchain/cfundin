@@ -2,6 +2,9 @@ package com.xq.crowd_funding.raisefunding.beans.vo;/*
     @auther yangjie
 */
 
+import lombok.Data;
+
+@Data
 public class MemberConfirmInfoVO {
     // 用户登录系统后，系统分配的token值，用于识别用户身份。
     // 用户的id可以根据token值查询Redis得到
