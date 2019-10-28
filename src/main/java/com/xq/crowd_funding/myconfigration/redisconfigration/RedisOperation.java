@@ -1,4 +1,4 @@
-package com.xq.crowd_funding.myconfigration.redis_configration;/*
+package com.xq.crowd_funding.myconfigration.redisconfigration;/*
     @auther yangjie
 */
 

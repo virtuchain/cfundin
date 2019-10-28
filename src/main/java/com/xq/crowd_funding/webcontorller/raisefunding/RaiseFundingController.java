@@ -5,7 +5,7 @@ package com.xq.crowd_funding.webcontorller.raisefunding;/*
 import com.alibaba.fastjson.JSON;
 import com.xq.crowd_funding.beans.ResultEntity;
 import com.xq.crowd_funding.beans.raisefunding.vo.ProjectVO;
-import com.xq.crowd_funding.myconfigration.redis_configration.RedisOperation;
+import com.xq.crowd_funding.myconfigration.redisconfigration.RedisOperation;
 import com.xq.crowd_funding.myutils.TokenKeyUtils;
 import com.xq.crowd_funding.servicepackage.raisefundingservice.impl.RaiseFundingServiceImpl;
 import org.springframework.beans.BeanUtils;
