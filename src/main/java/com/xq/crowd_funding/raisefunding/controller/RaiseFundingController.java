@@ -1,4 +1,4 @@
-package com.xq.crowd_funding.raisefunding.raisecontroller;/*
+package com.xq.crowd_funding.raisefunding.controller;/*
     @auther yangjie
 */
 
@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.xq.crowd_funding.common.ResultEntity;
 import com.xq.crowd_funding.common.utils.TokenKeyUtils;
 import com.xq.crowd_funding.common.utils.myconfigration.redisconfigration.RedisOperation;
-import com.xq.crowd_funding.raisefunding.raisebeans.vo.ProjectVO;
+import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
