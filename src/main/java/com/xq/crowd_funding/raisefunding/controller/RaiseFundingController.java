@@ -6,20 +6,21 @@ import com.xq.crowd_funding.common.ResultEntity;
 import com.xq.crowd_funding.common.utils.TokenKeyUtils;
 import com.xq.crowd_funding.common.utils.myconfigration.redisconfigration.RedisOperation;
 import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
+import com.xq.crowd_funding.raisefunding.servieces.IRaiseFundingService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-
 /**
  * 发起众筹
  */
 @RestController
 public class RaiseFundingController {
 
-  //  @Autowired
-   // RaiseFundingServiceImpl raiseFundingImp;
-  //  @Autowired
-    RedisOperation redisOperation;
+      @Autowired
+      IRaiseFundingService raiseFundingImp;
+
+      @Autowired
+      RedisOperation redisOperation;
 
     /**
      * @param memberSignToken 用于验证用户是否登录
@@ -45,7 +46,7 @@ public class RaiseFundingController {
     /**
      *  将start-step -1 里面的信息放入到 projectvo里面
      * @param projectVOFront
-     * @return
+     * @return  ResultEntity<String>
      */
     @RequestMapping("raisefunding/saveinfo")
     public  ResultEntity<String> saveProjectInfo(@RequestBody ProjectVO projectVOFront ){
