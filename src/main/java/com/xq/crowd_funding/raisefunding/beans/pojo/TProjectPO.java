@@ -1,22 +1,28 @@
 package com.xq.crowd_funding.raisefunding.beans.pojo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+// 无参数构造
+@NoArgsConstructor
+// 全参数构造
+@AllArgsConstructor
 public class TProjectPO {
 
-  private Long id;
+  private Integer id;
   private String name;
   private String remark;
-  private Long money;
-  private Long day;
+  private Integer money;
+  private Integer day;
   private String status;
   private String deploydate;
-  private Long supportmoney;
-  private Long supporter;
-  private Long completion;
-  private Long memberid;
+  private Integer supportmoney;
+  private Integer supporter;
+  private Integer completion;
+  private Integer memberid;
   private String createdate;
-  private Long follower;
+  private Integer follower;
 
 }

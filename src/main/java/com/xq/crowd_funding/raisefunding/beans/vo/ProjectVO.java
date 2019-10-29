@@ -1,11 +1,9 @@
 package com.xq.crowd_funding.raisefunding.beans.vo;/*
     @auther yangjie
 */
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 @Data
@@ -27,10 +25,10 @@ public class ProjectVO {
         private List<Integer> tagIdList;
 
         // 项目名称
-        private String projectName;
+        private String name;
 
         // 项目描述
-        private String projectDescription;
+        private String remark;
 
         // 计划筹集的金额
         private Integer money;

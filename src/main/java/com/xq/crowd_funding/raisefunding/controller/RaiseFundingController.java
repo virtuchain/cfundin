@@ -151,6 +151,6 @@ public class RaiseFundingController {
 
         // 调用srevice 保存到数据库
 
-        return raiseFundingImp.saveAllProToDatabase(projectVO);
+        return raiseFundingImp.saveAllProToDatabase(projectVO,17);
     }
 }

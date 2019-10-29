@@ -2,7 +2,9 @@ package com.xq.crowd_funding.common.utils;/*
     @auther yangjie
 */
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  *  众筹项目一些常用的工具
@@ -27,5 +29,15 @@ public class CrowdUtils {
      */
     public static  <E> boolean conllectionCkeck(Collection<E> c){
         return (c !=null) && (c.size()>0) ;
+    }
+
+    /**
+     * 返回 一个现在的日期字符
+     * @return
+     */
+    public  static String returnDateStr(){
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return  simpleDateFormat.format(date);
     }
 }
