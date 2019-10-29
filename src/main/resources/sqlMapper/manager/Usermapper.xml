@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xq.crowd_funding.manager.dao.TUserDao">
+
+<!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="com.xq.crowd_funding.manager.bean.TUser">
+        <result column="id" property="id"/>
+        <result column="loginacct" property="loginacct"/>
+        <result column="userpswd" property="userpswd"/>
+        <result column="username" property="username"/>
+        <result column="email" property="email"/>
+        <result column="createtime" property="createtime"/>
+    </resultMap>
+
+<!--auto generated Code-->
+    <sql id="all_column">
+        id,
+        loginacct,
+        userpswd,
+        username,
+        email,
+        createtime
+    </sql>
+
+<!--auto generated Code-->
+    <insert id="insert">
+        INSERT INTO t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.loginacct != null"> loginacct, </if>
+            <if test="pojo.userpswd != null"> userpswd, </if>
+            <if test="pojo.username != null"> username, </if>
+            <if test="pojo.email != null"> email, </if>
+            <if test="pojo.createtime != null"> createtime, </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id != null"> #{pojo.id}, </if>
+            <if test="pojo.loginacct != null"> #{pojo.loginacct}, </if>
+            <if test="pojo.userpswd != null"> #{pojo.userpswd}, </if>
+            <if test="pojo.username != null"> #{pojo.username}, </if>
+            <if test="pojo.email != null"> #{pojo.email}, </if>
+            <if test="pojo.createtime != null"> #{pojo.createtime}, </if>
+        </trim>
+    </insert>
+
+<!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO t_user(
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.loginacct},
+            #{pojo.userpswd},
+            #{pojo.username},
+            #{pojo.email},
+            #{pojo.createtime}
+            )
+        </foreach>
+    </insert>
+
+<!--auto generated Code-->
+    <update id="update">
+        UPDATE t_user
+        <set>
+            <if test="pojo.id != null"> id = #{pojo.id}, </if>
+            <if test="pojo.loginacct != null"> loginacct = #{pojo.loginacct}, </if>
+            <if test="pojo.userpswd != null"> userpswd = #{pojo.userpswd}, </if>
+            <if test="pojo.username != null"> username = #{pojo.username}, </if>
+            <if test="pojo.email != null"> email = #{pojo.email}, </if>
+            <if test="pojo.createtime != null"> createtime = #{pojo.createtime} </if>
+        </set>
+         WHERE id = #{pojo.id}
+    </update>
+
+<!--auto generated Code-->
+    <select id="select" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM t_user
+        <!--<where>-->
+            <!--<if test="pojo.id != null"> AND id = #{pojo.id} </if>-->
+            <!--<if test="pojo.loginacct != null"> AND loginacct = #{pojo.loginacct} </if>-->
+            <!--<if test="pojo.userpswd != null"> AND userpswd = #{pojo.userpswd} </if>-->
+            <!--<if test="pojo.username != null"> AND username = #{pojo.username} </if>-->
+            <!--<if test="pojo.email != null"> AND email = #{pojo.email} </if>-->
+            <!--<if test="pojo.createtime != null"> AND createtime = #{pojo.createtime} </if>-->
+        <!--</where>-->
+        -- LIMIT 1000
+    </select>
+
+<!--auto generated Code-->
+    <delete id="delete">
+        DELETE FROM t_user where id = #{id}
+    </delete>
+</mapper>
