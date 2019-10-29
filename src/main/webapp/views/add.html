@@ -66,7 +66,7 @@
                         <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 权限管理 <span class="badge" style="float:right">3</span></span>
                         <ul style="margin-top:10px;">
                             <li style="height:30px;">
-                                <a href="user.html" style="color:red;"><i class="glyphicon glyphicon-user"></i> 用户维护</a>
+                                <a href="user.html" style="color:#ff0000;"><i class="glyphicon glyphicon-user"></i> 用户维护</a>
                             </li>
                             <li style="height:30px;">
                                 <a href="role.html"><i class="glyphicon glyphicon-certificate"></i> 角色维护</a>
@@ -131,28 +131,24 @@
             <div class="panel panel-default">
                 <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
                 <div class="panel-body">
-               <form role="form">
+          <form role="form" id="datafrom">
 				  <div class="form-group">
 					<label>用户账号</label>
-					<input type="text" class="form-control" id="loginName" placeholder="请输入登录账号">
+					<input type="text" class="form-control" id="loginName" name="loginacct" placeholder="请输入登录账号">
 				  </div>
 					<div class="form-group">
 						<label>用户密码</label>
-						<input type="text" class="form-control" id="Password" placeholder="请输入用户密码">
+						<input type="text" class="form-control" id="Password" name="userpswd" placeholder="请输入用户密码">
 					</div>
 					<div class="form-group">
 						<label>用户名称</label>
-						<input type="text" class="form-control" id="UserName" placeholder="请输入用户名称">
+						<input type="text" class="form-control" id="UserName" name="username" placeholder="请输入用户名称">
 					</div>
 				  <div class="form-group">
 					<label>邮箱地址</label>
-					<input type="email" class="form-control" id="email" placeholder="请输入邮箱地址ַ">
+					<input type="email" class="form-control" id="email" name="email" placeholder="请输入邮箱地址ַ">
 					<p class="help-block label label-warning">请输入合法的邮箱地址, 格式为： xxxx@xxxx.com</p>
 				  </div>
-					<div class="form-group">
-						<label>创建日期</label>
-						<input type="date" class="form-control" id="creattime" placeholder="请输入创建日期">
-					</div>
 				  <button type="button" class="btn btn-success" id="insert"><i class="glyphicon glyphicon-plus"></i>新增</button>
 				  <button type="button" class="btn btn-danger" id="clean"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
 				</form>
@@ -192,23 +188,25 @@
 <script src="../script/docs.min.js"></script>
 <script type="text/javascript">
     $(function () {
-    	 $(function (){
                 //重置方法
                 $("#clean").click(function () {
 				      	$("#loginName").val("");
                     $("#Password").val("");
                     $("#UserName").val("");
                     $("#email").val("");
-                    $("#creattime").val("");
                 })
-				//添加方法
-				$("#insert").click(function () {
-                    var loginname=$("#loginName").val();
-                    var password=$("#Password").val();
-                    var username=$("#UserName").val();
-                    var email=$("#email").val();
-                    var creattime=$("#creattime").val()
-					
+				      //添加方法
+			        	$("#insert").click(function () {
+					          $.ajax({
+					          	type:"post",
+					          	url:"/insertUser?"+$("#datafrom").serialize(),
+					          	datatype:"json",
+					          	success : function (data) {
+                        if(data.status==200)alert("添加成功！");
+                         if(data.status==400)alert("添加失败！");
+                    }
+
+					          });
                 })
         $(".list-group-item").click(function(){
             if ( $(this).find("ul") ) {
@@ -224,3 +222,4 @@
 </script>
 </body>
 </html>
+

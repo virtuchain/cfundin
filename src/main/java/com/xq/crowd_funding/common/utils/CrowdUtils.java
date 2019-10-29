@@ -37,7 +37,7 @@ public class CrowdUtils {
      */
     public  static String returnDateStr(){
         Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:ss:mm");
         return  simpleDateFormat.format(date);
     }
 }
