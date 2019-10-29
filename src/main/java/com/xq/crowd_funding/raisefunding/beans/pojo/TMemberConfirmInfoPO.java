@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class TMemberConfirmInfoPO {
 
-  private long id;
-  private long memberid;
+  private Long id;
+  private Long memberid;
   private String paynum;
   private String cardnum;
 }

@@ -5,17 +5,17 @@ import lombok.Data;
 @Data
 public class TReturnPO {
 
-  private long id;
-  private long projectid;
+  private Long id;
+  private Long projectid;
   private String type;
-  private long supportmoney;
+  private Long supportmoney;
   private String content;
-  private long count;
-  private long signalpurchase;
-  private long purchase;
-  private long freight;
+  private Long count;
+  private Long signalpurchase;
+  private Long purchase;
+  private Long freight;
   private String invoice;
-  private long rtndate;
+  private Long rtndate;
 
 
 }
