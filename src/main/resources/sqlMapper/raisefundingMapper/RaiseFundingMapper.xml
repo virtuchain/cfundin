@@ -7,4 +7,18 @@
         #{id},#{name},#{remark},#{money},#{day},#{status},#{deploydate},#{supportmoney}
         ,#{supporter},#{completion},#{memberid},#{createdate},#{follower})
     </insert>
+
+    <insert id="insertProTypeInfo">
+        insert  into t_project_type ("projectid",typeid) values
+        <foreach collection="proTypeList" item="typeid">
+            (#{proId},#{typeid})
+        </foreach>
+    </insert>
+
+    <insert id="insertProTagInfo">
+        insert  into t_project_tag ("projectid",tagid) values
+        <foreach collection="proTypeList" item="typeid">
+            (#{proId},#{typeid})
+        </foreach>
+    </insert>
 </mapper>
