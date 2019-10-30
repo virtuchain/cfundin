@@ -93,7 +93,6 @@ public class RedisOperation {
             // 无效字符返回失败
             return  ResultEntity.failed("无效的key");
         }
-
         try {
             // 删除数据
             redisTemplate.delete(normalKey);
