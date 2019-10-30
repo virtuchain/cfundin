@@ -24,7 +24,7 @@ public class UserController {
    @GetMapping("/user") //查询所有用户方法
     public List<TUser> queryUsers(TUser pojo){
 
-       PageHelper.startPage(1,10);
+
 
        List<TUser> list = tUserService.select(pojo);
 
