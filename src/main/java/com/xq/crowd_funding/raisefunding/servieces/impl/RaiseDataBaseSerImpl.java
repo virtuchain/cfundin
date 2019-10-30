@@ -3,7 +3,7 @@ package com.xq.crowd_funding.raisefunding.servieces.impl;/*
 */
 
 import com.xq.crowd_funding.common.ResultEntity;
-import com.xq.crowd_funding.common.utils.myconfigration.redisconfigration.RedisOperation;
+import com.xq.crowd_funding.common.configrations.redisconfigration.RedisOperation;
 import com.xq.crowd_funding.raisefunding.beans.pojo.TMemberConfirmInfoPO;
 import com.xq.crowd_funding.raisefunding.beans.pojo.TMemberLaunchInfoPO;
 import com.xq.crowd_funding.raisefunding.beans.pojo.TProjectPO;

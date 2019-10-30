@@ -4,7 +4,7 @@ package com.xq.crowd_funding.raisefunding.controller;/*
 
 import com.alibaba.fastjson.JSON;
 import com.xq.crowd_funding.common.ResultEntity;
-import com.xq.crowd_funding.common.utils.myconfigration.redisconfigration.RedisOperation;
+import com.xq.crowd_funding.common.configrations.redisconfigration.RedisOperation;
 import com.xq.crowd_funding.raisefunding.beans.vo.MemberConfirmInfoVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ReturnVO;
