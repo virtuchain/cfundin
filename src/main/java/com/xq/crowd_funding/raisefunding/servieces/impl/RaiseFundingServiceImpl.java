@@ -63,9 +63,7 @@ public class RaiseFundingServiceImpl implements IRaiseFundingService {
                 returnPO.setProjectid(proId);
                 raiseDao.insertReturnInfo(returnPO);
             }
-
             // 添加 发起人确认信息
-
             TMemberConfirmInfoPO memberConfirmInfoPO =new TMemberConfirmInfoPO();
             BeanUtils.copyProperties(projectVO.getMemberConfirmInfoVO(),memberConfirmInfoPO);
             memberConfirmInfoPO.setMemberid(memberid);
@@ -74,13 +72,6 @@ public class RaiseFundingServiceImpl implements IRaiseFundingService {
             e.printStackTrace();
             return  ResultEntity.failed("添加数据失败");
         }
-
-
-
-
-
-
-
-        return  null;
+        return  ResultEntity.successNoData();
     }
 }
