@@ -33,11 +33,8 @@ public class UserController {
     @PostMapping("/insertUser")
     @ResponseBody//添加用户
     public Map<String,Object> insertUser(TUser pojo){
-
         pojo.setCreatetime(CrowdUtils.returnDateStr());
-
        int i = tUserService.insert(pojo);
-       System.out.println(pojo);
         System.out.println(i);
        Map<String,Object> map=new HashMap();
        if ( i >= 1 ){
