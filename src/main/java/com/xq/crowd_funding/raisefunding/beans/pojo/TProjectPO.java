@@ -24,5 +24,5 @@ public class TProjectPO {
   private Integer memberid;
   private String createdate;
   private Integer follower;
-
+  private  String headerPicturePath;
 }

@@ -21,4 +21,13 @@
             (#{proId},#{typeid})
         </foreach>
     </insert>
+
+    <insert id="insertReturnInfo" parameterType="com.xq.crowd_funding.raisefunding.beans.pojo.TReturnPO">
+        insert into t_return VALUES (#{id},#{projectid},#{type},#{supportmoney},#{content},
+        #{count},#{signalpurchase},#{purchase},#{freight},#{invoice},#{rtndate})
+    </insert>
+
+    <insert id="insertMemberConfirmInfo" parameterType="com.xq.crowd_funding.raisefunding.beans.pojo.TMemberConfirmInfoPO">
+        insert  into  t_member_confirm_info values (#{id},#{memberid},#{paynum},#{cardnum});
+    </insert>
 </mapper>
