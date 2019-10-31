@@ -1,7 +1,6 @@
 package com.xq.crowd_funding.raisefunding.controller;/*
     @auther yangjie
 */
-
 import com.alibaba.fastjson.JSON;
 import com.xq.crowd_funding.common.ResultEntity;
 import com.xq.crowd_funding.common.configrations.redisconfigration.RedisOperation;
@@ -10,13 +9,16 @@ import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ReturnVO;
 import com.xq.crowd_funding.raisefunding.servieces.IRaiseDataBaseService;
 import com.xq.crowd_funding.raisefunding.servieces.IRaiseRedisService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 发起众筹
  */
 @RestController
+// @CrossOrigin(origins = "*" , maxAge = 3600) 跨域 只在这个类里面
 public class RaiseFundingController {
 
       @Autowired
@@ -27,6 +29,11 @@ public class RaiseFundingController {
 
       @Autowired
       RedisOperation redisOperation;
+
+      @GetMapping("gethtmldata")
+      public ResultEntity getTtmlData(){
+          return null;
+      }
 
     /**
      * @param memberSignToken 用于验证用户是否登录
@@ -40,13 +47,21 @@ public class RaiseFundingController {
 
         return redisServiceImp.initProjectVOToRedis();
     }
+
+    @PostMapping("raisefunding/uploadheadpicture")
+    public  ResultEntity<String> saveHeadPicture(@Param("headFile")MultipartFile headFile){
+
+            return  null;
+    }
+
+
     /**
      *  将start-step -1 里面的信息放入到 projectvo里面
      * @param projectVOFront 页面一的vo 数据
      * @return  ResultEntity<String>
      */
     @RequestMapping("raisefunding/saveinfostepone")
-    public  ResultEntity<String> saveProjectInfo( @RequestBody ProjectVO projectVOFront ){
+    public  ResultEntity<String> saveProjectInfo(@RequestBody ProjectVO projectVOFront ){
         // 从 projectVOFront 获取 projectTempToken
         String projectTempToken = projectVOFront.getProjectTempToken();
         // 判断是否是失败的状态
