@@ -5,7 +5,8 @@ package com.xq.crowd_funding.raisefunding.servieces;/*
 import com.xq.crowd_funding.common.ResultEntity;
 import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
 
-public interface IRaiseFundingService {
+public interface IRaiseDataBaseService {
 
     ResultEntity<String> saveAllProToDatabase(ProjectVO projectVO,Integer memberid);
+
 }

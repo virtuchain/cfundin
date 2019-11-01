@@ -5,6 +5,7 @@ package com.xq.crowd_funding.common.utils;/*
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  *  众筹项目一些常用的工具
@@ -36,8 +37,27 @@ public class CrowdUtils {
      * @return
      */
     public  static String returnDateStr(){
-        Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:ss:mm");
-        return  simpleDateFormat.format(date);
+        return new SimpleDateFormat("yyyy-MM-dd hh:ss:mm").format(new Date());
+    }
+     /** @author yangjie
+      * @DESCRIPTION: 生成一个文件名
+      * @params: originalFileName 原始文件名
+      * @return:
+      * @Date:
+      * @Modified By:
+     */
+     public  static  String getNewFileName(String originalFileName){
+         // 扩展
+         String extensName="";
+         if (originalFileName.contains(".")){
+             extensName = originalFileName.substring(originalFileName.lastIndexOf("."));
+         }
+         return UUID.randomUUID().toString().replaceAll("-","")+extensName;
+     }
+    /**
+     * 根据日期生成一个文件夹名
+     */
+    public  static  String getNewFoldeName(String ossParentFoldeName){
+        return ossParentFoldeName+"/"+ new SimpleDateFormat("yyyMMdd").format(new Date());
     }
 }

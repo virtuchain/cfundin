@@ -3,6 +3,7 @@ package com.xq.crowd_funding.raisefunding.servieces.impl;/*
 */
 
 import com.xq.crowd_funding.common.ResultEntity;
+import com.xq.crowd_funding.common.configrations.redisconfigration.RedisOperation;
 import com.xq.crowd_funding.raisefunding.beans.pojo.TMemberConfirmInfoPO;
 import com.xq.crowd_funding.raisefunding.beans.pojo.TMemberLaunchInfoPO;
 import com.xq.crowd_funding.raisefunding.beans.pojo.TProjectPO;
@@ -10,8 +11,9 @@ import com.xq.crowd_funding.raisefunding.beans.pojo.TReturnPO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ReturnVO;
 import com.xq.crowd_funding.raisefunding.dao.RaiseDao;
-import com.xq.crowd_funding.raisefunding.servieces.IRaiseFundingService;
+import com.xq.crowd_funding.raisefunding.servieces.IRaiseDataBaseService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +21,13 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class RaiseFundingServiceImpl implements IRaiseFundingService {
+public class RaiseDataBaseSerImpl implements IRaiseDataBaseService {
 
       @Resource
       private RaiseDao raiseDao;
+
+      @Autowired
+      RedisOperation redisOperation;
 
     /**
      * 这个方法将申请众筹项目的所有数据添加到数据库
@@ -63,9 +68,7 @@ public class RaiseFundingServiceImpl implements IRaiseFundingService {
                 returnPO.setProjectid(proId);
                 raiseDao.insertReturnInfo(returnPO);
             }
-
             // 添加 发起人确认信息
-
             TMemberConfirmInfoPO memberConfirmInfoPO =new TMemberConfirmInfoPO();
             BeanUtils.copyProperties(projectVO.getMemberConfirmInfoVO(),memberConfirmInfoPO);
             memberConfirmInfoPO.setMemberid(memberid);
@@ -74,13 +77,9 @@ public class RaiseFundingServiceImpl implements IRaiseFundingService {
             e.printStackTrace();
             return  ResultEntity.failed("添加数据失败");
         }
-
-
-
-
-
-
-
-        return  null;
+        // 数据保存成功，则删除 redis 中的数据
+        return  redisOperation.removeRedisByKey(projectVO.getProjectTempToken());
     }
+
+
 }
