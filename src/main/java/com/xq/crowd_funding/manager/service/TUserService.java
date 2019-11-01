@@ -15,4 +15,7 @@ public interface TUserService {
 
     int update(TUser pojo);
 
+    int delete(TUser pojo);
+
+    int deleteUsers(TUser pojo);
 }

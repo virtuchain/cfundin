@@ -30,6 +30,7 @@ public class ResultEntity<T> {
     }
     // 成功返回结果 有数据
     public static <T> ResultEntity<T> successWithData(T data) {
+
         return new ResultEntity<>(SUCCESS, NO_MSG, data);
     }
     // 失败返回结果 有数据

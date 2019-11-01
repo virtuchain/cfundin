@@ -137,10 +137,6 @@
 					<input type="text" class="form-control" id="loginName" name="loginacct" placeholder="请输入登录账号">
 				  </div>
 					<div class="form-group">
-						<label>用户密码</label>
-						<input type="text" class="form-control" id="Password" name="userpswd" placeholder="请输入用户密码">
-					</div>
-					<div class="form-group">
 						<label>用户名称</label>
 						<input type="text" class="form-control" id="UserName" name="username" placeholder="请输入用户名称">
 					</div>
@@ -190,8 +186,7 @@
     $(function () {
                 //重置方法
                 $("#clean").click(function () {
-				      	$("#loginName").val("");
-                    $("#Password").val("");
+                    $("#loginName").val("");
                     $("#UserName").val("");
                     $("#email").val("");
                 })
@@ -199,11 +194,14 @@
 			        	$("#insert").click(function () {
 					          $.ajax({
 					          	type:"post",
-					          	url:"/insertUser?"+$("#datafrom").serialize(),
+					          	url:"/manager/insertUser?"+$("#datafrom").serialize(),
 					          	datatype:"json",
 					          	success : function (data) {
-                        if(data.status==200)alert("添加成功！");
-                         if(data.status==400)alert("添加失败！");
+                        if(data.result=='SUCCESS'){
+                            alert("添加成功！");
+                            window.location.href="user.html";
+                        }
+                         if(data.result=='FAILED')alert("添加失败！");
                     }
 
 					          });

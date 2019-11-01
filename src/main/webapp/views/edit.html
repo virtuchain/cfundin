@@ -131,22 +131,25 @@
 			<div class="panel panel-default">
               <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 			  <div class="panel-body">
-				<form role="form">
+				<form role="form" id="datefrom"  method="post">
+					<div class="form-group">
+						<input type="hidden" class="form-control"  id="fid" name="id">
+					</div>
 				  <div class="form-group">
-					<label for="exampleInputPassword1">登陆账号</label>
-					<input type="text" class="form-control" id="exampleInputPassword1" value="test">
+					<label>登陆账号</label>
+					<input type="text"  class="form-control" id="floginacct" name="loginacct" value="" >
 				  </div>
 				  <div class="form-group">
-					<label for="exampleInputPassword1">用户名称</label>
-					<input type="text" class="form-control" id="exampleInputPassword1" value="测试用户">
+					<label>用户名称</label>
+					<input type="text" class="form-control" id="fusername" name="username" value="">
 				  </div>
 				  <div class="form-group">
-					<label for="exampleInputEmail1">邮箱地址</label>
-					<input type="email" class="form-control" id="exampleInputEmail1" value="xxxx@xxxx.com">
+					<label>邮箱地址</label>
+					<input type="email" class="form-control" name="email" id="femail" value="">
 					<p class="help-block label label-warning">请输入合法的邮箱地址, 格式为： xxxx@xxxx.com</p>
 				  </div>
-				  <button type="button" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i> 修改</button>
-				  <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
+				  <button type="button" class="btn btn-success" id="UpdateBtn"><i class="glyphicon glyphicon-edit"></i> 修改</button>
+				  <button type="button" class="btn btn-danger" id="clean"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
 				</form>
 			  </div>
 			</div>
@@ -183,7 +186,22 @@
     <script src="../bootstrap/js/bootstrap.min.js"></script>
 	<script src="../script/docs.min.js"></script>
         <script type="text/javascript">
+
             $(function () {
+                //获取需要修改的用户id
+                var urlMsg = parseUrl(window.location.search);
+				var id=urlMsg.id;
+				//异步进行修改
+
+
+
+                $("#fid").val(id);
+                //重置方法
+                $("#clean").click(function () {
+                    $("#floginacct").val("");
+                    $("#fusername").val("");
+                    $("#femail").val("");
+                })
 			    $(".list-group-item").click(function(){
 				    if ( $(this).find("ul") ) {
 						$(this).toggleClass("tree-closed");
@@ -195,6 +213,36 @@
 					}
 				});
             });
+
+            //将url把参数解析出来
+            function parseUrl(url){
+                if(url.indexOf("?") == -1) {
+                    return {};
+                }
+                var query = url.split("?")[1];
+                var queryArr = query.split("&");
+                var obj = {};
+                queryArr.forEach(function(item){
+                    var key = item.split("=")[0];
+                    var value = item.split("=")[1];
+                    obj[key] = decodeURIComponent(value);
+                });
+                return obj;
+            }
+            $("#UpdateBtn").click(function () {
+				$.ajax( {
+					url:"/manager/UpdateUser?"+$("#datefrom").serialize(),
+					type: "json",
+                    async:true,
+					success : function  fun(data) {
+                        if(data.result=='SUCCESS'){
+                            alert("修改成功！");
+                            window.location.href="user.html";
+                        }
+                        if(data.result=='FAILED')alert("修改失败！");
+                    }
+                });
+            })
         </script>
   </body>
 </html>

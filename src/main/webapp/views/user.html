@@ -132,13 +132,18 @@
 <form class="form-inline" role="form" style="float:left;">
   <div class="form-group has-feedback">
     <div class="input-group">
+		<!-- 当前页数 -->
+		<input type="hidden" id="pageNum" name="pageNum" />
+		<!-- 总行数 -->
+		<input type="hidden" id="total" name="total" />
+
       <div class="input-group-addon">查询条件</div>
-      <input class="form-control has-success" type="text" placeholder="请输入查询条件">
+      <input class="form-control has-success" type="text" id="SelectText" placeholder="请输入查询条件">
     </div>
   </div>
-  <button type="button" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询</button>
+  <button type="button" class="btn btn-warning" id="selectBtn"><i class="glyphicon glyphicon-search"></i> 查询</button>
 </form>
-<button type="button" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
+<button type="button" class="btn btn-danger" style="float:right;margin-left:10px;" id="deleteBtns"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
 <button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='add.html'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
 <br>
  <hr style="clear:both;">
@@ -147,7 +152,7 @@
               <thead>
                 <tr >
                   <th width="30">#</th>
-				  <th width="30"><input type="checkbox"></th>
+				  <th width="30"><input type="checkbox"  id="allcheckbox"></th>
                   <th>账号</th>
                   <th>名称</th>
                   <th>邮箱地址</th>
@@ -159,14 +164,15 @@
 			     <tr >
 				     <td colspan="6" align="center">
 						<ul class="pagination">
-								<li class="disabled"><a href="#">上一页</a></li>
-								<li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-								<li><a href="#">下一页</a></li>
-							 </ul>
+							    <li  ><a href="#" id="firstPage">首页<span class="sr-only">(current)</span></a></li>
+								<li><a href="#" id="prePage">上一页<span class="sr-only">(current)</span></a></li>
+								<li><a href="#">1 <span class="sr-only">(current)</span></a></li>
+								<li><a href="#" id="nextPage">下一页</a></li>
+							    <li><a href="#" id="endPage">尾页<span class="sr-only">(current)</span></a></li>
+								<li class="active"><a href="#">当前页：<span id="page"></span></a></li>
+							    <li class="active"><a href="#">总条数：<span id="totalRow"></span></a></li></li>
+
+						</ul>
 					 </td>
 				 </tr>
 
@@ -183,24 +189,68 @@
     <script src="../bootstrap/js/bootstrap.min.js"></script>
 	<script src="../script/docs.min.js"></script>
         <script type="text/javascript">
-            $(function () {
-                $.ajax({
-					type:"get",
-					url:"/user",
-					datatype:"json",
-					success : function (data) {
-						var html;
-						$.each(data , function (index,item) {
-							html='<tbody><tr><td>'+item.id+'</td><td><input type="checkbox"/><td>'+item.loginacct+'</td><td>'+item.username+'</td><td>'+item.email+'</td><td>'+
-                                '<button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>\n' +
-                                '<button type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>\n' +
-                                '<button type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>\n' +
-                                '</td><tboty>';
-							$('#tab').append(html);
-                        })
-                    }
 
-				})
+            $(function () {
+                function getList() {
+                    $.ajax({
+                        type: "get",
+                        url: "/manager/user",
+                        datatype: "json",
+                        success: function (data) {
+                            var html;
+                            $.each(data.list, function (index, item) {
+                                html = '<tbody><tr><td>' + item.id + '</td><td><input type="checkbox" id="'+item.id+'"/><td>' + item.loginacct + '</td><td>' + item.username + '</td><td>' + item.email + '</td><td>' +
+                                    '<button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>\n' +
+                                    '<button type="button" class="btn btn-primary btn-xs" id="updateBtn" onclick="upGetId(this)"><i class=" glyphicon glyphicon-pencil"></i></button>\n' +
+                                    '<button type="button" class="btn btn-danger btn-xs" id="delBtn" onclick="delGetId(this)"><i class=" glyphicon glyphicon-remove"></i></button>\n' +
+                                    '</td><tboty>';
+                                $('#tab').append(html);
+                                //设置当前页数
+                                $("#pageNum").val(data.pageNum);
+                                //设置总条数
+                                $("#total").val(data.total);
+                                /*  alert(data.pageNum+" "+data.total);
+                               console.log("data.pageNum="+data.pageNum+", data.total="+data.total); */
+                                //设置当前页数显示
+                                $("#page").text(data.pageNum);
+                                //总条数显示
+                                $("#totalRow").text(data.total);
+                            })
+                        }
+                    })
+                }
+
+                //首页事件
+                $("#firstPage").on("click",function(){
+                    //设置当前页数
+                    $("#pageNum").val(1);
+                    getList();
+                })
+                //上一页事件
+                $("#prePage").on("click",function(){
+                    var pageNum=$("#pageNum").val();
+                    var pre=pageNum>1?parseInt(pageNum-1):pageNum;
+                    //设置当前页数
+                    $("#pageNum").val(pre);
+                    getList();
+                })
+                //下一页事件
+                $("#nextPage").on("click",function(){
+                    var pageNum=$("#pageNum").val();
+                    var next=pageNum==parseInt($("#total").val()/3)?pageNum:parseInt(pageNum)+1;
+                    //设置当前页数
+                    $("#pageNum").val(next);
+                    getList();
+                })
+                //尾页事件
+                $("#endPage").on("click",function(){
+                    var end=parseInt($("#total").val()/3);
+                    //设置当前页数
+                    $("#pageNum").val(end);
+                    getList();
+                })
+				getList();
+
 			    $(".list-group-item").click(function(){
 				    if ( $(this).find("ul") ) {
 						$(this).toggleClass("tree-closed");
@@ -211,13 +261,86 @@
 						}
 					}
 				});
+
             });
-            $("tbody .btn-success").click(function(){
-                window.location.href = "assignRole.html";
-            });
-            $("tbody .btn-primary").click(function(){
-                window.location.href = "edit.html";
-            });
+            //模糊查询
+			$("#selectBtn").click(function () {
+			    var loginacct=$("#SelectText").val();
+			    alert(loginacct);
+			    $.ajax({
+					type:"post",
+					url:"/manager/SelectLoginacct?"+loginacct,
+					typepost:"json",
+					success:function () {
+                        if(data.result=='SUCCESS'){
+                            window.location.href="user.html";
+                        }
+                        if(data.result=='FAILED')alert("查询失败！");
+                        window.location.href="user.html";
+                    }
+				})
+            })
+
+            function upGetId(obj){
+                //新增获取用户id
+                var Upid=$(obj).parent().prev().prev().prev().prev().prev().html();
+                //跳转到修改页面
+                window.location.href="edit.html?id="+Upid;
+            }
+            function delGetId(obj){
+                //删除获取用户id
+                var id=$(obj).parent().prev().prev().prev().prev().prev().html();
+                    $.ajax({
+                    type:"delete",
+                    url:"/manager/deleteUser",
+					data:{"id":id},
+                    typepost:"json",
+                    success:function (data) {
+                        if(data.result=='SUCCESS'){
+                            alert("删除成功~");
+                            window.location.href="user.html";
+                        }
+                        if(data.result=='FAILED')alert("删除失败！");
+                        window.location.href="user.html";
+                    }
+                })
+
+            }
+            //点击全选事件
+            $("#allcheckbox").click(function () {
+                //获取全选框的状态
+                var checkedStatus=this.checked;
+                //让下面的checkbox等于上面全选的状态
+                $("tbody tr td input[type='checkbox']").attr("checked",checkedStatus);
+            })
+			//点击批量删除按钮
+			$("#deleteBtns").click(function () {
+			    //获取tbody被选中的checkbox对象
+                var selectCheckbox=$("tbody tr td input:checked");
+                //循环获得被选中的列的id
+				var idStr="";//拼接成需要传输的格式
+                 $.each(selectCheckbox,function (i,n) {
+                     if (i!=0){
+                         idStr+="&";
+					 }
+				 	    idStr += "id="+n.id;
+                  });
+                $.ajax({
+                    type:"delete",
+                    url:"/manager/deleteUsers",
+                    data:idStr,
+                    typepost:"json",
+                    success:function (data) {
+                        if(data.result=='SUCCESS'){
+                            alert("删除成功~");
+                            window.location.href="user.html";
+                        }
+                        if(data.result=='FAILED')alert(data.message);
+                        window.location.href="user.html";
+                    }
+                })
+            })
+
         </script>
   </body>
 </html>
