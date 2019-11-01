@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class TTypePO {
 
-  private Long id;
+  private Integer id;
   private String name;
   private String remark;
 

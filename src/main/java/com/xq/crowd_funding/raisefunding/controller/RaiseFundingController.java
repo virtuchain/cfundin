@@ -4,33 +4,47 @@ package com.xq.crowd_funding.raisefunding.controller;/*
 
 import com.alibaba.fastjson.JSON;
 import com.xq.crowd_funding.common.ResultEntity;
-import com.xq.crowd_funding.common.utils.CrowdUtils;
-import com.xq.crowd_funding.common.utils.TokenKeyUtils;
-import com.xq.crowd_funding.common.utils.myconfigration.redisconfigration.RedisOperation;
+import com.xq.crowd_funding.common.configrations.redisconfigration.RedisOperation;
 import com.xq.crowd_funding.raisefunding.beans.vo.MemberConfirmInfoVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ReturnVO;
-import com.xq.crowd_funding.raisefunding.servieces.IRaiseFundingService;
-import org.springframework.beans.BeanUtils;
+import com.xq.crowd_funding.raisefunding.servieces.IRaiseDataBaseService;
+import com.xq.crowd_funding.raisefunding.servieces.IRaiseRedisService;
+import com.xq.crowd_funding.raisefunding.servieces.impl.PictureSerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 发起众筹
  */
 @RestController
+// @CrossOrigin(origins = "*" , maxAge = 3600) 跨域 只在这个类里面
 public class RaiseFundingController {
 
+    // 操作数据库
       @Autowired
-      IRaiseFundingService raiseFundingImp;
-
+      private IRaiseDataBaseService raiseDataImp;
+    // 操作 redis
       @Autowired
-      RedisOperation redisOperation;
+      private IRaiseRedisService redisServiceImp;
+      // redis的方法
+      @Autowired
+      private RedisOperation redisOperation;
+      @Autowired
+      private PictureSerImpl pictureSerImp;
 
     /**
+     * 获取页面的数据信息
+     * @return
+     */
+      @GetMapping("gethtmldata")
+      public ResultEntity getTtmlData(){
+          return null;
+      }
+
+    /**
+     *  创建  ProjectVO 所有页面的数据存放的对象
      * @param memberSignToken 用于验证用户是否登录
      * @return
      */
@@ -40,25 +54,36 @@ public class RaiseFundingController {
         System.out.println("进入了这个方法了 。。。。。");
         // 这里没有验证用户登录
 
-        // 创建 空  ProjectVO
-        ProjectVO projectVO = new ProjectVO();
-        // 将token 放入  projectVO
-        String raiseToken = TokenKeyUtils.getTokenAndUUID(TokenKeyUtils.REDIS_RAISE_KEY_PREFIX);
-        projectVO.setProjectTempToken(raiseToken);
-        // 将 projectVO 转化成 json 字符存入 redis
-        String projectVOJSON =  JSON.toJSONString(projectVO);
-        // 将 projectVOJSON 装入 redis
-        redisOperation.saveRedisKeyAndValue(raiseToken,projectVOJSON,-1);
-        return  ResultEntity.successWithData(projectVO);
+        return redisServiceImp.initProjectVOToRedis();
     }
+    /**
+     * 上传头图片
+     * @param headFile
+     * @return
+     */
+    @PostMapping("raisefunding/uploadheadpicture")
+    public  ResultEntity<String> saveHeadPicture(@RequestParam("headFile")MultipartFile headFile){
+         // 排除空文件
+        if (headFile.isEmpty()){
+            return  ResultEntity.failed("文件为空");
+        }
+        ResultEntity<String> resultEntity = pictureSerImp.uploadHeadPicture(headFile);
+        if (ResultEntity.FAILED.equals(resultEntity.getResult())){
+            return ResultEntity.failed("上传失败");
+        }
+
+
+        return  null;
+    }
+
+
     /**
      *  将start-step -1 里面的信息放入到 projectvo里面
      * @param projectVOFront 页面一的vo 数据
      * @return  ResultEntity<String>
      */
     @RequestMapping("raisefunding/saveinfostepone")
-    public  ResultEntity<String> saveProjectInfo(
-                             @RequestBody ProjectVO projectVOFront ){
+    public  ResultEntity<String> saveProjectInfo(@RequestBody ProjectVO projectVOFront ){
         // 从 projectVOFront 获取 projectTempToken
         String projectTempToken = projectVOFront.getProjectTempToken();
         // 判断是否是失败的状态
@@ -66,13 +91,7 @@ public class RaiseFundingController {
         if (ResultEntity.FAILED.equals(resultEntity.getMessage())){
             return  ResultEntity.failed(resultEntity.getMessage());
         }
-        // 转化为 project 对象
-       ProjectVO projectVO =  JSON.parseObject(resultEntity.getData(),ProjectVO.class);
-       // 将 projectVOFront里面的属性值放入到  project里面
-        BeanUtils.copyProperties(projectVOFront,projectVO);
-        // 将  projectVO 转化成 JSON数据，存入 redis
-        String ProjectJSON = JSON.toJSONString(projectVO);
-        return redisOperation.saveRedisKeyAndValue(projectTempToken,ProjectJSON,-1);
+        return  redisServiceImp.saveProjectInfoToRedis(projectVOFront,resultEntity);
     }
     /**
      * 这里是将回报加入redis
@@ -88,48 +107,26 @@ public class RaiseFundingController {
         if (ResultEntity.FAILED.equals(resultEntity.getMessage())){
             return  ResultEntity.failed(resultEntity.getMessage());
         }
-        // 转化为 project
-        ProjectVO projectVO = JSON.parseObject(resultEntity.getData(),ProjectVO.class);
-
-        List<ReturnVO> returnVOList = projectVO.getReturnVOList();
-
-        if (!CrowdUtils.conllectionCkeck(returnVOList)){
-            returnVOList = new ArrayList<>();
-        }
-        returnVOList.add(returnVO);
-        // 将  returnVOList set 到  returnVO
-        projectVO.setReturnVOList(returnVOList);
-        // 转化为 JSON 放入 redis
-        String  projectStr = JSON.toJSONString(projectVO);
-        return redisOperation.saveRedisKeyAndValue(proToken,projectStr,-1);
+        return redisServiceImp.saveProjectReturnToRedis(returnVO,resultEntity);
     }
-
     /**
      * 保存用户信息
      * @param memberConfirmInfoVO
      * @return
      */
-    public  ResultEntity<String> saveMemberConfirmInfo(@RequestBody MemberConfirmInfoVO memberConfirmInfoVO){
+    public  ResultEntity<String> saveMemberConfirmInfo(
+            @RequestBody MemberConfirmInfoVO memberConfirmInfoVO){
         // 得到 project
         String proToken = memberConfirmInfoVO.getProjectTempToken();
-        // 从redis 取出
         ResultEntity<String> resultEntity  = redisOperation.readRedisValueByKey(proToken);
         // 判断状态
         if (ResultEntity.FAILED.equals(resultEntity.getMessage())){
             return  ResultEntity.failed(resultEntity.getMessage());
         }
-        // 转化为 project
-        ProjectVO projectVO = JSON.parseObject(resultEntity.getData(),ProjectVO.class);
-        // 将 projectVOFront里面的属性值放入到  project里面
-        projectVO.setMemberConfirmInfoVO(memberConfirmInfoVO);
-        // 将  projectVO 转化成 JSON数据，存入 redis
-        String ProjectJSON = JSON.toJSONString(projectVO);
-        return redisOperation.saveRedisKeyAndValue(proToken,ProjectJSON,-1);
+        return redisServiceImp.saveMemberConfiInfoToRedis(memberConfirmInfoVO,resultEntity);
     }
-
     /**
      *  保存 projectpro到数据库
-     *
      * @param memberSignToken
      * @param projectTempToken
      * @return
@@ -142,15 +139,13 @@ public class RaiseFundingController {
         // 从 projectTempToken
         ResultEntity<String> resultEntity = redisOperation.readRedisValueByKey(projectTempToken);
 
-        if (ResultEntity.FAILED.equals(resultEntity.getMessage())){
+        if (ResultEntity.FAILED.equals(resultEntity.getResult())){
             return  ResultEntity.failed(resultEntity.getMessage());
         }
         // 得到 JSON数据，转化 成peojectpo对象
-
         ProjectVO projectVO = JSON.parseObject(resultEntity.getData(),ProjectVO.class);
 
         // 调用srevice 保存到数据库
-
-        return raiseFundingImp.saveAllProToDatabase(projectVO);
+        return raiseDataImp.saveAllProToDatabase(projectVO, 17);
     }
 }

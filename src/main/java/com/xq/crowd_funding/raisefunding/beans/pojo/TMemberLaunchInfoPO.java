@@ -5,8 +5,9 @@ import lombok.Data;
 @Data
 public class TMemberLaunchInfoPO {
 
-  private Long id;
-  private Long memberid;
+  private Integer id;
+  private Integer memberid;
+  // 简单介绍
   private String descriptionSimple;
   private String descriptionDetail;
   private String phoneNum;

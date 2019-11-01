@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xq.crowd_funding.mapperpackage.RaiseFundingDao">
+<mapper namespace="com.xq.crowd_funding.raisefunding.dao.RaiseDao">
+    <insert id="inserPeojectInfo" parameterType="com.xq.crowd_funding.raisefunding.beans.pojo.TProjectPO"
+                useGeneratedKeys="true" keyColumn="id">
+        insert into t_project values (
+        #{id},#{name},#{remark},#{money},#{day},#{status},#{deploydate},#{supportmoney}
+        ,#{supporter},#{completion},#{memberid},#{createdate},#{follower})
+    </insert>
 
+    <insert id="insertProTypeInfo">
+        insert  into t_project_type ("projectid",typeid) values
+        <foreach collection="proTypeList" item="typeid">
+            (#{proId},#{typeid})
+        </foreach>
+    </insert>
+
+    <insert id="insertProTagInfo">
+        insert  into t_project_tag ("projectid",tagid) values
+        <foreach collection="proTypeList" item="typeid">
+            (#{proId},#{typeid})
+        </foreach>
+    </insert>
+
+    <insert id="insertReturnInfo" parameterType="com.xq.crowd_funding.raisefunding.beans.pojo.TReturnPO">
+        insert into t_return VALUES (#{id},#{projectid},#{type},#{supportmoney},#{content},
+        #{count},#{signalpurchase},#{purchase},#{freight},#{invoice},#{rtndate})
+    </insert>
+
+    <insert id="insertMemberConfirmInfo" parameterType="com.xq.crowd_funding.raisefunding.beans.pojo.TMemberConfirmInfoPO">
+        insert  into  t_member_confirm_info values (#{id},#{memberid},#{paynum},#{cardnum});
+    </insert>
 </mapper>
