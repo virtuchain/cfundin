@@ -1,6 +1,7 @@
 package com.xq.crowd_funding.raisefunding.controller;/*
     @auther yangjie
 */
+
 import com.alibaba.fastjson.JSON;
 import com.xq.crowd_funding.common.ResultEntity;
 import com.xq.crowd_funding.common.configrations.redisconfigration.RedisOperation;
@@ -9,7 +10,7 @@ import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ReturnVO;
 import com.xq.crowd_funding.raisefunding.servieces.IRaiseDataBaseService;
 import com.xq.crowd_funding.raisefunding.servieces.IRaiseRedisService;
-import org.apache.ibatis.annotations.Param;
+import com.xq.crowd_funding.raisefunding.servieces.impl.PictureSerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,21 +22,29 @@ import org.springframework.web.multipart.MultipartFile;
 // @CrossOrigin(origins = "*" , maxAge = 3600) 跨域 只在这个类里面
 public class RaiseFundingController {
 
+    // 操作数据库
       @Autowired
-      IRaiseDataBaseService raiseDataImp;
-
+      private IRaiseDataBaseService raiseDataImp;
+    // 操作 redis
       @Autowired
-      IRaiseRedisService redisServiceImp;
-
+      private IRaiseRedisService redisServiceImp;
+      // redis的方法
       @Autowired
-      RedisOperation redisOperation;
+      private RedisOperation redisOperation;
+      @Autowired
+      private PictureSerImpl pictureSerImp;
 
+    /**
+     * 获取页面的数据信息
+     * @return
+     */
       @GetMapping("gethtmldata")
       public ResultEntity getTtmlData(){
           return null;
       }
 
     /**
+     *  创建  ProjectVO 所有页面的数据存放的对象
      * @param memberSignToken 用于验证用户是否登录
      * @return
      */
@@ -47,11 +56,24 @@ public class RaiseFundingController {
 
         return redisServiceImp.initProjectVOToRedis();
     }
-
+    /**
+     * 上传头图片
+     * @param headFile
+     * @return
+     */
     @PostMapping("raisefunding/uploadheadpicture")
-    public  ResultEntity<String> saveHeadPicture(@Param("headFile")MultipartFile headFile){
+    public  ResultEntity<String> saveHeadPicture(@RequestParam("headFile")MultipartFile headFile){
+         // 排除空文件
+        if (headFile.isEmpty()){
+            return  ResultEntity.failed("文件为空");
+        }
+        ResultEntity<String> resultEntity = pictureSerImp.uploadHeadPicture(headFile);
+        if (ResultEntity.FAILED.equals(resultEntity.getResult())){
+            return ResultEntity.failed("上传失败");
+        }
 
-            return  null;
+
+        return  null;
     }
 
 
