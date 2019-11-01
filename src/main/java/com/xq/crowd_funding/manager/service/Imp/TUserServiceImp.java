@@ -18,7 +18,7 @@ public class TUserServiceImp implements TUserService{
     private TUserDao tUserDao;
     @Override
     public int insert(TUser pojo) {
-        System.out.println("pojo: "+pojo.toString());
+
         return tUserDao.insert(pojo);
     }
 
@@ -33,6 +33,16 @@ public class TUserServiceImp implements TUserService{
     }
     @Override
     public int update(TUser pojo) {
-        return 0;
+        return tUserDao.update(pojo);
+    }
+
+    @Override
+    public int delete(TUser pojo) {
+        return tUserDao.delete(pojo);
+    }
+
+    @Override
+    public int deleteUsers(TUser pojo) {
+        return tUserDao.deleteUsers(pojo);
     }
 }

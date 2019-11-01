@@ -48,14 +48,7 @@
 <!--auto generated Code-->
     <update id="update">
         UPDATE t_user
-        <set>
-            <if test="pojo.id != null"> id = #{pojo.id}, </if>
-            <if test="pojo.loginacct != null"> loginacct = #{pojo.loginacct}, </if>
-            <if test="pojo.userpswd != null"> userpswd = #{pojo.userpswd}, </if>
-            <if test="pojo.username != null"> username = #{pojo.username}, </if>
-            <if test="pojo.email != null"> email = #{pojo.email}, </if>
-            <if test="pojo.createtime != null"> createtime = #{pojo.createtime} </if>
-        </set>
+           set loginacct=#{pojo.loginacct},username=#{pojo.username},email=#{pojo.email}
          WHERE id = #{pojo.id}
     </update>
 
@@ -76,6 +69,10 @@
 
 <!--auto generated Code-->
     <delete id="delete">
-        DELETE FROM t_user where id = #{id}
+        DELETE FROM t_user where id = #{pojo.id}
+    </delete>
+
+    <delete id="deleteUsers">
+        DELETE FROM t_user where id = #{pojo.id}
     </delete>
 </mapper>
