@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Map;
+
 /**
  * 发起众筹
  */
@@ -38,9 +40,11 @@ public class RaiseFundingController {
      * 获取页面的数据信息
      * @return
      */
-      @GetMapping("gethtmldata")
+      @GetMapping("raisefunding/gethtmldata")
       public ResultEntity getTtmlData(){
-          return null;
+          Map map =  raiseDataImp.getHtMalDataToMap();
+          System.out.println(map.toString());
+          return ResultEntity.successWithData(map);
       }
 
     /**

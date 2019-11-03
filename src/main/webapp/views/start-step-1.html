@@ -62,6 +62,7 @@
     border:1px solid #ddd;
     padding : 4px;
     font-size:14px;
+    background-color: whitesmoke;
 }
 .panel {
     border-radius:0;
@@ -70,7 +71,7 @@
 .progress-bar-default {
     background-color: #ddd;
 }
-	</style>
+    </style>
   </head>
   <script src="../jquery/jquery-2.1.1.min.js"></script>
   <script src="../bootstrap/js/bootstrap.min.js"></script>
@@ -103,7 +104,6 @@
     </div>
 
     <div class="container theme-showcase" role="main">
-
         <div class="container">
             <div class="row clearfix">
                 <div class="col-md-12 column">
@@ -205,22 +205,12 @@
 					项目信息
 				</h3>
 			</div>
+
             <form class="form-horizontal">
               <div class="form-group">
                 <label  class="col-sm-2 control-label">分类信息</label>
-                <div class="col-sm-10">
-                     <label class="radio-inline">
-                      <input type="checkbox" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 科技
-                    </label>
-                    <label class="radio-inline">
-                      <input type="checkbox" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 设计
-                    </label>
-                    <label class="radio-inline">
-                      <input type="checkbox" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 公益
-                    </label>
-                    <label class="radio-inline">
-                      <input type="checkbox" name="inlineRadioOptions" id="inlineRadio4" value="option3"> 农业
-                    </label>
+                <div class="col-sm-10" id="type">
+                    [最多四个，最少一个]</br></br>
                 </div>
               </div>
               <div class="form-group">
@@ -228,17 +218,29 @@
                 <div class="col-sm-10">
                     <ul style="list-style:none;padding-left:0;">
                         <li style="margin:10px 0">[手机]
-                            <span class="label-txt">手机</span> <span class="label-txt">快充</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span>
+                            <span class="label-txt" >手机</span> <span class="label-txt">快充</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span>
                         </li>
                         <li style="margin:10px 0">[数码]
-                            <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span>
+                            <span   class="label-txt" >文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span>
                         </li>
                         <li style="margin:10px 0">[电脑]
-                            <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span>
+                            <span   class="label-txt" >文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span>
                         </li>
                     </ul>
                 </div>
               </div>
+                <script>
+                // 点击标签，切换背景图片
+                    $(function () {
+                        $("span").click(function () {
+                            if(this.getAttribute('style')=='background-color:#DD8E11'){
+                                this.setAttribute('style','background-color:whitesmoke');
+                            }else {
+                                this.setAttribute('style','background-color:#DD8E11');
+                            }
+                        })
+                    })
+                </script>
               <div class="form-group">
                 <label class="col-sm-2 control-label">项目名称</label>
                 <div class="col-sm-10">
@@ -402,6 +404,12 @@
         // });
        $(function () {
            getHtmlListInfo();
+
+           $(function () {
+               $("input[name='typeIdList']").change(function () {
+                   alert("点击了多选");
+               })
+           })
        });
         // 解析 URL
         function parseUrl(url){
@@ -425,12 +433,24 @@
                 url:localhost+"/raisefunding/gethtmldata",
                 method:"get",
                 async:true,
-                success:function(data){
-
+                success:function(datas){
+                    var typeStr= "";
+                    var tagStr = "";
+                    console.log(datas.data);
+                    $.each(datas.data.ttypepo,function (felindexs, items) {
+                        typeStr +=  "<label class='radio-inline'>" +
+                        "<input type='checkbox'  name='typeIdList' id='inlineRadio1'" +
+                            "value="+items.id+">"+items.name+"</label>";
+                    });
+                    $("#type").append(typeStr);
+                    $.each(datas.data.ttagpo,function ( indexs, items) {
+                        // tagStr =
+                    })
                 }
             });
         }
 
 	</script>
+
   </body>
 </html>

@@ -30,4 +30,12 @@
     <insert id="insertMemberConfirmInfo" parameterType="com.xq.crowd_funding.raisefunding.beans.pojo.TMemberConfirmInfoPO">
         insert  into  t_member_confirm_info values (#{id},#{memberid},#{paynum},#{cardnum});
     </insert>
+
+    <select id="queryTypePO" resultType="com.xq.crowd_funding.raisefunding.beans.pojo.TTypePO">
+        SELECT  * FROM t_type
+    </select>
+
+    <select id="queryTagePO" resultType="com.xq.crowd_funding.raisefunding.beans.pojo.TTagPO">
+        select * from t_tag;
+    </select>
 </mapper>

@@ -4,10 +4,7 @@ package com.xq.crowd_funding.raisefunding.servieces.impl;/*
 
 import com.xq.crowd_funding.common.ResultEntity;
 import com.xq.crowd_funding.common.configrations.redisconfigration.RedisOperation;
-import com.xq.crowd_funding.raisefunding.beans.pojo.TMemberConfirmInfoPO;
-import com.xq.crowd_funding.raisefunding.beans.pojo.TMemberLaunchInfoPO;
-import com.xq.crowd_funding.raisefunding.beans.pojo.TProjectPO;
-import com.xq.crowd_funding.raisefunding.beans.pojo.TReturnPO;
+import com.xq.crowd_funding.raisefunding.beans.pojo.*;
 import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ReturnVO;
 import com.xq.crowd_funding.raisefunding.dao.RaiseDao;
@@ -18,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RaiseDataBaseSerImpl implements IRaiseDataBaseService {
@@ -79,6 +78,16 @@ public class RaiseDataBaseSerImpl implements IRaiseDataBaseService {
         }
         // 数据保存成功，则删除 redis 中的数据
         return  redisOperation.removeRedisByKey(projectVO.getProjectTempToken());
+    }
+
+    @Override
+    public Map getHtMalDataToMap() {
+        Map<String,Object> map = new HashMap();
+        List<TTypePO> tTypePO = raiseDao.queryTypePO();
+        map.put("ttypepo",tTypePO);
+        List<TTagPO> tTagPO = raiseDao.queryTagePO();
+        map.put("ttagpo",tTagPO);
+        return map;
     }
 
 

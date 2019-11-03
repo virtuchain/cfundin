@@ -2,9 +2,7 @@ package com.xq.crowd_funding.raisefunding.dao;/*
     @auther yangjie
 */
 
-import com.xq.crowd_funding.raisefunding.beans.pojo.TMemberConfirmInfoPO;
-import com.xq.crowd_funding.raisefunding.beans.pojo.TProjectPO;
-import com.xq.crowd_funding.raisefunding.beans.pojo.TReturnPO;
+import com.xq.crowd_funding.raisefunding.beans.pojo.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,4 +20,8 @@ public interface RaiseDao {
     void insertReturnInfo(TReturnPO returnPO);
 
     void insertMemberConfirmInfo(TMemberConfirmInfoPO memberConfirmInfoPO);
+
+    List<TTypePO> queryTypePO();
+
+    List<TTagPO>  queryTagePO();
 }
