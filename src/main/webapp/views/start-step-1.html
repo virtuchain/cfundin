@@ -209,8 +209,9 @@
             <form class="form-horizontal">
               <div class="form-group">
                 <label  class="col-sm-2 control-label">分类信息</label>
+
                 <div class="col-sm-10" id="type">
-                    [最多四个，最少一个]</br></br>
+                    [最多三个，最少一个]</br></br>
                 </div>
               </div>
               <div class="form-group">
@@ -440,7 +441,7 @@
                     console.log(datas.data);
                     $.each(datas.data.ttypepo,function (felindexs, items) {
                         typeStr +=  "<label class='radio-inline'>" +
-                        "<input type='checkbox'  name='typeIdList' id='inlineRadio1'" +
+                        "<input type='checkbox' onclick='ckeckboxclick()'  name='typeIdList' id='inlineRadio'" +
                             "value="+items.id+">"+items.name+"</label>";
                     });
                     $("#type").append(typeStr);
@@ -449,6 +450,16 @@
                     })
                 }
             });
+        }
+        function ckeckboxclick() {
+            if ($("#inlineRadio:checked").length > 3 ) {
+                alert($(this));
+              // $(this).removeAttr("checked");
+               // $(this).removeProp("checked");
+              //  $(this).prop("checked",false);
+             //   $(this).attr("checked" ,false);
+                alert("最多能选三个");
+            }
         }
 
 	</script>

@@ -114,7 +114,7 @@ public class RaiseFundingController {
      * @return  ResultEntity<String>
      */
     @RequestMapping("raisefunding/saveinfostepone")
-    public  ResultEntity<String> saveProjectInfo(@RequestBody ProjectVO projectVOFront ){
+    public  ResultEntity<String> saveProjectInfo(@RequestBody ProjectVO projectVOFront){
         // 从 projectVOFront 获取 projectTempToken
         String projectTempToken = projectVOFront.getProjectTempToken();
         // 判断是否是失败的状态
