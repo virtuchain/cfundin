@@ -35,7 +35,15 @@
         SELECT  * FROM t_type
     </select>
 
-    <select id="queryTagePO" resultType="com.xq.crowd_funding.common.pojo.TTag">
-        select * from t_tag;
+    <select id="selectTagByTypeId" resultType="com.xq.crowd_funding.common.pojo.TTag">
+        select * from t_tag
+        <where>
+            <if test="array != null">
+
+                <foreach collection="array"  item="itm" separator="or" open="(" close=")">
+                    pid = #{itm}
+                </foreach>
+            </if>
+        </where>
     </select>
 </mapper>

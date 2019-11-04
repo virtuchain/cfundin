@@ -23,5 +23,5 @@ public interface RaiseDao {
 
     List<TType> queryTypePO();
 
-    List<TTag>  queryTagePO();
+    List<TTag> selectTagByTypeId(Integer[] typeIdArray);
 }

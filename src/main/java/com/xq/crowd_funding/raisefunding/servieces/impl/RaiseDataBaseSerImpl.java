@@ -11,7 +11,6 @@ import com.xq.crowd_funding.raisefunding.dao.RaiseDao;
 import com.xq.crowd_funding.raisefunding.servieces.IRaiseDataBaseService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.xq.crowd_funding.common.pojo.TMemberConfirmInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,13 +81,19 @@ public class RaiseDataBaseSerImpl implements IRaiseDataBaseService {
     }
 
     @Override
-    public Map getHtMalDataToMap() {
+    public List getHtMalDataToMap() {
         Map<String,Object> map = new HashMap();
-        List<TType> tTypePO = raiseDao.queryTypePO();
-        map.put("ttypepo",tTypePO);
-        List<TTag> tTagPO = raiseDao.queryTagePO();
-        map.put("ttagpo",tTagPO);
-        return map;
+        return  raiseDao.queryTypePO();
+    }
+
+    @Override
+    public List<TTag> getTagByTypeId(List<Integer> typeIdArray) {
+        Integer[] array = new Integer[ typeIdArray.size()];
+        for (int i = 0; i < typeIdArray.size(); i++) {
+            array[i] = typeIdArray.get(i);
+        }
+        System.out.println("typeIdArray: "+typeIdArray.toString());
+        return raiseDao.selectTagByTypeId(array);
     }
 
 

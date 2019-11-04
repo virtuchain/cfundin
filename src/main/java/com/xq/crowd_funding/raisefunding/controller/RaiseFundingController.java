@@ -5,6 +5,8 @@ package com.xq.crowd_funding.raisefunding.controller;/*
 import com.alibaba.fastjson.JSON;
 import com.xq.crowd_funding.common.ResultEntity;
 import com.xq.crowd_funding.common.configrations.redisconfigration.RedisOperation;
+import com.xq.crowd_funding.common.pojo.TTag;
+import com.xq.crowd_funding.common.pojo.TType;
 import com.xq.crowd_funding.raisefunding.beans.vo.MemberConfirmInfoVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ReturnVO;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 发起众筹
@@ -42,12 +43,20 @@ public class RaiseFundingController {
      * 获取页面的数据信息
      * @return
      */
-      @GetMapping("raisefunding/gethtmldata")
+      @GetMapping ("raisefunding/gethtmldata")
       public ResultEntity getTtmlData(){
-          Map map =  raiseDataImp.getHtMalDataToMap();
-          System.out.println(map.toString());
-          return ResultEntity.successWithData(map);
+         List<TType>  typeList =  raiseDataImp.getHtMalDataToMap();
+          return ResultEntity.successWithData(typeList);
       }
+    /**
+     * 选中按钮，找到 type 对应的 标签
+     */
+    @PostMapping("raisefunding/gettag")
+    public  ResultEntity getTag(@RequestBody List<Integer> typeIdArray){
+        List<TTag> tagByTypeId = raiseDataImp.getTagByTypeId(typeIdArray);
+        return  ResultEntity.successWithData(tagByTypeId);
+    }
+
 
     /**
      *  创建  ProjectVO 所有页面的数据存放的对象
@@ -59,7 +68,6 @@ public class RaiseFundingController {
             @RequestParam("memberSignToken") String memberSignToken ){
         System.out.println("进入了这个方法了 。。。。。");
         // 这里没有验证用户登录
-
         return redisServiceImp.initProjectVOToRedis();
     }
     /**
@@ -103,8 +111,6 @@ public class RaiseFundingController {
         // 将 路径 存入 redis
 
 
-
-
         return  ResultEntity.successNoData();
     }
 
@@ -112,6 +118,7 @@ public class RaiseFundingController {
      *  将start-step -1 里面的信息放入到 projectvo里面
      * @param projectVOFront 页面一的vo 数据
      * @return  ResultEntity<String>
+     *
      */
     @RequestMapping("raisefunding/saveinfostepone")
     public  ResultEntity<String> saveProjectInfo(@RequestBody ProjectVO projectVOFront){

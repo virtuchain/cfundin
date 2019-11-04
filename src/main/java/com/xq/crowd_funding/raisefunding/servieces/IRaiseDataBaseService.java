@@ -3,13 +3,16 @@ package com.xq.crowd_funding.raisefunding.servieces;/*
 */
 
 import com.xq.crowd_funding.common.ResultEntity;
+import com.xq.crowd_funding.common.pojo.TTag;
 import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
 
-import java.util.Map;
+import java.util.List;
 
 public interface IRaiseDataBaseService {
 
     ResultEntity<String> saveAllProToDatabase(ProjectVO projectVO,Integer memberid);
 
-    Map getHtMalDataToMap();
+    List getHtMalDataToMap();
+
+    List<TTag> getTagByTypeId(List<Integer> typeIdArray);
 }

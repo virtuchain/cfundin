@@ -217,31 +217,14 @@
               <div class="form-group">
                 <label  class="col-sm-2 control-label">标签</label>
                 <div class="col-sm-10">
-                    <ul style="list-style:none;padding-left:0;">
-                        <li style="margin:10px 0">[手机]
-                            <span class="label-txt" >手机</span> <span class="label-txt">快充</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span>
-                        </li>
-                        <li style="margin:10px 0">[数码]
-                            <span   class="label-txt" >文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span>
-                        </li>
-                        <li style="margin:10px 0">[电脑]
-                            <span   class="label-txt" >文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span>
-                        </li>
+                    <ul style="list-style:none;padding-left:0;" >
+                        <li style="margin:10px 0" id="tag1"></li>
+                        <li style="margin:10px 0" id="tag2"></li>
+                        <li style="margin:10px 0" id="tag3"></li>
                     </ul>
                 </div>
               </div>
-                <script>
-                // 点击标签，切换背景图片
-                    $(function () {
-                        $("span").click(function () {
-                            if(this.getAttribute('style')=='background-color:#DD8E11'){
-                                this.setAttribute('style','background-color:whitesmoke');
-                            }else {
-                                this.setAttribute('style','background-color:#DD8E11');
-                            }
-                        })
-                    })
-                </script>
+
               <div class="form-group">
                 <label class="col-sm-2 control-label">项目名称</label>
                 <div class="col-sm-10">
@@ -399,11 +382,7 @@
     </div> <!-- /container -->
 
 	<script>
-        // $('#myTab a').click(function (e) {
-        //     // idcode
-        //   e.preventDefault()
-        //   $(this).tab('show')
-        // });
+
        $(function () {
            getHtmlListInfo();
 
@@ -433,35 +412,69 @@
             var localhost = "http://localhost:8080";
             $.ajax({
                 url:localhost+"/raisefunding/gethtmldata",
-                method:"get",
+                type:"get",
                 async:true,
                 success:function(datas){
                     var typeStr= "";
-                    var tagStr = "";
                     console.log(datas.data);
-                    $.each(datas.data.ttypepo,function (felindexs, items) {
+                    $.each(datas.data,function (felindexs, items) {
                         typeStr +=  "<label class='radio-inline'>" +
-                        "<input type='checkbox' onclick='ckeckboxclick()'  name='typeIdList' id='inlineRadio'" +
+                        "<input type='checkbox' onclick='ckeckboxclick(this)' name='typeIdList' id='inlineRadio'" +
                             "value="+items.id+">"+items.name+"</label>";
                     });
                     $("#type").append(typeStr);
-                    $.each(datas.data.ttagpo,function ( indexs, items) {
-                        // tagStr =
-                    })
                 }
             });
         }
         function ckeckboxclick() {
-            if ($("#inlineRadio:checked").length > 3 ) {
-                alert($(this));
-              // $(this).removeAttr("checked");
-               // $(this).removeProp("checked");
-              //  $(this).prop("checked",false);
-             //   $(this).attr("checked" ,false);
-                alert("最多能选三个");
-            }
+            var localhost = "http://localhost:8080";
+          // 最多选中三个
+            $('input[type=checkbox]').click(function () {//checkbox的input标签点击事件
+                $("input[name='typeIdList']").attr('disabled', true);//设置name为apk[]的input标签的属性为true,表示不可选
+                if ($("input[name='typeIdList']:checked").length >= 3) {//选中个数大于3
+                    $("input[name='typeIdList']:checked").attr('disabled', false);
+                } else {
+                    $("input[name='typeIdList']").attr('disabled', false);
+                }
+            });
+            // 根据选中的值去找标签
+            var typeIdArray = new Array();
+            $("input[name='typeIdList']:checked").each(function(){
+                    typeIdArray.push($(this).val());
+            });
+            console.log("typeIdArray "+typeIdArray);
+            $.ajax({
+                url:localhost+"/raisefunding/gettag",
+                type:"POST",
+                data:JSON.stringify(typeIdArray),
+                contentType: "application/json; charset=utf-8",
+                success:function(datas){
+                    $("#tag1").empty();
+                    $("#tag2").empty();
+                    $("#tag3").empty();
+                    var idex =0;
+                        $.each(datas.data,function ( indexs,items ) {
+                            idex++;
+                        if (idex>6){
+                            $("#tag1").append("<span onclick='tagbiaoqian(this)'  class='label-txt' value="+items.id+">"+items.name+"</span>");
+                        }
+                        if (idex>12) {
+                            $("#tag2").append("<span onclick='tagbiaoqian(this)' class='label-txt' value="+items.id+">"+items.name+"</span>");
+                        }else{
+                            $("#tag3").append("<span onclick='tagbiaoqian(this)' class='label-txt' value="+items.id+">"+items.name+"</span>");
+                        }
+                    })
+                }
+            });
         }
-
+       // 点击标签，切换背景图片
+       function tagbiaoqian(obj){
+               if(obj.getAttribute('style')=='background-color:#DD8E11'){
+                   obj.setAttribute('style','background-color:whitesmoke');
+               }else {
+                   obj.setAttribute('style','background-color:#DD8E11');
+               }
+       }
 	</script>
 
   </body>
