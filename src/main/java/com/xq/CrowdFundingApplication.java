@@ -10,7 +10,6 @@ public class CrowdFundingApplication {
 
     public static void main(String[] args)
     {
-
         SpringApplication.run(CrowdFundingApplication.class, args);
     }
 

@@ -1504,363 +1504,368 @@
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="360" parent="250" name="PRIMARY">
+    <column id="360" parent="250" name="headerPicturePath">
+      <Position>14</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="361" parent="250" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="361" parent="251" name="id">
+    <column id="362" parent="251" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="362" parent="251" name="projectid">
+    <column id="363" parent="251" name="projectid">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="363" parent="251" name="item_pic_path">
+    <column id="364" parent="251" name="item_pic_path">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="364" parent="251" name="PRIMARY">
+    <key id="365" parent="251" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="365" parent="252" name="id">
+    <column id="366" parent="252" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="366" parent="252" name="projectid">
+    <column id="367" parent="252" name="projectid">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="367" parent="252" name="tagid">
+    <column id="368" parent="252" name="tagid">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="368" parent="252" name="FK_Reference_7">
+    <index id="369" parent="252" name="FK_Reference_7">
       <ColNames>projectid</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="369" parent="252" name="FK_Reference_8">
+    <index id="370" parent="252" name="FK_Reference_8">
       <ColNames>tagid</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="370" parent="252" name="PRIMARY">
+    <key id="371" parent="252" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="371" parent="252" name="FK_Reference_7">
+    <foreign-key id="372" parent="252" name="FK_Reference_7">
       <ColNames>projectid</ColNames>
       <RefSchemaName>atcrowdfunding</RefSchemaName>
       <RefTableName>t_project</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="372" parent="252" name="FK_Reference_8">
+    <foreign-key id="373" parent="252" name="FK_Reference_8">
       <ColNames>tagid</ColNames>
       <RefSchemaName>atcrowdfunding</RefSchemaName>
       <RefTableName>t_tag</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="373" parent="253" name="id">
+    <column id="374" parent="253" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="374" parent="253" name="projectid">
+    <column id="375" parent="253" name="projectid">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="375" parent="253" name="typeid">
+    <column id="376" parent="253" name="typeid">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="376" parent="253" name="FK_Reference_5">
+    <index id="377" parent="253" name="FK_Reference_5">
       <ColNames>projectid</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="377" parent="253" name="FK_Reference_6">
+    <index id="378" parent="253" name="FK_Reference_6">
       <ColNames>typeid</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="378" parent="253" name="PRIMARY">
+    <key id="379" parent="253" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="379" parent="253" name="FK_Reference_5">
+    <foreign-key id="380" parent="253" name="FK_Reference_5">
       <ColNames>projectid</ColNames>
       <RefSchemaName>atcrowdfunding</RefSchemaName>
       <RefTableName>t_project</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="380" parent="253" name="FK_Reference_6">
+    <foreign-key id="381" parent="253" name="FK_Reference_6">
       <ColNames>typeid</ColNames>
       <RefSchemaName>atcrowdfunding</RefSchemaName>
       <RefTableName>t_type</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="381" parent="254" name="id">
+    <column id="382" parent="254" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="382" parent="254" name="projectid">
+    <column id="383" parent="254" name="projectid">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="383" parent="254" name="type">
+    <column id="384" parent="254" name="type">
       <Position>3</Position>
       <Comment>0 - 实物回报， 1 虚拟物品回报</Comment>
       <DataType>char(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="384" parent="254" name="supportmoney">
+    <column id="385" parent="254" name="supportmoney">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="385" parent="254" name="content">
+    <column id="386" parent="254" name="content">
       <Position>5</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="386" parent="254" name="count">
+    <column id="387" parent="254" name="count">
       <Position>6</Position>
       <Comment>“0”为不限回报数量</Comment>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="387" parent="254" name="signalpurchase">
+    <column id="388" parent="254" name="signalpurchase">
       <Position>7</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="388" parent="254" name="purchase">
+    <column id="389" parent="254" name="purchase">
       <Position>8</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="389" parent="254" name="freight">
+    <column id="390" parent="254" name="freight">
       <Position>9</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="390" parent="254" name="invoice">
+    <column id="391" parent="254" name="invoice">
       <Position>10</Position>
       <Comment>0 - 不开发票， 1 - 开发票</Comment>
       <DataType>char(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="391" parent="254" name="rtndate">
+    <column id="392" parent="254" name="rtndate">
       <Position>11</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="392" parent="254" name="PRIMARY">
+    <key id="393" parent="254" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="393" parent="255" name="id">
+    <column id="394" parent="255" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="394" parent="255" name="name">
+    <column id="395" parent="255" name="name">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="395" parent="255" name="PRIMARY">
+    <key id="396" parent="255" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="396" parent="256" name="id">
+    <column id="397" parent="256" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="397" parent="256" name="roleid">
+    <column id="398" parent="256" name="roleid">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="398" parent="256" name="permissionid">
+    <column id="399" parent="256" name="permissionid">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="399" parent="256" name="FK_Reference_3">
+    <index id="400" parent="256" name="FK_Reference_3">
       <ColNames>roleid</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="400" parent="256" name="FK_Reference_4">
+    <index id="401" parent="256" name="FK_Reference_4">
       <ColNames>permissionid</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="401" parent="256" name="PRIMARY">
+    <key id="402" parent="256" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="402" parent="256" name="FK_Reference_3">
+    <foreign-key id="403" parent="256" name="FK_Reference_3">
       <ColNames>roleid</ColNames>
       <RefSchemaName>atcrowdfunding</RefSchemaName>
       <RefTableName>t_role</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="403" parent="256" name="FK_Reference_4">
+    <foreign-key id="404" parent="256" name="FK_Reference_4">
       <ColNames>permissionid</ColNames>
       <RefSchemaName>atcrowdfunding</RefSchemaName>
       <RefTableName>t_permission</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="404" parent="257" name="id">
+    <column id="405" parent="257" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="405" parent="257" name="pid">
+    <column id="406" parent="257" name="pid">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="406" parent="257" name="name">
+    <column id="407" parent="257" name="name">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="407" parent="257" name="PRIMARY">
+    <key id="408" parent="257" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="408" parent="258" name="id">
+    <column id="409" parent="258" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="409" parent="258" name="name">
+    <column id="410" parent="258" name="name">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="410" parent="258" name="remark">
+    <column id="411" parent="258" name="remark">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="411" parent="258" name="PRIMARY">
+    <key id="412" parent="258" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="412" parent="259" name="id">
+    <column id="413" parent="259" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="413" parent="259" name="loginacct">
+    <column id="414" parent="259" name="loginacct">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="414" parent="259" name="userpswd">
+    <column id="415" parent="259" name="userpswd">
       <Position>3</Position>
       <DataType>char(32)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="415" parent="259" name="username">
+    <column id="416" parent="259" name="username">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="416" parent="259" name="email">
+    <column id="417" parent="259" name="email">
       <Position>5</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="417" parent="259" name="createtime">
+    <column id="418" parent="259" name="createtime">
       <Position>6</Position>
       <DataType>char(19)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="418" parent="259" name="PRIMARY">
+    <key id="419" parent="259" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="419" parent="260" name="id">
+    <column id="420" parent="260" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="420" parent="260" name="userid">
+    <column id="421" parent="260" name="userid">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="421" parent="260" name="roleid">
+    <column id="422" parent="260" name="roleid">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="422" parent="260" name="FK_Reference_1">
+    <index id="423" parent="260" name="FK_Reference_1">
       <ColNames>userid</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="423" parent="260" name="FK_Reference_2">
+    <index id="424" parent="260" name="FK_Reference_2">
       <ColNames>roleid</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="424" parent="260" name="PRIMARY">
+    <key id="425" parent="260" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="425" parent="260" name="FK_Reference_1">
+    <foreign-key id="426" parent="260" name="FK_Reference_1">
       <ColNames>userid</ColNames>
       <RefSchemaName>atcrowdfunding</RefSchemaName>
       <RefTableName>t_user</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="426" parent="260" name="FK_Reference_2">
+    <foreign-key id="427" parent="260" name="FK_Reference_2">
       <ColNames>roleid</ColNames>
       <RefSchemaName>atcrowdfunding</RefSchemaName>
       <RefTableName>t_role</RefTableName>

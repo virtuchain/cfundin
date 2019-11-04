@@ -34,7 +34,7 @@ public class ReturnVO {
     // 是否开发票，0 - 不开发票， 1 - 开发票
     private Integer invoice;
     // 众筹结束后返还回报物品天数
-    private Integer returndate;
+    private Integer rtndate;
     // 说明图片路径
     private String describPicPath;
 
