@@ -57,8 +57,8 @@ public class CrowdUtils {
     /**
      * 根据日期生成一个文件夹名  按年月来
      */
-    public  static  String getNewFoldeName(){
-        return new SimpleDateFormat("yyyMM").format(new Date());
+    public  static  String getNewFoldeNameByDate(String ossProjectParentFolder){
+        return  ossProjectParentFolder+"/"+new SimpleDateFormat("yyyMM").format(new Date());
     }
     /**
      * 将文件夹名和文件名拼接在一起

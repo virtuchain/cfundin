@@ -10,10 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 文件上传的类
@@ -39,22 +38,60 @@ public class PictureSerImpl implements PictureServer {
     @Value("${oss.bucket.domain}")
     private String domain;
     /**
-     * 上传头图片服务
+     * 上传头图片 OSS 服务
      * @param headFile
      * @return
      */
     @Override
     public ResultEntity<String> uploadHeadPicture(MultipartFile headFile) {
-        String newFileName = CrowdUtils.getNewFileName(headFile.getOriginalFilename());
-        String folderFileName = CrowdUtils.folderFileName(CrowdUtils.getNewFoldeName(),newFileName);
-        try {
-            InputStream inputStream = new FileInputStream(new File(headFile.getName()));
-            UploadPictrue.uploadOneFileToOSS(
-               endpoint,accessKeyId,accessKeySecret,folderFileName,folder,bucketName,inputStream);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return  ResultEntity.failed("上传失败");
+
+        String originalFilename =  headFile.getOriginalFilename();
+        String newFileName =  CrowdUtils.getNewFileName(originalFilename);
+        String newfolderName = CrowdUtils.getNewFoldeNameByDate(folder);
+       try {
+           InputStream inputStream = headFile.getInputStream();
+
+           UploadPictrue.uploadOneFileToOSS(
+                   endpoint,accessKeyId,accessKeySecret,newFileName,
+                   newfolderName,bucketName,inputStream);
+
+       }catch (Exception e){
+           e.printStackTrace();
+       }
+       // 头图片路径
+        String headPicturePath = bucketName+"/"+newfolderName+"/"+newFileName;
+        System.out.println("headPicturePath "+headPicturePath);
+        return ResultEntity.successWithData(headPicturePath);
+    }
+
+    /**
+     * 上传详情图片
+     * @param detailFiles
+     * @return
+     */
+    public ResultEntity uploadDetailPicture(List<MultipartFile> detailFiles){
+
+        List<String> detailicturePathList = new ArrayList<>();
+
+        for(MultipartFile detailFile:detailFiles ){
+
+            System.out.println("detailFile："+detailFile.getOriginalFilename());
+           try {
+               String originalFilename =  detailFile.getOriginalFilename();
+               String newFileName =  CrowdUtils.getNewFileName(originalFilename);
+               String newfolderName = CrowdUtils.getNewFoldeNameByDate(folder);
+               InputStream inputStream = detailFile.getInputStream();
+
+               UploadPictrue.uploadOneFileToOSS(
+                       endpoint,accessKeyId,accessKeySecret,newFileName,
+                       newfolderName,bucketName,inputStream);
+               // 详情图片路径
+               detailicturePathList.add(bucketName+"/"+newfolderName+"/"+newFileName);
+           }catch (Exception e){
+               e.printStackTrace();
+           }
         }
-        return ResultEntity.successWithData(folderFileName);
+        System.out.println("detailicturePathList "+detailicturePathList);
+        return ResultEntity.successWithData(detailicturePathList);
     }
 }

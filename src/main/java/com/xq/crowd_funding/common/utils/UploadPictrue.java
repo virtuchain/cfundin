@@ -30,6 +30,7 @@ public class UploadPictrue {
                 OSSClient ossClient = new OSSClient(endpoint , accessKeyId ,accessKeySecret);
                 // 存入对象的名称 = 目录名+ 文件名
                 String objectName = folderName+"/"+fileName;
+                System.out.println("objectName: "+objectName);
                 ossClient.putObject(bucketName , objectName , inputStream);
                 // 关闭 ossclient
                 ossClient.shutdown();

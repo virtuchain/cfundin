@@ -284,11 +284,10 @@
                                     type:"post",
                                     contentType: false, 
                                     processData: false,
-                                    success:function (data) {
+                                    success:function (datas) {
                                         // 成功
-                                    },
-                                    error: function () {
-                                        // 失败
+                                        alert(datas.result);
+                                        alert(datas.message);
                                     }
                                 });
                           })
@@ -312,20 +311,22 @@
                             $("#uploadDetailFile").click();
                       }
                       $("#uploadDetailFile").change(function () {
+                          alert("选择了图片");
                           var local= "http://localhost:8080/";
-                          var formData = new formData();
-                          formData.append("detailFile",this.files);
+                          var formData = new FormData();
+                          filess = this.files;
+                          for (var i=0 ; i<filess.length ; i++){
+                              formData.append("detailFiles", filess[i]);
+                          }
                           $.ajax({
-                              url: local+ "raisefunding/uploadheadpicture" ,
+                              url: local+ "raisefunding/uploaddetailpicture" ,
                               data: formData,
                               type:"post",
                               contentType: false,
                               processData: false,
-                              success:function (data) {
+                              success:function (datas) {
                                   // 成功
-                              },
-                              error: function () {
-                                  // 失败
+                                  alert(datas.data);
                               }
                           });
                       })

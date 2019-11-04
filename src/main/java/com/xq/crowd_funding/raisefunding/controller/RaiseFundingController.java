@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,6 +34,7 @@ public class RaiseFundingController {
       // redis的方法
       @Autowired
       private RedisOperation redisOperation;
+      // 上传图片
       @Autowired
       private PictureSerImpl pictureSerImp;
 
@@ -75,11 +77,36 @@ public class RaiseFundingController {
         if (ResultEntity.FAILED.equals(resultEntity.getResult())){
             return ResultEntity.failed("上传失败");
         }
-
-
+        // 头图片的储存路径
+        String headPicturePath = (String) resultEntity.getData();
+        // 将 路径 存入 redis
         return  null;
     }
+    /**
+     * 上传详情图片
+     */
+    @PostMapping("raisefunding/uploaddetailpicture")
+    public  ResultEntity<String> saveDetailPicture(@RequestParam("detailFiles") List<MultipartFile> detailFiles){
 
+        // 排除空文件
+        if (detailFiles.isEmpty()){
+            return  ResultEntity.failed("文件为空");
+        }
+
+        ResultEntity resultEntity = pictureSerImp.uploadDetailPicture(detailFiles);
+
+        if (ResultEntity.FAILED.equals(resultEntity.getResult())){
+            return ResultEntity.failed("上传失败");
+        }
+        // 得到详情图片的存储路径
+        List<String> detailicturePathList  = (List<String>) resultEntity.getData();
+        // 将 路径 存入 redis
+
+
+
+
+        return  ResultEntity.successNoData();
+    }
 
     /**
      *  将start-step -1 里面的信息放入到 projectvo里面
