@@ -55,9 +55,15 @@ public class CrowdUtils {
          return UUID.randomUUID().toString().replaceAll("-","")+extensName;
      }
     /**
-     * 根据日期生成一个文件夹名
+     * 根据日期生成一个文件夹名  按年月来
      */
-    public  static  String getNewFoldeName(String ossParentFoldeName){
-        return ossParentFoldeName+"/"+ new SimpleDateFormat("yyyMMdd").format(new Date());
+    public  static  String getNewFoldeNameByDate(String ossProjectParentFolder){
+        return  ossProjectParentFolder+"/"+new SimpleDateFormat("yyyMM").format(new Date());
+    }
+    /**
+     * 将文件夹名和文件名拼接在一起
+     */
+    public static String folderFileName(String folderName , String fileName){
+        return  folderName+"/"+fileName;
     }
 }
