@@ -67,12 +67,24 @@
         -- LIMIT 1000
     </select>
 
-<!--auto generated Code-->
-    <delete id="delete">
-        DELETE FROM t_user where id = #{pojo.id}
-    </delete>
+    <select id="queryList" resultMap="AllColumnMap">
+    SELECT <include refid="all_column"/>
+    FROM t_user limit #{startIndex},#{pagesize}
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM t_user
+    </select>
 
     <delete id="deleteUsers">
         DELETE FROM t_user where id = #{pojo.id}
     </delete>
+
+    <!-- 模糊查询 -->
+    <select id="queryLike" parameterType="java.lang.String"
+            resultType="com.xq.crowd_funding.manager.bean.TUser">
+
+        SELECT <include refid="all_column"/>
+        FROM t_user where loginacct like '%${queryText}%'
+    </select>
 </mapper>

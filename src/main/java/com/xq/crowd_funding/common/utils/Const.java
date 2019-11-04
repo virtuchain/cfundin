@@ -5,5 +5,5 @@ package com.xq.crowd_funding.common.utils;
  * 常量类const
  **/
 public class Const {
-    public  static final String PASSWORD="123";//密码
+    public  static final String PASSWORD="123";//密码md5
 }
