@@ -21251,3 +21251,51 @@ java.lang.NullPointerException: null
 	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_171]
 
 >>>>>>> Stashed changes
+2019-11-04 10:40:46.084  INFO 7884 --- [restartedMain] com.xq.CrowdFundingApplication           : Starting CrowdFundingApplication on DESKTOP-GBLN8MR with PID 7884 (F:\IDEAproject\work\crowd_funding\target\classes started by ASUS in F:\IDEAproject\work\crowd_funding)
+2019-11-04 10:40:46.099  INFO 7884 --- [restartedMain] com.xq.CrowdFundingApplication           : No active profile set, falling back to default profiles: default
+2019-11-04 10:40:46.352  INFO 7884 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2019-11-04 10:40:46.353  INFO 7884 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2019-11-04 10:40:48.399 DEBUG 7884 --- [restartedMain] o.m.s.b.a.MybatisAutoConfiguration       : Searching for mappers annotated with @Mapper
+2019-11-04 10:40:48.399 DEBUG 7884 --- [restartedMain] o.m.s.b.a.MybatisAutoConfiguration       : Using auto-configuration base package 'com.xq'
+2019-11-04 10:40:48.524  INFO 7884 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-11-04 10:40:48.524  INFO 7884 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-11-04 10:40:48.633  INFO 7884 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 78ms. Found 0 repository interfaces.
+2019-11-04 10:40:48.961 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [F:\IDEAproject\work\crowd_funding\target\classes\com\xq\crowd_funding\manager\dao\TUserDao.class]
+2019-11-04 10:40:48.961 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [F:\IDEAproject\work\crowd_funding\target\classes\com\xq\crowd_funding\partfinancing\dao\TMemberDao.class]
+2019-11-04 10:40:48.961 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [F:\IDEAproject\work\crowd_funding\target\classes\com\xq\crowd_funding\partfinancing\dao\TOrderDao.class]
+2019-11-04 10:40:48.961 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [F:\IDEAproject\work\crowd_funding\target\classes\com\xq\crowd_funding\partfinancing\dao\TProjectDao.class]
+2019-11-04 10:40:48.961 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [F:\IDEAproject\work\crowd_funding\target\classes\com\xq\crowd_funding\partfinancing\dao\TmpfDao.class]
+2019-11-04 10:40:48.961 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [F:\IDEAproject\work\crowd_funding\target\classes\com\xq\crowd_funding\raisefunding\dao\RaiseDao.class]
+2019-11-04 10:40:48.961 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'TUserDao' and 'com.xq.crowd_funding.manager.dao.TUserDao' mapperInterface
+2019-11-04 10:40:48.961 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Enabling autowire by type for MapperFactoryBean with name 'TUserDao'.
+2019-11-04 10:40:48.961 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'TMemberDao' and 'com.xq.crowd_funding.partfinancing.dao.TMemberDao' mapperInterface
+2019-11-04 10:40:48.961 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Enabling autowire by type for MapperFactoryBean with name 'TMemberDao'.
+2019-11-04 10:40:48.961 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'TOrderDao' and 'com.xq.crowd_funding.partfinancing.dao.TOrderDao' mapperInterface
+2019-11-04 10:40:48.961 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Enabling autowire by type for MapperFactoryBean with name 'TOrderDao'.
+2019-11-04 10:40:48.961 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'TProjectDao' and 'com.xq.crowd_funding.partfinancing.dao.TProjectDao' mapperInterface
+2019-11-04 10:40:48.961 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Enabling autowire by type for MapperFactoryBean with name 'TProjectDao'.
+2019-11-04 10:40:48.977 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'tmpfDao' and 'com.xq.crowd_funding.partfinancing.dao.TmpfDao' mapperInterface
+2019-11-04 10:40:48.977 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Enabling autowire by type for MapperFactoryBean with name 'tmpfDao'.
+2019-11-04 10:40:48.977 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'raiseDao' and 'com.xq.crowd_funding.raisefunding.dao.RaiseDao' mapperInterface
+2019-11-04 10:40:48.977 DEBUG 7884 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Enabling autowire by type for MapperFactoryBean with name 'raiseDao'.
+2019-11-04 10:40:49.524  INFO 7884 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d71001] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-11-04 10:40:50.196  INFO 7884 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-11-04 10:40:50.227  INFO 7884 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-11-04 10:40:50.227  INFO 7884 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.26]
+2019-11-04 10:40:50.508  INFO 7884 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-11-04 10:40:50.508  INFO 7884 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 4155 ms
+2019-11-04 10:40:51.305  INFO 7884 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2019-11-04 10:40:51.524  INFO 7884 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2019-11-04 10:40:51.665 DEBUG 7884 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [F:\IDEAproject\work\crowd_funding\target\classes\sqlMapper\classificationMapper\ClassificationMapper.xml]'
+2019-11-04 10:40:51.774 DEBUG 7884 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [F:\IDEAproject\work\crowd_funding\target\classes\sqlMapper\manager\Usermapper.xml]'
+2019-11-04 10:40:51.790 DEBUG 7884 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [F:\IDEAproject\work\crowd_funding\target\classes\sqlMapper\myfundingMapper\MyFundingMapper.xml]'
+2019-11-04 10:40:51.806 DEBUG 7884 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [F:\IDEAproject\work\crowd_funding\target\classes\sqlMapper\partfinancingMapper\PartFinancingMapper.xml]'
+2019-11-04 10:40:51.837 DEBUG 7884 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [F:\IDEAproject\work\crowd_funding\target\classes\sqlMapper\raisefundingMapper\RaiseFundingMapper.xml]'
+2019-11-04 10:40:51.837 DEBUG 7884 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [F:\IDEAproject\work\crowd_funding\target\classes\sqlMapper\realnameMapper\RealNameMapper.xml]'
+2019-11-04 10:40:51.852 DEBUG 7884 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [F:\IDEAproject\work\crowd_funding\target\classes\sqlMapper\userloginMapper\UserLoginMapper.xml]'
+2019-11-04 10:40:52.415  INFO 7884 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-11-04 10:40:52.571  INFO 7884 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: ServletContext resource [/index.html]
+2019-11-04 10:40:52.665 DEBUG 7884 --- [restartedMain] o.m.s.b.a.MybatisAutoConfiguration       : Not found configuration for registering mapper bean using @MapperScan, MapperFactoryBean and MapperScannerConfigurer.
+2019-11-04 10:40:53.212  INFO 7884 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-11-04 10:40:53.353  INFO 7884 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2019-11-04 10:40:53.353  INFO 7884 --- [restartedMain] com.xq.CrowdFundingApplication           : Started CrowdFundingApplication in 8.738 seconds (JVM running for 12.589)

@@ -11,6 +11,7 @@ import com.xq.crowd_funding.raisefunding.dao.RaiseDao;
 import com.xq.crowd_funding.raisefunding.servieces.IRaiseDataBaseService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.xq.crowd_funding.common.pojo.TMemberConfirmInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
