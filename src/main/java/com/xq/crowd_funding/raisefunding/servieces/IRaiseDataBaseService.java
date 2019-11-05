@@ -7,6 +7,7 @@ import com.xq.crowd_funding.common.pojo.TTag;
 import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IRaiseDataBaseService {
 
@@ -14,5 +15,5 @@ public interface IRaiseDataBaseService {
 
     List getHtMalDataToMap();
 
-    List<TTag> getTagByTypeId(List<Integer> typeIdArray);
+    Set<TTag> getTagByTypeId(List<Integer> typeIdArray);
 }

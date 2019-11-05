@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 发起众筹
@@ -53,7 +54,7 @@ public class RaiseFundingController {
      */
     @PostMapping("raisefunding/gettag")
     public  ResultEntity getTag(@RequestBody List<Integer> typeIdArray){
-        List<TTag> tagByTypeId = raiseDataImp.getTagByTypeId(typeIdArray);
+        Set<TTag> tagByTypeId = raiseDataImp.getTagByTypeId(typeIdArray);
         return  ResultEntity.successWithData(tagByTypeId);
     }
 
@@ -121,14 +122,15 @@ public class RaiseFundingController {
      * @return  ResultEntity<String>
      *
      */
-    @RequestMapping("raisefunding/saveinfostepone")
-    public  ResultEntity<String> saveProjectInfo(@RequestBody ProjectVO projectVOFront){
+    @PostMapping("raisefunding/saveinfostepone")
+    public  ResultEntity<String> saveProjectInfo(ProjectVO projectVOFront){
+        System.out.println("projetc: "+projectVOFront.toString());
         // 从 projectVOFront 获取 projectTempToken
         String projectTempToken = projectVOFront.getProjectTempToken();
         // 判断是否是失败的状态
-        ResultEntity<String> resultEntity = redisOperation.readRedisValueByKey(projectTempToken);
+       ResultEntity<String> resultEntity = redisOperation.readRedisValueByKey(projectTempToken);
         if (ResultEntity.FAILED.equals(resultEntity.getMessage())){
-            return  ResultEntity.failed(resultEntity.getMessage());
+           return  ResultEntity.failed(resultEntity.getMessage());
         }
         return  redisServiceImp.saveProjectInfoToRedis(projectVOFront,resultEntity);
     }

@@ -44,6 +44,6 @@
                     pid = #{itm}
                 </foreach>
             </if>
-        </where>
+        </where> group by  name
     </select>
 </mapper>

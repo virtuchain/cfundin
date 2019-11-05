@@ -18,6 +18,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class RaiseDataBaseSerImpl implements IRaiseDataBaseService {
@@ -87,7 +88,7 @@ public class RaiseDataBaseSerImpl implements IRaiseDataBaseService {
     }
 
     @Override
-    public List<TTag> getTagByTypeId(List<Integer> typeIdArray) {
+    public Set<TTag> getTagByTypeId(List<Integer> typeIdArray) {
         Integer[] array = new Integer[ typeIdArray.size()];
         for (int i = 0; i < typeIdArray.size(); i++) {
             array[i] = typeIdArray.get(i);
