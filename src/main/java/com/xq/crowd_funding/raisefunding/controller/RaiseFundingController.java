@@ -65,12 +65,11 @@ public class RaiseFundingController {
      * @return
      */
     @PostMapping("raisefunding/createProjectVO")
-
-    public ResultEntity<ProjectVO> initCrestion(
-            @RequestParam("memberSignToken") String memberSignToken ){
+    public ResultEntity initCrestion(){
+        //        @RequestParam("memberSignToken") String memberSignToken
         System.out.println("进入了这个方法了 。。。。。");
-        // 这里没有验证用户登录
-        return redisServiceImp.initProjectVOToRedis();
+        // 这里没有验证用户登录 redisServiceImp.initProjectVOToRedis()
+        return ResultEntity.successNoData();
     }
     /**
      * 上传头图片
@@ -139,7 +138,9 @@ public class RaiseFundingController {
      * @param returnVO
      * @return  ResultEntity<String>
      */
-    public  ResultEntity<String> saveProjectReturn(@RequestBody ReturnVO returnVO){
+    @PostMapping("raisefunding/savereturn")
+    public  ResultEntity<String> saveProjectReturn(ReturnVO returnVO){
+        System.out.println("returnVO "+returnVO.toString());
         // 得到 project
         String proToken = returnVO.getProjectTempToken();
         //  从redis取出 pro
