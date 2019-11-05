@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper
 public interface RaiseDao {
@@ -23,5 +24,5 @@ public interface RaiseDao {
 
     List<TType> queryTypePO();
 
-    List<TTag> selectTagByTypeId(Integer[] typeIdArray);
+    Set<TTag> selectTagByTypeId(Integer[] typeIdArray);
 }
