@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xq.crowd_funding.manager.dao.TUserRoleDao">
+
+<!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="com.xq.crowd_funding.common.pojo.TUserRole">
+        <result column="id" property="id"/>
+        <result column="userid" property="userid"/>
+        <result column="roleid" property="roleid"/>
+    </resultMap>
+
+<!--auto generated Code-->
+    <sql id="all_column">
+        id,
+        userid,
+        roleid
+    </sql>
+
+<!--auto generated Code-->
+    <insert id="insert">
+        INSERT INTO t_user_role
+        VALUES (#{pojo.id},#{pojo.userid},#{pojo.roleid});
+    </insert>
+
+<!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO t_user_role(
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item
+                ="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.userid},
+            #{pojo.roleid}
+            )
+        </foreach>
+    </insert>
+
+<!--auto generated Code-->
+    <update id="update">
+        UPDATE t_user_role
+        <set>
+            <if test="pojo.id != null"> id = #{pojo.id}, </if>
+            <if test="pojo.userid != null"> userid = #{pojo.userid}, </if>
+            <if test="pojo.roleid != null"> roleid = #{pojo.roleid} </if>
+        </set>
+         WHERE id = #{pojo.id}
+    </update>
+
+<!--auto generated Code-->
+    <select id="select" resultMap="AllColumnMap">
+        SELECT  roleid  FROM t_user_role
+    </select>
+
+    <select id="selectUserRole"  resultType="java.lang.Integer">
+        SELECT roleid FROM t_user_role where userid=#{userid}
+    </select>
+<!--auto generated Code-->
+    <delete id="deleteAssign">
+        DELETE FROM t_user_role where userid = #{pojo.userid} and roleid=#{pojo.roleid}
+    </delete>
+</mapper>

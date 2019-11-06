@@ -357,11 +357,9 @@
                 })
 
             function assignRole(obj) {
-
-                window.location.href = "assignRole.html";
-
+                var userid = $(obj).parent().prev().prev().prev().prev().prev().html();
+                window.location.href = "assignRole.html?userid="+userid;
             }
-
         </script>
   </body>
 </html>
