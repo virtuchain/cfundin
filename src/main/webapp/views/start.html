@@ -343,10 +343,22 @@
             //   $(this).tab('show')
             // })
             $(function () {
+                var localhost = "http://localhost:8080/";
                 $("#readAndOk").click(function () {
+                    $.ajax({
+						url: localhost+"raisefunding/createProjectVO",
+						type: "post",
+						dataType:"JSON",
+						success: function (datas) {
+                            if (datas.result=='SUCCESS'){
+                                alert("成功了");
+                                window.location.href='start-step-1.html';
+                            }
+                        }
+					});
                     // 调用解析 URL方法 ， 得到里面的参数
-                    var urlMsg = parseUrl(window.location.search);
-                    window.location.href='start-step-1.html?idcode='+urlMsg.id;
+                   // var urlMsg = parseUrl(window.location.search);
+                   // window.location.href='start-step-1.html?idcode='+urlMsg.id;
                 })
             });
             // 解析 URL

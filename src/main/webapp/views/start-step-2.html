@@ -225,7 +225,7 @@
                                         </tr>
                                       </tbody>
                                     </table>
-                                    <button type="button" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus"></i> 添加回报</button>
+                                    <button type="button" id="addreturn" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus"></i> 添加回报</button>
                                     <div style="border:10px solid #f60;border-bottom-color: #eceeef;border-width: 10px;width:20px;margin-left:20px;
                                              border-left-color: rgba(221, 221, 221, 0);
                                              border-top-color: rgba(221, 221, 221, 0);
@@ -234,29 +234,29 @@
                                     <div class="panel panel-default" style="border-style: dashed;background-color:#eceeef">
                                       <div class="panel-body">
 
-		<div class="col-md-12 column">
+		<div class="col-md-12 column" style="display:none" id="addreturnmodal" >
             <form class="form-horizontal">
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">回报类型</label>
+                <label  class="col-sm-2 control-label">回报类型</label>
                 <div class="col-sm-10">
                      <label class="radio-inline">
-                      <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 实物回报
+                      <input type="radio" name="type"  value="0"> 实物回报
                     </label>
                     <label class="radio-inline">
-                      <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 虚拟物品回报
+                      <input type="radio" name="type"  value="1"> 虚拟物品回报
                     </label>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">支持金额（元）</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" style="width:100px;" >
+                  <input type="number" name="supportmoney" class="form-control" style="width:100px;" >
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">回报内容</label>
                 <div class="col-sm-10">
-                  <textarea class="form-control" rows="5" placeholder="简单描述回报内容，不超过200字"></textarea>
+                  <textarea class="form-control" name="content" rows="5" placeholder="简单描述回报内容，不超过200字"></textarea>
                 </div>
               </div>
               <div class="form-group">
@@ -269,63 +269,61 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">回报数量（名）</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" style="width:100px;display:inline" >
+                  <input type="number" name="count" class="form-control" style="width:100px;display:inline" >
                   <label class="control-label">“0”为不限回报数量</label>
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">单笔限购</label>
+                <label  class="col-sm-2 control-label">单笔限购</label>
                 <div class="col-sm-10">
                      <label class="radio-inline">
-                      <input type="radio" name="inlineRadioOptions2" id="inlineRadio1" value="option1"> 不限购
+                      <input type="radio" name="signalpurchase"  value="0"> 不限购
                     </label>
                     <label class="radio-inline">
-                      <input type="radio" name="inlineRadioOptions2" id="inlineRadio2" value="option2"> 限购
+                      <input type="radio" name="signalpurchase"  value="1"> 限购
                     </label>
-                    <input type="text" class="form-control" style="width:100px;display:inline" >
+                    <input type="number" name="purchase" class="form-control" style="width:100px;display:inline" >
                     <label class="radio-inline">默认数量为1，且不超过上方已设置的回报数量</label>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">运费(元)</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" style="width:100px;display:inline" value="0" >
+                  <input type="text" name="freight" class="form-control" style="width:100px;display:inline" value="0" >
                   <label class="control-label">“0”为包邮</label>
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">发票</label>
+                <label  class="col-sm-2 control-label">发票</label>
                 <div class="col-sm-10">
                      <label class="radio-inline">
-                      <input type="radio" name="inlineRadioOptions1" id="inlineRadio1" value="option1"> 不可开发票
+                      <input type="radio" name="invoice"  value="0"> 不可开发票
                     </label>
                     <label class="radio-inline">
-                      <input type="radio" name="inlineRadioOptions1" id="inlineRadio2" value="option2"> 可开发票（包括个人发票和自定义抬头发票）
+                      <input type="radio" name="invoice"  value="1"> 可开发票（包括个人发票和自定义抬头发票）
                     </label>
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">回报时间</label>
+                <label  class="col-sm-2 control-label">回报时间</label>
                 <div class="col-sm-10">
                      <label class="radio-inline">
                       项目结束后
                     </label>
-                    <input type="text" class="form-control" style="width:100px;display:inline" >
+                    <input type="number" name="rtndate" class="form-control" style="width:100px;display:inline" >
                     <label class="radio-inline">天，向支持者发送回报</label>
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label"></label>
+                <label  class="col-sm-2 control-label"></label>
                 <div class="col-sm-10">
-                      <button type="button" class="btn btn-primary">确定</button>
-                      <button type="button" class="btn btn-default">取消</button>
+                      <button type="button" id="determine" class="btn btn-primary">确定</button>
+                      <button type="button" id="cancel" class="btn btn-default">取消</button>
                 </div>
               </div>
 
             </form>
 		</div>
-                                      
-                                      
                                       </div>
                                     </div>
                                 </div>
@@ -379,10 +377,32 @@
 	<script src="../script/docs.min.js"></script>
     <script src="../script/back-to-top.js"></script>
 	<script>
-$('#myTab a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
+            $(function () {
+                var localhost = "http://localhost:8080/";
+                $("#determine").click(function () {
+                    $.ajax({
+                       url:localhost+"raisefunding/savereturn",
+                       data:$("form").serialize(),
+                        datatype: "json",
+                        type:"POST",
+                       success: function (datas) {
+                           if (datas.result=='SUCCESS'){
+                                alert("成功了");
+                           }
+                       }
+                    });
+                });
+
+                $("#addreturn").click(function () {
+                    alert($("#addreturnmodal").attr("style"));
+                    if ($("#addreturnmodal").attr("style")=="display:block"){
+                        $("#addreturnmodal").attr("style","display:none");
+                    }
+                    if ($("#addreturnmodal").attr("style")=="display:none"){
+                        $("#addreturnmodal").attr("style","display:block");
+                    }
+                })
+            })
 	</script>
   </body>
 </html>
