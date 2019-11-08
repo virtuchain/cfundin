@@ -351,9 +351,15 @@
 						dataType:"JSON",
 						success: function (datas) {
                             if (datas.result=='SUCCESS'){
-                                alert("成功了");
                                 window.location.href='start-step-1.html';
                             }
+                            if(datas.result=='FAILED'){
+								if(datas.message=='RAISE_NO_LOGIN'){
+								    alert("您尚未登录账号，为您跳转到主页登录");
+								}else{
+								    alert("稍后请重试");
+								}
+							}
                         }
 					});
                     // 调用解析 URL方法 ， 得到里面的参数

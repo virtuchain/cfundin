@@ -16,4 +16,5 @@ public interface IRaiseDataBaseService {
     List getHtMalDataToMap();
 
     Set<TTag> getTagByTypeId(List<Integer> typeIdArray);
+
 }
