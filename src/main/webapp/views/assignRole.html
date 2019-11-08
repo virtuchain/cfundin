@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="UTF-8">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -133,27 +133,19 @@
 				<form role="form" class="form-inline">
 				  <div class="form-group">
 					<label for="exampleInputPassword1">未分配角色列表</label><br>
-					<select class="form-control" multiple size="10" style="width:100px;overflow-y:auto;">
-                        <option value="pm">PM</option>
-                        <option value="sa">SA</option>
-                        <option value="se">SE</option>
-                        <option value="tl">TL</option>
-                        <option value="gl">GL</option>
+					<select id="leftRoleList" class="form-control"  multiple size="10" style="width:185px;overflow-y:auto;">
                     </select>
 				  </div>
 				  <div class="form-group">
                         <ul>
-                            <li class="btn btn-default glyphicon glyphicon-chevron-right"></li>
+                            <li id="leftToRightBtn" class="btn btn-default glyphicon glyphicon-chevron-right"></li>
                             <br>
-                            <li class="btn btn-default glyphicon glyphicon-chevron-left" style="margin-top:20px;"></li>
+                            <li id="rightToLeftBtn" class="btn btn-default glyphicon glyphicon-chevron-left" style="margin-top:20px;"></li>
                         </ul>
 				  </div>
 				  <div class="form-group" style="margin-left:40px;">
 					<label for="exampleInputPassword1">已分配角色列表</label><br>
-					<select class="form-control" multiple size="10" style="width:100px;overflow-y:auto;">
-                        <option value="qa">QA</option>
-                        <option value="qc">QC</option>
-                        <option value="pg">PG</option>
+					<select id="rightRoleList" class="form-control" multiple size="10" style="width:185px;overflow-y:auto;">
                     </select>
 				  </div>
 				</form>
@@ -193,6 +185,7 @@
 	<script src="../script/docs.min.js"></script>
         <script type="text/javascript">
             $(function () {
+                userrole();
 			    $(".list-group-item").click(function(){
 				    if ( $(this).find("ul") ) {
 						$(this).toggleClass("tree-closed");
@@ -204,6 +197,113 @@
 					}
 				});
             });
+            function userrole(){
+                //获取需要修改的用户id
+                var urlMsg = parseUrl(window.location.search);
+                var userid=urlMsg.userid;
+                $.ajax({
+                    type: "post",
+                    url: "/managerUserRole/userRole",
+					data:{"userid":userid},
+                    dataType:"json",
+                    success: function (data) {
+                            $.each(data.leftRoleList,function (n,left) {
+                                $("#leftRoleList").append('<option id='+left.id+' value='+left.name+'>'+left.name+'</option>');
+                            })
+                           $.each(data.rightRoleList,function (i,right) {
+                               $("#rightRoleList").append('<option id='+right.id+' value='+right.name+'>'+right.name+'</option>');
+                            })
+                    },
+					error: function () {
+						alert("错误");
+                    }
+                })
+			}
+            //分配按钮事件
+            $("#leftToRightBtn").click(function () {
+                //获取左边被选中的
+              var selectOptions= $("#leftRoleList option:selected");
+              //将左边选中的给右边
+              $("#rightRoleList").append(selectOptions);
+                //获取需要修改的用户id
+				var urlMsg = parseUrl(window.location.search);
+                var userid=urlMsg.userid;
+                //获取到选中的权限id
+                var idStr = "";//拼接成需要传输的格式
+                $.each(selectOptions, function (i, n) {
+                    console.log("i="+i);
+                    if (i != 0) {
+                        idStr += "&";
+                    }
+                    idStr += "roleid=" + n.id;
+                });
+                console.log(idStr);
+               var jsonObj= {
+                  "userid": userid
+			   }
+			   $.ajax({
+				   type:"post",
+				   url:"/managerUserRole/assignRole?"+idStr,
+				   typepost:"json",
+				   data:jsonObj,
+				   success:function (data) {
+                       if (data.result == 'SUCCESS') {
+                           alert("授权成功~");
+                       }
+                       if (data.result == 'FAILED') alert("授权失败！");
+                   }
+			  })
+            })
+            $("#rightToLeftBtn").click(function () {
+                //获取左边被选中的
+                var selectOptions= $("#rightRoleList option:selected");
+                //将左边选中的给右边
+                $("#leftRoleList").append(selectOptions);
+
+                //获取需要修改的用户id
+                var urlMsg = parseUrl(window.location.search);
+                var userid=urlMsg.userid;
+                //获取到选中的权限id
+                var idStr = "";//拼接成需要传输的格式
+                $.each(selectOptions, function (i, n) {
+                    console.log("i="+i);
+                    if (i != 0) {
+                        idStr += "&";
+                    }
+                    idStr += "roleid=" + n.id;
+                });
+                console.log(idStr);
+                var jsonObj= {
+                    "userid": userid
+                }
+                $.ajax({
+                    type:"post",
+                    url:"/managerUserRole/delassignRole?"+idStr,
+                    typepost:"json",
+                    data:jsonObj,
+                    success:function (data) {
+                        if (data.result == 'SUCCESS') {
+                            alert("解除授权成功~");
+                        }
+                        if (data.result == 'FAILED') alert("解除授权失败！");
+                    }
+                })
+            })
+			//解析路径传过来的id的方法
+            function parseUrl(url){
+                if(url.indexOf("?") == -1) {
+                    return {};
+                }
+                var query = url.split("?")[1];
+                var queryArr = query.split("&");
+                var obj = {};
+                queryArr.forEach(function(item){
+                    var key = item.split("=")[0];
+                    var value = item.split("=")[1];
+                    obj[key] = decodeURIComponent(value);
+                });
+                return obj;
+            }
         </script>
   </body>
 </html>

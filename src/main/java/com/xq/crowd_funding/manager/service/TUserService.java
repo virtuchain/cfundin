@@ -1,8 +1,7 @@
 package com.xq.crowd_funding.manager.service;
 
+import com.xq.crowd_funding.common.pojo.TUser;
 import com.xq.crowd_funding.common.utils.Page;
-import com.xq.crowd_funding.manager.bean.TUser;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

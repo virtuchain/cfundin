@@ -219,7 +219,7 @@
                                 html +='   <td>' + item.loginacct + '</td>';
                                 html +='   <td>' + item.username + '</td>';
                                 html +='   <td>' + item.email + '</td>';
-                                html +='   <td><button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>';
+                                html +='   <td><button type="button" class="btn btn-success btn-xs" id="assignBtn" onclick="assignRole(this)"><i class=" glyphicon glyphicon-check"></i></button>';
                                 html +='   <button type="button" class="btn btn-primary btn-xs" id="updateBtn" onclick="upGetId(this)"><i class=" glyphicon glyphicon-pencil"></i></button>';
                                 html +='   <button type="button" class="btn btn-danger btn-xs" id="delBtn" onclick="delGetId(this)"><i class=" glyphicon glyphicon-remove"></i></button>';
                                 html +='   </td></tr>';
@@ -278,7 +278,7 @@
                                     html += '   <td>' + item.loginacct + '</td>';
                                     html += '   <td>' + item.username + '</td>';
                                     html += '   <td>' + item.email + '</td>';
-                                    html += '   <td><button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>';
+                                    html += '   <td><button type="button" class="btn btn-success btn-xs" id="assignBtn" onclick="assignRole(this)"><i class=" glyphicon glyphicon-check"></i></button>';
                                     html += '   <button type="button" class="btn btn-primary btn-xs" id="updateBtn" onclick="upGetId(this)"><i class=" glyphicon glyphicon-pencil"></i></button>';
                                     html += '   <button type="button" class="btn btn-danger btn-xs" id="delBtn" onclick="delGetId(this)"><i class=" glyphicon glyphicon-remove"></i></button>';
                                     html += '   </td>';
@@ -356,7 +356,10 @@
                     })
                 })
 
-
+            function assignRole(obj) {
+                var userid = $(obj).parent().prev().prev().prev().prev().prev().html();
+                window.location.href = "assignRole.html?userid="+userid;
+            }
         </script>
   </body>
 </html>
