@@ -15,7 +15,6 @@ ClassName: TReturn
 @Version: 1.0
 */
 public class TReturn {
-
   private long id;
   private long projectid;
   private String type;

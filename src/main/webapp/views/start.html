@@ -343,10 +343,28 @@
             //   $(this).tab('show')
             // })
             $(function () {
+                var localhost = "http://localhost:8080/";
                 $("#readAndOk").click(function () {
+                    $.ajax({
+						url: localhost+"raisefunding/createProjectVO",
+						type: "post",
+						dataType:"JSON",
+						success: function (datas) {
+                            if (datas.result=='SUCCESS'){
+                                window.location.href='start-step-1.html';
+                            }
+                            if(datas.result=='FAILED'){
+								if(datas.message=='RAISE_NO_LOGIN'){
+								    alert("您尚未登录账号，为您跳转到主页登录");
+								}else{
+								    alert("稍后请重试");
+								}
+							}
+                        }
+					});
                     // 调用解析 URL方法 ， 得到里面的参数
-                    var urlMsg = parseUrl(window.location.search);
-                    window.location.href='start-step-1.html?idcode='+urlMsg.id;
+                   // var urlMsg = parseUrl(window.location.search);
+                   // window.location.href='start-step-1.html?idcode='+urlMsg.id;
                 })
             });
             // 解析 URL
