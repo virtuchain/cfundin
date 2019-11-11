@@ -92,7 +92,7 @@
                                     <a rel="nofollow" href="projects.html"><i class="glyphicon glyphicon-th-large"></i> 项目总览</a>
                                 </li>
                                 <li class="active">
-                                    <a rel="nofollow" href="javascript:;"><i class="glyphicon glyphicon-edit"></i> 发起项目</a>
+                                    <a rel="nofollow" href="javascript:"><i class="glyphicon glyphicon-edit"></i> 发起项目</a>
                                 </li>
                                 <li>
                                     <a rel="nofollow" href="minecrowdfunding.html"><i class="glyphicon glyphicon-user"></i> 我的众筹</a>
@@ -421,7 +421,7 @@
                 }
             });
             // 根据选中的值去找标签
-            var typeIdArray = new Array();
+            var typeIdArray = [];
             $("input[name='typeIdList']:checked").each(function(){
                     typeIdArray.push($(this).val());
             });

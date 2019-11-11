@@ -62,44 +62,6 @@ public class RaiseFundingController {
         return  ResultEntity.successWithData(tagByTypeId);
     }
 
-    /**
-     * 加载 start-2 页面的返回list集合
-     * @param request
-     * @return
-     */
-    @GetMapping("raisefunding/loaderstartTwo")
-    public  ResultEntity loadStartTwo(HttpServletRequest request){
-        UserToken userToken = TokenKeyUtils.getUserTokenByRequest(request);
-        if (userToken == null){
-           return   ResultEntity.failed(Const.RAISE_LOGIN);
-        }
-        ResultEntity<String> entity = redisOperation.readRedisValueByKey(userToken.getRaiseToken());
-        ProjectVO projectVO = JSON.parseObject(entity.getData().toString(),ProjectVO.class);
-        return ResultEntity.successWithData(projectVO.getReturnVOList());
-    }
-    /**
-     * 根据 回报信息的 id 删除
-     */
-    @GetMapping("raisefunding/removereturnbyid")
-    public  ResultEntity removeReturnById(Integer listid,HttpServletRequest request){
-
-        System.out.println("listid<><><> "+listid);
-
-        UserToken userToken = TokenKeyUtils.getUserTokenByRequest(request);
-
-        if (userToken == null){
-            ResultEntity.failed("无法获取ID");
-        }
-
-        ResultEntity<String> resultEntity =
-                redisOperation.readRedisValueByKey(userToken.getRaiseToken());
-
-        if (ResultEntity.FAILED.equals(resultEntity.getResult())){
-            return   ResultEntity.failed(Const.RAISE_LOGIN);
-        }
-
-        return  redisServiceImp.removeReturnById(resultEntity, listid);
-    }
 
     /**
      *  创建  ProjectVO 所有页面的数据存放的对象
@@ -201,14 +163,11 @@ public class RaiseFundingController {
         }
 
         // 判断是否是失败的状态
-       ResultEntity<String> resultEntity = redisOperation.readRedisValueByKey(userToken.getRaiseToken());
-
+       ResultEntity<String> resultEntity = redisOperation.readRedisValueByKey(projectTempToken);
         if (ResultEntity.FAILED.equals(resultEntity.getMessage())){
            return  ResultEntity.failed(resultEntity.getMessage());
         }
-        projectVOFront.setMemberSignToken(userToken.getUsertoken());
-        projectVOFront.setProjectTempToken(userToken.getRaiseToken());
-        return  redisServiceImp.saveProjectInfoToRedis(projectVOFront, resultEntity);
+        return  redisServiceImp.saveProjectInfoToRedis(projectVOFront,resultEntity);
     }
     /**
      * 这里是将回报加入redis
@@ -216,29 +175,17 @@ public class RaiseFundingController {
      * @return  ResultEntity<String>
      */
     @PostMapping("raisefunding/savereturn")
-    public  ResultEntity<Object> saveProjectReturn(
-            ReturnVO returnVO,HttpServletRequest request){
-
-        UserToken userToken = TokenKeyUtils.getUserTokenByRequest(request);
-        returnVO.setProjectTempToken(userToken.getRaiseToken());
-        returnVO.setMemberSignToken(userToken.getUsertoken());
-
+    public  ResultEntity<String> saveProjectReturn(ReturnVO returnVO){
         System.out.println("returnVO "+returnVO.toString());
-
-        System.out.println("saveProjectReturn "+userToken.getRaiseToken());
-
-        //  从redis取出 resultEntity
-        ResultEntity<String> resultEntity  =
-                redisOperation.readRedisValueByKey(userToken.getRaiseToken());
-
-        System.out.println("resultEntity "+resultEntity.toString());
-
+        // 得到 project
+        String proToken = returnVO.getProjectTempToken();
+        //  从redis取出 pro
+        ResultEntity<String> resultEntity  = redisOperation.readRedisValueByKey(proToken);
         // 判断状态
         if (ResultEntity.FAILED.equals(resultEntity.getMessage())){
             return  ResultEntity.failed(resultEntity.getMessage());
         }
-
-        return redisServiceImp.saveProjectReturnToRedis(returnVO, resultEntity);
+        return redisServiceImp.saveProjectReturnToRedis(returnVO,resultEntity);
     }
     /**
      * 保存用户信息
