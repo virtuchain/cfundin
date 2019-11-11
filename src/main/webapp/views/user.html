@@ -197,7 +197,7 @@
                         }
                     }
                 });
-            })
+            });
                 //加载数据
                 function getList(pageno) {
                     $.ajax({
@@ -223,9 +223,9 @@
                                 html +='   <button type="button" class="btn btn-primary btn-xs" id="updateBtn" onclick="upGetId(this)"><i class=" glyphicon glyphicon-pencil"></i></button>';
                                 html +='   <button type="button" class="btn btn-danger btn-xs" id="delBtn" onclick="delGetId(this)"><i class=" glyphicon glyphicon-remove"></i></button>';
                                 html +='   </td></tr>';
-                            })
+                            });
                             $('#tbo').html(html);
-                            var pageBar=""
+                            var pageBar="";
                             if(page.pageno==1){
                                 pageBar+='<li class="disabled"><a href="#" id="prePage">首页<span class="sr-only">(current)</span></a></li>';
                             }else{
@@ -282,7 +282,7 @@
                                     html += '   <button type="button" class="btn btn-primary btn-xs" id="updateBtn" onclick="upGetId(this)"><i class=" glyphicon glyphicon-pencil"></i></button>';
                                     html += '   <button type="button" class="btn btn-danger btn-xs" id="delBtn" onclick="delGetId(this)"><i class=" glyphicon glyphicon-remove"></i></button>';
                                     html += '   </td>';
-                                })
+                                });
                                 $('#tbo').html(html);
                                 $(".pagination").html("");
                             }
@@ -291,7 +291,7 @@
                         }
                     })
 
-                })
+                });
 
                 function upGetId(obj) {
                     //修改获取用户id
@@ -327,7 +327,7 @@
                     var checkedStatus = this.checked;
                     //让下面的checkbox等于上面全选的状态
                     $("tbody tr td input[type='checkbox']").prop("checked", checkedStatus);
-                })
+                });
                 //点击批量删除按钮
                 $("#deleteBtns").click(function () {
                     //获取tbody被选中的checkbox对象
@@ -354,7 +354,7 @@
                             window.location.href = "user.html";
                         }
                     })
-                })
+                });
 
             function assignRole(obj) {
                 var userid = $(obj).parent().prev().prev().prev().prev().prev().html();

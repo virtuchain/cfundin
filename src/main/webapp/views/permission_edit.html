@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="UTF-8">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -126,28 +126,29 @@
 				<ol class="breadcrumb">
 				  <li><a href="#">首页</a></li>
 				  <li><a href="#">数据列表</a></li>
-				  <li class="active">分配角色</li>
+				  <li class="active">修改</li>
 				</ol>
 			<div class="panel panel-default">
+              <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 			  <div class="panel-body">
-				<form role="form" class="form-inline">
+				<form role="form" id="datefrom"  method="post">
+					<div class="form-group">
+						<input type="hidden" class="form-control"  id="fid" name="id">
+					</div>
 				  <div class="form-group">
-					<label for="exampleInputPassword1">未分配角色列表</label><br>
-					<select id="leftRoleList" class="form-control"  multiple size="10" style="width:185px;overflow-y:auto;">
-                    </select>
+					<label>许可名称</label>
+					<input type="text" class="form-control" id="fname" name="name" value="">
 				  </div>
 				  <div class="form-group">
-                        <ul>
-                            <li id="leftToRightBtn" class="btn btn-default glyphicon glyphicon-chevron-right"></li>
-                            <br>
-                            <li id="rightToLeftBtn" class="btn btn-default glyphicon glyphicon-chevron-left" style="margin-top:20px;"></li>
-                        </ul>
+					<label>许可图标</label>
+					<input type="text" class="form-control" name="icon" id="ficon" value="">
 				  </div>
-				  <div class="form-group" style="margin-left:40px;">
-					<label for="exampleInputPassword1">已分配角色列表</label><br>
-					<select id="rightRoleList" class="form-control" multiple size="10" style="width:185px;overflow-y:auto;">
-                    </select>
-				  </div>
+					<div class="form-group">
+						<label>URL地址</label>
+						<input type="text" class="form-control" name="url" id="furl" value="">
+					</div>
+				  <button type="button" class="btn btn-success" id="UpdateBtn"><i class="glyphicon glyphicon-edit"></i> 修改</button>
+				  <button type="button" class="btn btn-danger" id="clean"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
 				</form>
 			  </div>
 			</div>
@@ -184,8 +185,20 @@
     <script src="../bootstrap/js/bootstrap.min.js"></script>
 	<script src="../script/docs.min.js"></script>
         <script type="text/javascript">
+
             $(function () {
-                userrole();
+                //获取需要修改的用户id
+                var urlMsg = parseUrl(window.location.search);
+				var ids=urlMsg.id;
+				//异步查询后进行数据回显
+				getPermissionById(ids);
+
+                //重置方法
+                $("#clean").click(function () {
+                    $("#fname").val("");
+                    $("#ficon").val("");
+                    $("#furl").val("");
+                });
 			    $(".list-group-item").click(function(){
 				    if ( $(this).find("ul") ) {
 						$(this).toggleClass("tree-closed");
@@ -197,99 +210,8 @@
 					}
 				});
             });
-            function userrole(){
-                //获取需要修改的用户id
-                var urlMsg = parseUrl(window.location.search);
-                var userid=urlMsg.userid;
-                $.ajax({
-                    type: "post",
-                    url: "/managerUserRole/userRole",
-					data:{"userid":userid},
-                    dataType:"json",
-                    success: function (data) {
-                            $.each(data.leftRoleList,function (n,left) {
-                                $("#leftRoleList").append('<option id='+left.id+' value='+left.name+'>'+left.name+'</option>');
-                            });
-                           $.each(data.rightRoleList,function (i,right) {
-                               $("#rightRoleList").append('<option id='+right.id+' value='+right.name+'>'+right.name+'</option>');
-                            })
-                    },
-					error: function () {
-						alert("错误");
-                    }
-                })
-			}
-            //分配按钮事件
-            $("#leftToRightBtn").click(function () {
-                //获取左边被选中的
-              var selectOptions= $("#leftRoleList option:selected");
-              //将左边选中的给右边
-              $("#rightRoleList").append(selectOptions);
-                //获取需要修改的用户id
-				var urlMsg = parseUrl(window.location.search);
-                var userid=urlMsg.userid;
-                //获取到选中的权限id
-                var idStr = "";//拼接成需要传输的格式
-                $.each(selectOptions, function (i, n) {
-                    console.log("i="+i);
-                    if (i != 0) {
-                        idStr += "&";
-                    }
-                    idStr += "roleid=" + n.id;
-                });
-                console.log(idStr);
-               var jsonObj= {
-                  "userid": userid
-			   };
-			   $.ajax({
-				   type:"post",
-				   url:"/managerUserRole/assignRole?"+idStr,
-				   typepost:"json",
-				   data:jsonObj,
-				   success:function (data) {
-                       if (data.result == 'SUCCESS') {
-                           alert("授权成功~");
-                       }
-                       if (data.result == 'FAILED') alert("授权失败！");
-                   }
-			  })
-            });
-            $("#rightToLeftBtn").click(function () {
-                //获取左边被选中的
-                var selectOptions= $("#rightRoleList option:selected");
-                //将左边选中的给右边
-                $("#leftRoleList").append(selectOptions);
 
-                //获取需要修改的用户id
-                var urlMsg = parseUrl(window.location.search);
-                var userid=urlMsg.userid;
-                //获取到选中的权限id
-                var idStr = "";//拼接成需要传输的格式
-                $.each(selectOptions, function (i, n) {
-                    console.log("i="+i);
-                    if (i != 0) {
-                        idStr += "&";
-                    }
-                    idStr += "roleid=" + n.id;
-                });
-                console.log(idStr);
-                var jsonObj= {
-                    "userid": userid
-                };
-                $.ajax({
-                    type:"post",
-                    url:"/managerUserRole/delassignRole?"+idStr,
-                    typepost:"json",
-                    data:jsonObj,
-                    success:function (data) {
-                        if (data.result == 'SUCCESS') {
-                            alert("解除授权成功~");
-                        }
-                        if (data.result == 'FAILED') alert("解除授权失败！");
-                    }
-                })
-            });
-			//解析路径传过来的id的方法
+            //将url把参数解析出来
             function parseUrl(url){
                 if(url.indexOf("?") == -1) {
                     return {};
@@ -304,6 +226,52 @@
                 });
                 return obj;
             }
+            //根据id查询方法
+			function getPermissionById(id){
+                $.ajax( {
+                    url:"/permission/toUpdate?id="+id,
+                    type: "json",
+                    typepost:"json",
+                    async:true,
+                    success : function  fun(data) {
+                        if(data.result=='SUCCESS'){
+                            $("#fname").val(data.data.name);
+                            $("#ficon").val(data.data.icon);
+                            $("#furl").val(data.data.url);
+                        }
+                        if(data.result=='FAILED')alert("查询失败！");
+                    }
+                });
+			}
+            //修改按钮进行异步修改
+            $("#UpdateBtn").click(function () {
+                //获取需要修改的用户id
+                var urlMsg = parseUrl(window.location.search);
+                var ids=urlMsg.id;
+                var name=$("#fname").val();
+                var icon=$("ficon").val();
+                var url=$("#furl").val();
+                var jsonObj={
+                    "id":ids,
+					"name":name,
+					"icon":icon,
+					"url":url
+				}
+				$.ajax( {
+					url:"/permission/doUpdate",
+					type: "post",
+					data:jsonObj,
+					typepost:"json",
+                    async:true,
+					success : function  fun(data) {
+                        if(data.result=='SUCCESS'){
+                            alert("节点修改成功！");
+                            window.location.href="permission.html";
+                        }
+                        if(data.result=='FAILED')alert("修改失败！");
+                    }
+                });
+            })
         </script>
   </body>
 </html>

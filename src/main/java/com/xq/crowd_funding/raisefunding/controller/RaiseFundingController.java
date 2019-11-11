@@ -87,7 +87,7 @@ public class RaiseFundingController {
             return ResultEntity.failed("上传失败");
         }
         // 头图片的储存路径
-        String headPicturePath = (String) resultEntity.getData();
+        String headPicturePath = resultEntity.getData();
         // 将 路径 存入 redis
         return  null;
     }
