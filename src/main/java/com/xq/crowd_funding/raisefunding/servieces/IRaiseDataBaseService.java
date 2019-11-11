@@ -11,10 +11,11 @@ import java.util.Set;
 
 public interface IRaiseDataBaseService {
 
+    // 保存所有发起众筹的信息到数据库
     ResultEntity<String> saveAllProToDatabase(ProjectVO projectVO,Integer memberid);
-
+    // 查询所有的页面数据 ，， 项目类型
     List getHtMalDataToMap();
-
+    // 根据项目类型查询项目的标签
     Set<TTag> getTagByTypeId(List<Integer> typeIdArray);
 
 }
