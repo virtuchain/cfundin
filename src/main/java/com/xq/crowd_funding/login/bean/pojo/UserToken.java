@@ -8,4 +8,5 @@ public class UserToken {
     private String loginacct;
     private String userpswd;
     private String usertoken;
+    private String raiseToken;
 }

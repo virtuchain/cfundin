@@ -7,6 +7,9 @@ import com.xq.crowd_funding.common.ResultEntity;
 import com.xq.crowd_funding.common.configrations.redisconfigration.RedisOperation;
 import com.xq.crowd_funding.common.pojo.TTag;
 import com.xq.crowd_funding.common.pojo.TType;
+import com.xq.crowd_funding.common.utils.Const;
+import com.xq.crowd_funding.common.utils.TokenKeyUtils;
+import com.xq.crowd_funding.login.bean.pojo.UserToken;
 import com.xq.crowd_funding.raisefunding.beans.vo.MemberConfirmInfoVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ReturnVO;
@@ -17,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
 
@@ -61,14 +65,31 @@ public class RaiseFundingController {
 
     /**
      *  创建  ProjectVO 所有页面的数据存放的对象
-     * @param memberSignToken 用于验证用户是否登录
+    // * @param memberSignToken 用于验证用户是否登录
      * @return
      */
     @PostMapping("raisefunding/createProjectVO")
-    public ResultEntity initCrestion(){
-        //        @RequestParam("memberSignToken") String memberSignToken
-        System.out.println("进入了这个方法了 。。。。。");
-        // 这里没有验证用户登录 redisServiceImp.initProjectVOToRedis()
+    public ResultEntity initCrestion(HttpServletRequest request){
+
+        UserToken userToken = TokenKeyUtils.getUserTokenByRequest(request);
+
+        if (userToken == null){
+            ResultEntity.failed(Const.RAISE_LOGIN);
+        }
+        // 创建 peojectvo 返回 peojectvo
+        ResultEntity<ProjectVO> projectVOResultEntity =
+                redisServiceImp.initProjectVOToRedis(userToken.getUsertoken());
+
+         // 得到  peojectvo 里面的  Token
+        String projectToken =  projectVOResultEntity.getData().getProjectTempToken();
+        //  Token 放入  userToken
+        userToken.setRaiseToken(projectToken);
+
+        System.out.println("初始化后返回的userToken "+userToken.toString());
+
+        //  userToken 放入 session
+        request.getSession().setAttribute("userToken",userToken);
+        // 成功返回
         return ResultEntity.successNoData();
     }
     /**
@@ -77,7 +98,9 @@ public class RaiseFundingController {
      * @return
      */
     @PostMapping("raisefunding/uploadheadpicture")
-    public  ResultEntity<String> saveHeadPicture(@RequestParam("headFile")MultipartFile headFile){
+    public  ResultEntity<String> saveHeadPicture(
+            @RequestParam("headFile")MultipartFile headFile,HttpServletRequest request){
+
          // 排除空文件
         if (headFile.isEmpty()){
             return  ResultEntity.failed("文件为空");
@@ -87,15 +110,20 @@ public class RaiseFundingController {
             return ResultEntity.failed("上传失败");
         }
         // 头图片的储存路径
-        String headPicturePath = resultEntity.getData();
+        String headPicturePath = (String) resultEntity.getData();
+
+        //  得到session
+        UserToken userToken = TokenKeyUtils.getUserTokenByRequest(request);
+
         // 将 路径 存入 redis
-        return  null;
+        return  redisServiceImp.saveHeadPicture(userToken,headPicturePath);
     }
     /**
      * 上传详情图片
      */
     @PostMapping("raisefunding/uploaddetailpicture")
-    public  ResultEntity<String> saveDetailPicture(@RequestParam("detailFiles") List<MultipartFile> detailFiles){
+    public  ResultEntity<String> saveDetailPicture(
+            @RequestParam("detailFiles") List<MultipartFile> detailFiles,HttpServletRequest request){
 
         // 排除空文件
         if (detailFiles.isEmpty()){
@@ -107,12 +135,15 @@ public class RaiseFundingController {
         if (ResultEntity.FAILED.equals(resultEntity.getResult())){
             return ResultEntity.failed("上传失败");
         }
+
         // 得到详情图片的存储路径
         List<String> detailicturePathList  = (List<String>) resultEntity.getData();
+
+        //  得到session
+        UserToken userToken = TokenKeyUtils.getUserTokenByRequest(request);
+
         // 将 路径 存入 redis
-
-
-        return  ResultEntity.successNoData();
+        return  redisServiceImp.saveDetailPicture(userToken,detailicturePathList);
     }
 
     /**
@@ -122,10 +153,15 @@ public class RaiseFundingController {
      *
      */
     @PostMapping("raisefunding/saveinfostepone")
-    public  ResultEntity<String> saveProjectInfo(ProjectVO projectVOFront){
-        System.out.println("projetc: "+projectVOFront.toString());
-        // 从 projectVOFront 获取 projectTempToken
-        String projectTempToken = projectVOFront.getProjectTempToken();
+    public  ResultEntity<String> saveProjectInfo(
+            ProjectVO projectVOFront,HttpServletRequest request){
+
+        UserToken userToken = TokenKeyUtils.getUserTokenByRequest(request);
+
+        if (userToken == null){
+            ResultEntity.failed(Const.RAISE_LOGIN);
+        }
+
         // 判断是否是失败的状态
        ResultEntity<String> resultEntity = redisOperation.readRedisValueByKey(projectTempToken);
         if (ResultEntity.FAILED.equals(resultEntity.getMessage())){
