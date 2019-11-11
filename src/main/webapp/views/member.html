@@ -86,7 +86,7 @@
 							<h3>
 								ZhangSan
 							</h3>
-							<span class="label label-danger" style="cursor:pointer;" onclick="window.location.href='accttype.html'">未实名认证</span>
+							<span class="label label-danger" id="foot" style="cursor:pointer;" onclick="clickDemo()">未实名认证</span>
 						</div>
 					</div>
 				</div>
@@ -143,6 +143,7 @@
     <script src="../script/back-to-top.js"></script>
     <script src="../script/echarts.js"></script>
 	<script>
+
 $('#myTab a').click(function (e) {
   e.preventDefault()
   $(this).tab('show')
@@ -323,7 +324,6 @@ option2 = {
         }
     ]
 };
-
         // 使用刚指定的配置项和数据显示图表。
         myChart2.setOption(option2);
 	</script>

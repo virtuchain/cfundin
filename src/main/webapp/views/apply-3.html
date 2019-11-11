@@ -62,7 +62,8 @@
             <input type="text" class="form-control" id="exampleInputEmail1" placeholder="请输入你邮箱中接收到的验证码">
         </div>
         <button type="button" onclick="javascript:;" class="btn btn-primary">重新发送验证码</button>
-        <button type="button" onclick="window.location.href='member.html'"  class="btn btn-success">申请完成</button>
+        <input type="button" id="btn" onclick="clickDemo()" value="申请完成"  class="btn btn-success"></input>
+        <div id="changeDemo"></div>
     </form>
     <hr>
 </div> <!-- /container -->
@@ -85,10 +86,41 @@
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <script src="../script/docs.min.js"></script>
 <script>
+    var localhost = "http://localhost:8080/";
     $('#myTab a').click(function (e) {
         e.preventDefault()
         $(this).tab('show')
     });
+    function clickDemo(){
+        $.ajax({
+            url :localhost+ "email/yanzheng",//后台请求的数据
+            dataType : "json",//数据格式 
+            type : "post",//请求方式
+            data:{"yzm":$("#exampleInputEmail1").val()},
+            success : function(datas) {   //如果请求成功，返回数据。
+                if (datas.result =='SUCCESS') {
+                    updateMenberStatus();
+                }
+                if(datas.result =='FAILED'){
+                    $("#changeDemo").text("验证码错误");
+                }
+            },
+        })
+    }
+    function updateMenberStatus(){
+        $.ajax({
+            url :localhost+ "realname/UpdateReName",
+            dataType : "json",//数据格式 
+            type : "post",//请求方式
+            success:function () {
+               if(datas.result =='SUCCESS'){
+                   window.location.href='accttype.html';
+               }else {
+                   alert("认证失败");
+               }
+            }
+        })
+    }
 </script>
 </body>
 </html>
