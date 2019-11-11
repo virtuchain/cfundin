@@ -30,7 +30,7 @@ public class Login {
     private IService userService;
     @RequestMapping("login/a1")
     public Object Loginw(String loginacctt, String userpawd, Integer userType, HttpServletRequest request) {
-
+        TMember tMember = new TMember();
         System.out.println("账号" + loginacctt);
         System.out.println("密码" + userpawd);
         System.out.println("usertype" + userType);
@@ -44,7 +44,7 @@ public class Login {
                 //后台登陆
                 subject.login(token);
                 token.setRememberMe(true);
-                TMember tMember = (TMember) subject.getPrincipal();
+                tMember = (TMember) subject.getPrincipal();
                 resultMap.put("statuc", "success");
                 resultMap.put("data", tMember);
 
@@ -59,6 +59,7 @@ public class Login {
             UserToken userToken = new UserToken();
             userToken.setLoginacct(loginacctt);
             userToken.setUserpswd(userpawd);
+            userToken.setId(tMember.getId());
 
             userToken.setUsertoken(
                     TokenKeyUtils.getTokenAndUUID(TokenKeyUtils.USER_LOGIN_SUCCESS_PREFIX));
