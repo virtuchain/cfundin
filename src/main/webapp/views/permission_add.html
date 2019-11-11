@@ -24,7 +24,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <div><a class="navbar-brand" style="font-size:32px;" href="user.html">众筹平台 - 用户维护</a></div>
+            <div><a class="navbar-brand" style="font-size:32px;" href="user.html">众筹平台 - 许可维护</a></div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -133,18 +133,13 @@
                 <div class="panel-body">
           <form role="form" id="datafrom">
 				  <div class="form-group">
-					<label>用户账号</label>
-					<input type="text" class="form-control" id="loginName" name="loginacct" placeholder="请输入登录账号">
+					<label>许可名称</label>
+					<input type="text" class="form-control" id="fname" name="name" placeholder="请输入许可名称">
 				  </div>
 					<div class="form-group">
-						<label>用户名称</label>
-						<input type="text" class="form-control" id="UserName" name="username" placeholder="请输入用户名称">
+						<label>许可URL</label>
+						<input type="text" class="form-control" id="furl" name="url" placeholder="请输入许可url">
 					</div>
-				  <div class="form-group">
-					<label>邮箱地址</label>
-					<input type="email" class="form-control" id="email" name="email" placeholder="请输入邮箱地址ַ">
-					<p class="help-block label label-warning">请输入合法的邮箱地址, 格式为： xxxx@xxxx.com</p>
-				  </div>
 				  <button type="button" class="btn btn-success" id="insert"><i class="glyphicon glyphicon-plus"></i>新增</button>
 				  <button type="button" class="btn btn-danger" id="clean"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
 				</form>
@@ -184,26 +179,31 @@
 <script src="../script/docs.min.js"></script>
 <script type="text/javascript">
     $(function () {
-                //重置方法
-                $("#clean").click(function () {
-                    $("#loginName").val("");
-                    $("#UserName").val("");
-                    $("#email").val("");
-                });
+                    //获取需要修改的用户id
+                    var urlMsg = parseUrl(window.location.search);
+                    var id=urlMsg.id;
 				      //添加方法
 			        	$("#insert").click(function () {
+                            var name=$("#fname").val();
+                            var url=$("#furl").val();
+                            //传递的json数据
+                            var jsonObj={
+                                "pid":id,
+                                "name":name,
+                                "url" :url
+                            }
 					          $.ajax({
 					          	type:"post",
-					          	url:"/manager/insertUser?"+$("#datafrom").serialize(),
+					          	url:"/permission/toadd",
+                                data:jsonObj,
 					          	datatype:"json",
 					          	success : function (data) {
-                        if(data.result=='SUCCESS'){
-                            alert("添加成功！");
-                            window.location.href="user.html";
-                        }
-                         if(data.result=='FAILED')alert("添加失败！");
-                    }
-
+                                    if(data.result=='SUCCESS'){
+                                        alert("保存许可成功！");
+                                        window.location.href="permission.html";
+                                    }
+                                     if(data.result=='FAILED')alert("保存许可失败！");
+                                }
 					          });
                 });
         $(".list-group-item").click(function(){
@@ -217,6 +217,26 @@
             }
         });
     });
+    //重置方法
+    $("#clean").click(function () {
+        $("#fname").val("");
+        $("#furl").val("");
+    });
+    //将url把参数解析出来
+    function parseUrl(url){
+        if(url.indexOf("?") == -1) {
+            return {};
+        }
+        var query = url.split("?")[1];
+        var queryArr = query.split("&");
+        var obj = {};
+        queryArr.forEach(function(item){
+            var key = item.split("=")[0];
+            var value = item.split("=")[1];
+            obj[key] = decodeURIComponent(value);
+        });
+        return obj;
+    }
 </script>
 </body>
 </html>
