@@ -6,15 +6,13 @@ import com.xq.crowd_funding.partfinancing.bean.TMember;
 import java.util.List;
 
 public interface IService{
-    int insert(TMember pojo);
-
-    int insertList( List< TMember> pojo);
-
-    List<TMember> select(TMember pojo);
-
-    int update( TMember pojo);
+    void insert(TMember tMember);
 
     TMember selectUser( String loginacct);
 
     void setUserType(Integer userType);
+
+    String selectUsername(String logginacct);
+
+    String selectPhone(String Phone);
 }

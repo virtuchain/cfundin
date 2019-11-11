@@ -24,31 +24,31 @@ import java.util.Map;
 public class Login {
     /**
      * @author: lishiming
-     * TODO:
+     * TODO:11111111
      **/
     @Autowired
     private IService userService;
     @RequestMapping("login/a1")
-    public Object Loginw(String loginacctt, String userpawd, Integer userType, HttpServletRequest request) {
+         public Object Loginw(String loginacctt, String userpawd, Integer userType, HttpServletRequest request) {
 
-        System.out.println("账号" + loginacctt);
-        System.out.println("密码" + userpawd);
-        System.out.println("usertype" + userType);
-        Map<String, Object> resultMap = new HashMap<>();
-            try {
-                Subject subject = SecurityUtils.getSubject();
-                UsernamePasswordToken token = new UsernamePasswordToken(loginacctt, userpawd);
-                System.out.println("token的用户名>"+token.getUsername());
-                //设置用户登陆类型给service 层
-                userService.setUserType(userType);
-                //后台登陆
-                subject.login(token);
-                token.setRememberMe(true);
-                TMember tMember = (TMember) subject.getPrincipal();
-                resultMap.put("statuc", "success");
-                resultMap.put("data", tMember);
+                    System.out.println("账号" + loginacctt);
+                    System.out.println("密码" + userpawd);
+                    System.out.println("usertype" + userType);
+                    Map<String, Object> resultMap = new HashMap<>();
+                    try {
+                        Subject subject = SecurityUtils.getSubject();
+                        UsernamePasswordToken token = new UsernamePasswordToken(loginacctt, userpawd);
+                        System.out.println("token的用户名>"+token.getUsername());
+                        //设置用户登陆类型给service 层
+                        userService.setUserType(userType);
+                        //后台登陆
+                        subject.login(token);
+                        token.setRememberMe(true);
+                        TMember tMember = (TMember) subject.getPrincipal();
+                        resultMap.put("statuc", "success");
+                        resultMap.put("data", tMember);
 
-            } catch (AuthenticationException e) {
+                    } catch (AuthenticationException e) {
                 System.out.println("登陆失败———--》"+e.getMessage());
                 String msg="你输入的账号密码有误";
                 resultMap.put("statuc","error");

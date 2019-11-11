@@ -98,7 +98,7 @@ h3.break>a {
   </head>
   <body>
  <div class="navbar-wrapper">
-      <div class="container">
+      <div class="container" >
 			<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 			  <div class="container">
 				<div class="navbar-header">
@@ -106,8 +106,10 @@ h3.break>a {
 				</div>
             <div id="navbar" class="navbar-collapse collapse" style="float:right;">
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="login.html">登录</a></li>
-                <li><a href="reg.html">注册</a></li>
+				  <li><a id="QQ"></a></li>
+				  <li><a id="QQ1" ></a></li>
+                <li><a href="login.html" id="QW">登录</a></li>
+                <li><a href="reg.html" id="QWQ">注册</a></li>
               </ul>
             </div>
 			  </div>
@@ -629,6 +631,44 @@ h3.break>a {
     $(".thumbnail img").click(function(){
         window.location.href = "project.html";
     });
+    /*
+    *右上角的登陆注册
+    * 登陆之后转变为登陆者名字
+    */
+		$(function (){
+		    // function getuser() {
+                $.ajax({
+                    type: "post",
+                    url: "/reg/on3",
+                    datatype: "json",
+                    success: function (reg) {
+                        if (reg.status == "success") {
+                            $("#QQ").text(reg.username);
+                            $("#QQ1").text("退出");
+                            $("#QW").css("visibility", "hidden");
+                            $("#QWQ").css("visibility", "hidden");
+                        }else {
+                            $("#QQ").css("visibility", "hidden");
+                            $("#QQ1").css("visibility", "hidden");
+						}
+                    }
+                })
+            // }
+		})
+	//
+    $("#QQ1").on("click",function () {
+        $.ajax({
+            url:"/reg/on5",
+            type:"post",
+            datatype:"json",
+            success:function (reg) {
+                alert(reg.data);
+                if(reg.data=="success"){
+                    location.href="index.html";
+                }
+            }
+        })
+    })
     </script>
   </body>
 </html>
