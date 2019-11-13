@@ -3,8 +3,6 @@ package com.xq.crowd_funding.login.bean.service;
 
 import com.xq.crowd_funding.partfinancing.bean.TMember;
 
-import java.util.List;
-
 public interface IService{
     void insert(TMember tMember);
 

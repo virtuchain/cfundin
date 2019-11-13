@@ -1,9 +1,12 @@
 package com.xq.crowd_funding.login.bean.controller;
 
 
+import com.xq.crowd_funding.common.ResultEntity;
+import com.xq.crowd_funding.common.pojo.TType;
 import com.xq.crowd_funding.common.utils.TokenKeyUtils;
 import com.xq.crowd_funding.login.bean.pojo.UserToken;
 import com.xq.crowd_funding.login.bean.service.IService;
+import com.xq.crowd_funding.login.bean.service.IServiceType;
 import com.xq.crowd_funding.partfinancing.bean.TMember;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -28,6 +32,8 @@ public class Login {
      **/
     @Autowired
     private IService userService;
+    @Autowired
+    private IServiceType typeService;
     @RequestMapping("login/a1")
          public Object Loginw(String loginacctt, String userpawd, Integer userType, HttpServletRequest request) {
 
@@ -68,40 +74,41 @@ public class Login {
         return resultMap;
     }
 
-        //------------------------------------------\
-        @RequestMapping("login/on1")
-        @ResponseBody
-        public String ww (String loginacctt){
-            String msg = "";
-            System.out.println("账号" + loginacctt);
+          //列表请求页面
+        @RequestMapping("/login/on3")
+        public ResultEntity getList(){
+          System.out.println("--------------->列表");
+          List<TType> typelist=typeService.selectList();
+            System.out.println("type中的数据有"+typelist);
+            if(typelist==null||typelist.equals("")){
+                System.out.println("列表没有数据");
+            }
+            return  ResultEntity.successWithData(typelist);
+        }
+    @RequestMapping("/login/on4")
+    public Object deleteid(Integer id){
+        Map<String,Object> resultMap=new HashMap<>();
+        String msg="";
+        System.out.println("--------------->删除");
+        typeService.deleteid(id);
+          if(id!=null){
+            msg="删除成功";
+              resultMap.put("status","success");
+              resultMap.put("msg",msg);
+          }
+        return  resultMap;
+    }
+    @RequestMapping("/login/on5")
+    public ResultEntity selectBytext(String  text){
+        System.out.println("--------------->模糊查询");
+        List<TType> user =typeService.selectBytext(text);
+        System.out.println("user中的数据有"+user);
+        if(user==null||user.equals("")){
+            System.out.println("列表没有数据");
+        }
+        return  ResultEntity.successWithData(user);
 
-            if (loginacctt != null || loginacctt != "") {
-                if ("123456".equals(loginacctt)) {
-                    msg = "ok";
-                } else {
-                    msg = "账号有误";
-                }
-            } else {
-                msg = "账号不能为空";
-            }
-            return msg;
-        }
-        @RequestMapping("login/on2")
-        @ResponseBody
-        public String www (String userpawd ){
-            String msg = "";
-            System.out.println("密码" + userpawd);
-            if (userpawd != null || userpawd != "") {
-                if ("123456".equals(userpawd)) {
-                    msg = "ok";
-                } else {
-                    msg = "密码有误";
-                }
-            } else {
-                msg = "密码不能为空";
-            }
-            return msg;
-        }
+    }
     }
 
 

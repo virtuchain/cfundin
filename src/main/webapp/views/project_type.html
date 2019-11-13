@@ -133,10 +133,10 @@
   <div class="form-group has-feedback">
     <div class="input-group">
       <div class="input-group-addon">查询条件</div>
-      <input class="form-control has-success" type="text" placeholder="请输入查询条件">
+      <input class="form-control has-success" id="selecttext" type="text" placeholder="请输入查询条件">
     </div>
   </div>
-  <button type="button" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询</button>
+  <button type="button" class="btn btn-warning"><i class="glyphicon glyphicon-search" id="selectbytext"></i> 查询</button>
 </form>
 <button type="button" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
 <button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='form.html'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
@@ -153,7 +153,7 @@
                   <th width="100">操作</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="from">
                <!-- <tr>
                   <td>1</td>
 				  <td><input type="checkbox"></td>
@@ -209,10 +209,78 @@
 						}
 					}
 				});
+                getList();
+                //单个点击删除
+				$(document).on("click","#delete",function () {
+                    var id=$(this).parent().prev().prev().prev().prev().html();
+                         $.ajax({
+							 url: "/login/on4",
+							 type:"post",
+							 data:{"id":id},
+							 dataType:"json",
+							 success:function (data) {
+                                    if(data.status=="success"){
+                                        alert(data.msg)
+                                        getList();
+									}
+                             }
+						 })
+
+                })
+				//模糊查询
+				$(document).on("click","#selectbytext",function () {
+					var text=$("#selecttext").val();
+					console.log(text);
+                    $.ajax({
+                        url:"/login/on5",
+                        type:"post",
+						data:{"text":text},
+                        datatype:"json",
+                        success:function (data) {
+                            if(data.result=='SUCCESS'){
+                                var html='';
+                                $.each(data.data,function (index,item) {
+                                    html+='<tr>'
+                                    html+='<td>'+(item.id)+'</td>';
+                                    html+='<td> <input type="checkbox" id="'+item.id+'"value="'+item.id+'" /></td>'
+                                    html+='<td>'+item.name+'</td>';
+                                    html+='<td>'+item.remark+'</td>';
+                                    html+='<td><button type="button" id="" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>'
+                                    html+='<button type="button" id="delete" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>'
+                                    html+='<td/>'
+                                })
+                                $("#from").html(html);
+                            }
+                        }
+                    })
+                })
+				//实现全选
+
+				//批量删除
+
+
             });
             function getList() {
 				$.ajax({
-					url:"",
+					url:"/login/on3",
+					type:"post",
+					datatype:"json",
+					success:function (data) {
+                    if(data.result=='SUCCESS'){
+                        var html='';
+                   $.each(data.data,function (index,item) {
+					   html+='<tr>'
+                       html+='<td>'+(item.id)+'</td>';
+					   html+='<td> <input type="checkbox" id="'+item.id+'"value="'+item.id+'" /></td>'
+					   html+='<td>'+item.name+'</td>';
+					   html+='<td>'+item.remark+'</td>';
+					   html+='<td><button type="button" id="" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>'
+					   html+='<button type="button" id="delete" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>'
+                       html+='<td/>'
+                   })
+                     $("#from").html(html);
+				   }
+			   }
 				})
             }
         </script>
