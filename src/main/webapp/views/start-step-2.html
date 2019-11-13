@@ -70,6 +70,10 @@
     background-color: #ddd;
 }
 	</style>
+      <script src="../jquery/jquery-2.1.1.min.js"></script>
+      <script src="../bootstrap/js/bootstrap.min.js"></script>
+      <script src="../script/docs.min.js"></script>
+      <script src="../script/back-to-top.js"></script>
   </head>
   <body>
  <div class="navbar-wrapper">
@@ -112,7 +116,7 @@
                                     <a rel="nofollow" href="projects.html"><i class="glyphicon glyphicon-th-large"></i> 项目总览</a>
                                 </li>
                                 <li class="active">
-                                    <a rel="nofollow" href="javascript:;"><i class="glyphicon glyphicon-edit"></i> 发起项目</a>
+                                    <a rel="nofollow" href="javascript:"><i class="glyphicon glyphicon-edit"></i> 发起项目</a>
                                 </li>
                                 <li>
                                     <a rel="nofollow" href="minecrowdfunding.html"><i class="glyphicon glyphicon-user"></i> 我的众筹</a>
@@ -123,8 +127,6 @@
                 </div>
             </div>
         </div>
-        
-        
         <div class="container">
             <div class="row clearfix">
                 <div class="col-md-12 column">
@@ -209,23 +211,11 @@
                                           <td>操作</td>
                                         </tr>
                                       </thead>
-                                      <tbody>
-                                        <tr>
-                                          <td    scope="row">1</td>
-                                          <td>￥1.00</td>
-                                          <td>无限制</td>
-                                          <td>1</td>
-                                          <td>1</td>
-                                          <td>项目结束后的30天</td>
-                                          <td>包邮</td>
-                                          <td>
-                                                      <button type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>
-                                                      <button type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>
-                                          </td>
-                                        </tr>
+                                      <tbody id="tbodys">
+
                                       </tbody>
                                     </table>
-                                    <button type="button" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus"></i> 添加回报</button>
+                                    <button type="button" id="addreturn" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus"></i> 添加回报</button>
                                     <div style="border:10px solid #f60;border-bottom-color: #eceeef;border-width: 10px;width:20px;margin-left:20px;
                                              border-left-color: rgba(221, 221, 221, 0);
                                              border-top-color: rgba(221, 221, 221, 0);
@@ -234,98 +224,104 @@
                                     <div class="panel panel-default" style="border-style: dashed;background-color:#eceeef">
                                       <div class="panel-body">
 
-		<div class="col-md-12 column">
+		<div class="col-md-12 column" style="display:none" id="addreturnmodal" >
             <form class="form-horizontal">
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">回报类型</label>
+                <label  class="col-sm-2 control-label">回报类型</label>
                 <div class="col-sm-10">
                      <label class="radio-inline">
-                      <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 实物回报
+                      <input type="radio" name="type"  checked value="0"> 实物回报
                     </label>
                     <label class="radio-inline">
-                      <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 虚拟物品回报
+                      <input type="radio" name="type"   value="1"> 虚拟物品回报
                     </label>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">支持金额（元）</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" style="width:100px;" >
+                  <input type="number" name="supportmoney" class="form-control" style="width:100px;" >
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">回报内容</label>
                 <div class="col-sm-10">
-                  <textarea class="form-control" rows="5" placeholder="简单描述回报内容，不超过200字"></textarea>
+                  <textarea class="form-control" name="content" rows="5" placeholder="简单描述回报内容，不超过200字"></textarea>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">说明图片</label>
                 <div class="col-sm-10">
-                  <button type="button" class="btn btn-primary btn-lg active">上传图片</button>
+                    <input type="file" id="uploadsayFile" style="display: none;" />
+                  <button type="button" id="sayclick" class="btn btn-primary btn-lg active">上传图片</button>
                   <label class="control-label">支持jpg、jpeg、png、gif格式，大小不超过2M，建议尺寸：760*510px选择文件</label>
                 </div>
+                  <script>
+                     $(function () {
+                         $("#sayclick").click(function () {
+                             $("#uploadsayFile").click();
+                         })
+                     })
+                  </script>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">回报数量（名）</label>
+                <label class="col-sm-2 control-label" value="0">回报数量（名）</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" style="width:100px;display:inline" >
+                  <input type="number" name="count" class="form-control" style="width:100px;display:inline" >
                   <label class="control-label">“0”为不限回报数量</label>
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">单笔限购</label>
+                <label  class="col-sm-2 control-label">单笔限购</label>
                 <div class="col-sm-10">
                      <label class="radio-inline">
-                      <input type="radio" name="inlineRadioOptions2" id="inlineRadio1" value="option1"> 不限购
+                      <input type="radio" id="nosignal" name="sigradio"  value="0"> 不限购
                     </label>
                     <label class="radio-inline">
-                      <input type="radio" name="inlineRadioOptions2" id="inlineRadio2" value="option2"> 限购
+                      <input type="radio" id="signal" name="sigradio" checked value="1"> 限购
                     </label>
-                    <input type="text" class="form-control" style="width:100px;display:inline" >
+                    <input type="number" id="signalval" name="signalpurchase" value="1" class="form-control" style="width:100px;display:inline" >
                     <label class="radio-inline">默认数量为1，且不超过上方已设置的回报数量</label>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">运费(元)</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" style="width:100px;display:inline" value="0" >
+                  <input type="text" name="freight" class="form-control" style="width:100px;display:inline" value="0" >
                   <label class="control-label">“0”为包邮</label>
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">发票</label>
+                <label  class="col-sm-2 control-label">发票</label>
                 <div class="col-sm-10">
                      <label class="radio-inline">
-                      <input type="radio" name="inlineRadioOptions1" id="inlineRadio1" value="option1"> 不可开发票
+                      <input type="radio" name="invoice"  value="0"> 不可开发票
                     </label>
                     <label class="radio-inline">
-                      <input type="radio" name="inlineRadioOptions1" id="inlineRadio2" value="option2"> 可开发票（包括个人发票和自定义抬头发票）
+                      <input type="radio" name="invoice"  checked value="1"> 可开发票（包括个人发票和自定义抬头发票）
                     </label>
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">回报时间</label>
+                <label  class="col-sm-2 control-label">回报时间</label>
                 <div class="col-sm-10">
                      <label class="radio-inline">
                       项目结束后
                     </label>
-                    <input type="text" class="form-control" style="width:100px;display:inline" >
+                    <input type="number" name="rtndate" class="form-control" style="width:100px;display:inline" >
                     <label class="radio-inline">天，向支持者发送回报</label>
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label"></label>
+                <label  class="col-sm-2 control-label"></label>
                 <div class="col-sm-10">
-                      <button type="button" class="btn btn-primary">确定</button>
-                      <button type="button" class="btn btn-default">取消</button>
+                      <button type="button" id="determine" class="btn btn-primary">确定</button>
+                      <button type="button" id="cancel" class="btn btn-default">取消</button>
                 </div>
               </div>
 
             </form>
 		</div>
-                                      
-                                      
                                       </div>
                                     </div>
                                 </div>
@@ -347,16 +343,14 @@
                         </div>
                         </div>
                         <div class="panel-footer" style="text-align:center;">
-                            <button type="button" class="btn  btn-default btn-lg" onclick="window.location.href='start-step-1.html'">上一步</button>
-                            <button type="button" class="btn  btn-warning btn-lg" onclick="window.location.href='start-step-3.html'">下一步</button>
+                            <!--<button type="button" class="btn  btn-default btn-lg" onclick="window.location.href='start-step-1.html'">上一步</button>-->
+                            <button type="button" class="btn  btn-warning btn-lg" id="nextstep" style="display:none"  onclick="window.location.href='start-step-3.html'">下一步</button>
                             <a class="btn" > 预览 </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-
         <div class="container" style="margin-top:20px;">
             <div class="row clearfix">
                 <div class="col-md-12 column">
@@ -374,15 +368,101 @@
         </div>
       
     </div> <!-- /container -->
-    <script src="../jquery/jquery-2.1.1.min.js"></script>
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
-	<script src="../script/docs.min.js"></script>
-    <script src="../script/back-to-top.js"></script>
+
 	<script>
-$('#myTab a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
+            $(function () {
+                var localhost = "http://localhost:8080/";
+                // 加载 页面回报的list
+                loadhtml();
+                $("#determine").click(function () {
+                    $.ajax({
+                       url:localhost+"raisefunding/savereturn",
+                       data:$("form").serialize(),
+                        datatype: "json",
+                        type:"POST",
+                       success: function (datas) {
+                           getList(datas);
+                       }
+                    });
+                });
+                $("#addreturn").click(function () {
+                    var show = $('#addreturnmodal').css('display');
+                    $('#addreturnmodal').css('display',show =='block'?'none':'block');
+                });
+                $("#cancel").click(function () {
+                    $('#addreturnmodal').css('display','none');
+                });
+
+                function getList(datas) {
+
+                    if ( datas.data.length > 0 ) {
+                        $('#nextstep').css('display','block');
+                    }else {
+                        $('#nextstep').css('display','none');
+                    }
+
+                    $("#tbodys").empty();
+                    if (datas.result=='SUCCESS'){
+                        $('#addreturnmodal').css('display','none');
+                        // 返回的回报不为空
+                        if(datas.data !=null ){
+                            $.each(datas.data , function (indexs ,items ) {
+                                var count = items.count ;
+                                var freight = items.freight;
+                                //      var signalpurchase = items.signalpurchase;
+                                if (items.count==0) {
+                                    count='无限制';
+                                }
+                                if (items.freight==0) {
+                                    freight='包邮';
+                                }
+                                // if (items.signalpurchase==0) {
+                                //     signalpurchase= '不限购';
+                                // }
+                                $("#tbodys").append(
+                                    "<tr><td scope='row1'>"+(indexs+1)+"</td>"+
+                                    "<td>"+items.supportmoney+"</td>"+
+                                    "<td>"+count+"</td>" +
+                                    "<td>"+items.signalpurchase+"</td>>"+
+                                    "<td>"+items.content+"</td>" +
+                                    "<td>项目结束后的"+items.rtndate+"天</td>"+
+                                    "<td>"+freight+"</td>"+
+                                    "<td><button type='button' id='deletReturn'" +
+                                    "' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button></td>"
+                                );
+                            })
+                        }
+
+                    }else{
+                        alert("错误，稍后请重试");
+                    }
+                }
+                function loadhtml() {
+                    $.ajax({
+                        url:localhost+"raisefunding/loaderstartTwo",
+                        datatype: "json",
+                        type:"get",
+                        success: function (datas) {
+                            getList(datas);
+                        }
+                    });
+                }
+                $(document).on("click", "#deletReturn", function (){
+                   var listId=  $(this).parent().prev().prev().prev().prev().
+                                        prev().prev().prev().html()-1;
+                    $.ajax({
+                        url:localhost+"raisefunding/removereturnbyid",
+                        datatype: "json",
+                        type:"get",
+                        data:{"listid":listId},
+                        success: function (datas) {
+                            getList(datas);
+                        }
+                    });
+
+                });
+
+            })
 	</script>
   </body>
 </html>

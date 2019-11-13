@@ -2,6 +2,9 @@ package com.xq.crowd_funding.common.utils;/*
     @auther yangjie
 */
 
+import com.xq.crowd_funding.login.bean.pojo.UserToken;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 /**
@@ -15,5 +18,9 @@ public class TokenKeyUtils {
       // 传入一个 token 前缀，在后面加入UUD返回
       public static String getTokenAndUUID(String token){
           return  token + (UUID.randomUUID().toString().replaceAll("-",""));
+      }
+      // 传入 httpservletrequest 返回一个 USERtOKEN
+      public  static UserToken getUserTokenByRequest(HttpServletRequest request){
+            return  (UserToken)request.getSession().getAttribute("userToken");
       }
 }

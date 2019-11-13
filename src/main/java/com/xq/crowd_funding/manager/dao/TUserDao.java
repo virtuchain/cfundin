@@ -1,11 +1,11 @@
-package com.xq.crowd_funding.manager.dao;
+package com.xq.crowd_funding.manager.dao ;
 
+import com.xq.crowd_funding.common.pojo.TUser;
 import com.xq.crowd_funding.common.utils.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
-import com.xq.crowd_funding.manager.bean.TUser;
-import org.springframework.stereotype.Component;
 
 @Mapper
 public interface TUserDao {

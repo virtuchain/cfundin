@@ -2,11 +2,11 @@ package com.xq.crowd_funding.manager.controller;
 
 
 import com.xq.crowd_funding.common.ResultEntity;
+import com.xq.crowd_funding.common.pojo.TUser;
 import com.xq.crowd_funding.common.utils.Const;
 import com.xq.crowd_funding.common.utils.CrowdUtils;
 import com.xq.crowd_funding.common.utils.MD5Utils;
 import com.xq.crowd_funding.common.utils.Page;
-import com.xq.crowd_funding.manager.bean.TUser;
 import com.xq.crowd_funding.manager.service.TUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/manager")
 public class UserController {
+
     @Autowired
     private TUserService tUserService;
 
@@ -28,7 +29,7 @@ public class UserController {
     @RequestMapping("/index")
     @ResponseBody
     public Page index(@RequestParam(value = "pageno")Integer pageno,
-                        @RequestParam(value = "pagesize")Integer pagesize,TUser pojo){
+                      @RequestParam(value = "pagesize")Integer pagesize, TUser pojo){
         //调用查询page类里的内容
         Page page=tUserService.queryPage(pageno,pagesize,pojo);
         //返回page数据

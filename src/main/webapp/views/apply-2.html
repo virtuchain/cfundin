@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/theme.css">
     <style>
         #footer {
             padding: 15px 0;
@@ -54,7 +54,7 @@
 		  <li role="presentation" ><a href="#"><span class="badge">1</span> 基本信息</a></li>
 		  <li role="presentation" ><a href="#"><span class="badge">2</span> 资质文件上传</a></li>
 		  <li role="presentation" class="active"><a href="#"><span class="badge">3</span> 邮箱确认</a></li>
-		  <li role="presentation"><a href="#"><span class="badge">4</span> 申申请确认</a></li>
+		  <li role="presentation"><a href="#"><span class="badge">4</span> 申请确认</a></li>
 		</ul>
 
 		<form role="form" style="margin-top:20px;" id="curst" action="" method="get">
@@ -73,7 +73,7 @@
                 <div class="col-md-12 column">
                     <div id="footer">
                         <div class="footerNav">
-                             <a rel="nofollow" href="http://www.atguigu.com">关于我们</a> | <a rel="nofollow" href="http://www.atguigu.com">��������</a> | <a rel="nofollow" href="http://www.atguigu.com">��������</a> | <a rel="nofollow" href="http://www.atguigu.com">��վ��ͼ</a> | <a rel="nofollow" href="http://www.atguigu.com">��ϵ����</a>
+                             <a rel="nofollow" href="http://www.atguigu.com">关于我们</a> | <a rel="nofollow" href="http://www.atguigu.com">服务条款</a> | <a rel="nofollow" href="http://www.atguigu.com">免责声明</a> | <a rel="nofollow" href="http://www.atguigu.com">网站地图</a> | <a rel="nofollow" href="http://www.atguigu.com">联系我们</a>
                         </div>
                         <div class="copyRight">
                             Copyright ?2017-2017atguigu.com 版权所有
@@ -88,57 +88,45 @@
 	<script src="../script/docs.min.js"></script>
 	<script>
         $('#myTab a').click(function (e) {
-          e.preventDefault()
+          e.preventDefault();
           $(this).tab('show')
         });
-      /*  $('#btn').click(function(){
-            var  local = "http://localhost:8080/";
-            $.ajax({
-                url:local+'MailsUtils',
-                data:{"id":"value"},
-                type:"GET",
-                dataType:"json",
-                traditional:true,
-                success:function(data){
-                    var mails=$('exampleInputEmail1').val();
-                    if(data.result==''){
-                        $("#btn").onclick="window.location.href='apply-3.html'";
-                    }
-                    // onclick="window.location.href='apply-3.html'"
-                }
-
-            });
-
-
-        });
-
-       */
 
 	</script>
   <script type="text/javascript">
       function clickDemo(){
+          var localhost = "http://localhost:8080";
+          //获取表单文本框的value值
           var text=$("#curst input:eq(0)").val();
-          //����������ʽ
+          //创建正则表达式
           var rexGep=/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
           if(text==null||text==""){
-              $("#changeDemo").text("�����������ַ");
+              $("#changeDemo").text("请填入邮箱地址ַ");
               return;
           }
           if(!rexGep.test($("#curst input:eq(0)").val())){
-              $("#changeDemo").text("�����ַ��ʽ����ȷ");
+              $("#changeDemo").text("邮箱格式错误");
               return;
           }
           $("#changeDemo").empty();
           $.ajax({
-              url:"apply-2.html",
+              url: localhost+"/realname/sendMails",
               type:"GET",
-              dataType:"text",
-              data:"text="+text,
-              success:function(data){
-                  $("#btn").onclick="window.location.href='apply-3.html'";
+              dataType:"JSON",
+              data:{"text":text},
+              success:function(datas){
+
+                  if ($.trim(datas.result) == $.trim('SUCCESS')) {
+                      window.location.href='apply-3.html';
+                  }
+                  if ( $.trim(datas.result) == $.trim('FAILED')){
+                      alert("发送验证码失败")
+                  }
               }
           });
+          $("#exampleInputEmail1").val("");
       }
   </script>
   </body>
+
 </html>

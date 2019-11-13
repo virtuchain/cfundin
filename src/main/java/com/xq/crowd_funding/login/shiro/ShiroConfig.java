@@ -1,6 +1,5 @@
 package com.xq.crowd_funding.login.shiro;
 
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -8,7 +7,6 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -28,15 +26,13 @@ public class  ShiroConfig {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         // 设置 SecurityManager
         bean.setSecurityManager(securityManager);
-        /*
-        * 我们的案例是前后端分离的，所以下面3个设置不需要设置
+       // * 我们的案例是前后端分离的，所以下面3个设置不需要设置
         // 设置登录成功跳转Url
-        bean.setSuccessUrl("/main");
-        // 设置登录跳转Url
-        bean.setLoginUrl("/toLogin");
+       // bean.setSuccessUrl("views/index.html");
+       // 设置登录跳转Url
+        bean.setLoginUrl("/views/login.html");
         // 设置未授权提示Url
         bean.setUnauthorizedUrl("/error/unAuth");
-        */
         /**
          * anon：匿名用户可访问
          * authc：认证用户可访问

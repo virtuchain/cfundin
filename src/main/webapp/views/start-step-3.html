@@ -9,6 +9,10 @@
 	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="../css/font-awesome.min.css">
 	<link rel="stylesheet" href="../css/theme.css">
+      <script src="../jquery/jquery-2.1.1.min.js"></script>
+      <script src="../bootstrap/js/bootstrap.min.js">
+      </script><script src="../script/docs.min.js"></script>
+      <script src="../script/back-to-top.js"></script>
 	<style>
 #footer {
     padding: 15px 0;
@@ -249,15 +253,49 @@
         </div>
       
     </div> <!-- /container -->
-    <script src="../jquery/jquery-2.1.1.min.js"></script>
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
-	<script src="../script/docs.min.js"></script>
-    <script src="../script/back-to-top.js"></script>
 	<script>
-$('#myTab a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
+        $(function () {
+            var localhost="http://localhost:8080/";
+            $.ajax({
+               url: localhost+"raisefunding/retuenUserInfo",
+                dataType:"JSON",
+                type:"get",
+                success:function (datas) {
+                   console.log(datas.data);
+                    $("#loginname").append(datas.data.loginacct);
+                }
+            });
+            $("input").blur(function () {
+               var paynumVal =  $("input[name='paynum']").val();
+                var cardnumVal =  $("input[name='cardnum']").val();
+
+                if( paynumVal !=null && paynumVal.trim() != '' &&
+                    cardnumVal!=null && cardnumVal.trim() != '' ){
+                    $('#raisecrow').css('display','block');
+                }else {
+                    $('#raisecrow').css('display','none');
+                }
+
+            });
+
+            $("#raisecrow").click(function () {
+                $.ajax({
+                    url: localhost+"raisefunding/saveMemberConfirmInfo",
+                    dataType:"JSON",
+                    data:$("form").serialize() ,
+                    type:"post",
+                 //   contentType:'application/json',
+                    success:function (datas) {
+                        console.log(datas.data);
+                        if(datas.result=='SUCCESS'){
+                            window.location.href='start-step-4.html';
+                        }else {
+                            alert("失败了")
+                        }
+                    }
+                });
+            })
+        })
 	</script>
   </body>
 </html>
