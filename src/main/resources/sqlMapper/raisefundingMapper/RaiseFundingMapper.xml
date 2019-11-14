@@ -1,35 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xq.crowd_funding.raisefunding.dao.RaiseDao">
-    <insert id="inserPeojectInfo" parameterType="com.xq.crowd_funding.common.pojo.TProject"
-                useGeneratedKeys="true" keyColumn="id">
-        insert into t_project values (
-        #{id},#{name},#{remark},#{money},#{day},#{status},#{deploydate},#{supportmoney}
-        ,#{supporter},#{completion},#{memberid},#{createdate},#{follower})
+
+    <insert id="inserPeojectInfo"  parameterType="com.xq.crowd_funding.common.pojo.TProject"
+           useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
+        insert into t_project
+        (`name`,`remark`,`money`,`day`,`status`,`deploydate`,`supportmoney`,
+        `supporter`,`completion`,`memberid`,`createdate` ,`follower`,`headerPicturePath`)
+         values
+         (#{name},#{remark},#{money},#{day},#{status},#{deploydate},#{supportmoney}
+        ,#{supporter},#{completion},#{memberid},#{createdate},#{follower},#{headerPicturePath})
     </insert>
 
     <insert id="insertProTypeInfo">
-        insert  into t_project_type ("projectid",typeid) values
-        <foreach collection="proTypeList" item="typeid">
+        insert  into t_project_type (projectid,typeid) values
+        <foreach collection="proTypeList" item="typeid" separator="," index="index">
             (#{proId},#{typeid})
         </foreach>
     </insert>
 
+    <insert id="insertDetailPicture" >
+       insert into t_project_item_pic (projectid,item_pic_path) values
+        <foreach collection="detailPicturePathList" item="detailpath" separator="," index="index">
+            (#{proId},#{detailpath})
+        </foreach>
+    </insert>
+
+    <insert id="inserttMemberLaunch">
+      INSERT INTO t_member_launch_info
+      (memberid,description_simple,description_detail,phone_num,service_num)
+      values
+      (#{memberid},#{descriptionSimple},#{descriptionDetail},#{phoneNum},#{serviceNum})
+    </insert>
+
     <insert id="insertProTagInfo">
-        insert  into t_project_tag ("projectid",tagid) values
-        <foreach collection="proTypeList" item="typeid">
-            (#{proId},#{typeid})
+        insert  into t_project_tag (projectid,tagid) values
+        <foreach collection="proTagList" item="tagid" separator="," index="index">
+            (#{proId},#{tagid})
         </foreach>
     </insert>
 
     <insert id="insertReturnInfo" parameterType="com.xq.crowd_funding.common.pojo.TReturn">
-        insert into t_return VALUES (#{id},#{projectid},#{type},#{supportmoney},#{content},
+        insert into t_return
+        (`projectid`,`type`,`supportmoney`,`content`,`count`,`signalpurchase`,`purchase`,`freight`,`invoice`,`rtndate`)
+        VALUES
+        (#{projectid},#{type},#{supportmoney},#{content},
         #{count},#{signalpurchase},#{purchase},#{freight},#{invoice},#{rtndate})
     </insert>
 
     <insert id="insertMemberConfirmInfo" parameterType="com.xq.crowd_funding.common.pojo.TMemberConfirmInfo">
-        insert  into  t_member_confirm_info values (#{id},#{memberid},#{paynum},#{cardnum});
+        insert  into  t_member_confirm_info
+        (memberid,paynum,cardnum)
+        values (#{memberid},#{paynum},#{cardnum});
     </insert>
+
+
 
     <select id="queryTypePO" resultType="com.xq.crowd_funding.common.pojo.TType">
         SELECT  * FROM t_type

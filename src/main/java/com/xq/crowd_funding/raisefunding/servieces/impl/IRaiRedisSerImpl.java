@@ -15,6 +15,7 @@ import com.xq.crowd_funding.raisefunding.servieces.IRaiseRedisService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +36,14 @@ public class IRaiRedisSerImpl implements IRaiseRedisService {
         // 创建 空  ProjectVO
         ProjectVO projectVO = new ProjectVO();
         projectVO.setMemberSignToken(userToken);
+
         // 将token 放入  projectVO
+
         String raiseToken = TokenKeyUtils.getTokenAndUUID(TokenKeyUtils.REDIS_RAISE_KEY_PREFIX);
-
-
         projectVO.setProjectTempToken(raiseToken);
 
-
         // 将 projectVO 转化成 json 字符存入 redis
+
         String projectVOJSON = JSON.toJSONString(projectVO);
 
         // 将 projectVOJSON 装入 redis
@@ -61,6 +62,9 @@ public class IRaiRedisSerImpl implements IRaiseRedisService {
             ProjectVO projectVOFront, ResultEntity resultEntity) {
 
         ProjectVO projectVO = JSON.parseObject(resultEntity.getData().toString(),ProjectVO.class);
+
+        projectVOFront.setHeaderPicturePath(projectVO.getHeaderPicturePath());
+        projectVOFront.setDetailPicturePathList(projectVO.getDetailPicturePathList());
 
         // 将 projectVOFront里面的属性值放入到  project里面
 
@@ -88,7 +92,7 @@ public class IRaiRedisSerImpl implements IRaiseRedisService {
         if (ResultEntity.FAILED.equals(resultEntity.getResult())){
             return ResultEntity.failed("失效");
         }
-        ProjectVO projectVO = JSON.parseObject(resultEntity.getData().toString(),ProjectVO.class);
+        ProjectVO projectVO = JSON.parseObject(resultEntity.getData(),ProjectVO.class);
         projectVO.setHeaderPicturePath(headFilePath);
         String toJSONString = JSON.toJSONString(projectVO);
         return redisOperation.saveRedisKeyAndValue(projectToken,toJSONString,-1);
@@ -107,7 +111,7 @@ public class IRaiRedisSerImpl implements IRaiseRedisService {
         if (ResultEntity.FAILED.equals(resultEntity.getResult())){
             return ResultEntity.failed("失效");
         }
-        ProjectVO projectVO = JSON.parseObject(resultEntity.getData().toString(),ProjectVO.class);
+        ProjectVO projectVO = JSON.parseObject(resultEntity.getData(),ProjectVO.class);
         projectVO.setDetailPicturePathList(detailPicturePath);
         String toJSONString = JSON.toJSONString(projectVO);
         return redisOperation.saveRedisKeyAndValue(projectToken,toJSONString,-1);
@@ -200,6 +204,16 @@ public class IRaiRedisSerImpl implements IRaiseRedisService {
                 projectVO.getProjectTempToken(),ProjectJSON,-1);
 
         return ResultEntity.successWithData(returnVOList);
+    }
+
+    @Override
+    public ResultEntity saveReturnsayFileToRedis(MultipartFile sayFile, UserToken userToken) {
+        // 首先将 projectvo取出来
+      String  projectToken =  userToken.getRaiseToken();
+      ResultEntity<String> resultEntity = redisOperation.readRedisValueByKey(projectToken);
+      ProjectVO projectVO = JSON.parseObject(resultEntity.getData().toString(),ProjectVO.class);
+      // projectVO 取出回报
+        return null;
     }
 
 }

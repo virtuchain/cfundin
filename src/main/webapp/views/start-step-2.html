@@ -83,10 +83,9 @@
 				<div class="navbar-header">
 				  <a class="navbar-brand" href="index.html" style="font-size:32px;">尚筹网-创意产品众筹平台</a>
 				</div>
-            <div id="navbar" class="navbar-collapse collapse" style="float:right;">
               <ul class="nav navbar-nav">
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> 张三<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i><span id="username"></span><span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="member.html"><i class="glyphicon glyphicon-scale"></i> 会员中心</a></li>
                     <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
@@ -96,8 +95,8 @@
                 </li>
               </ul>
             </div>
-			  </div>
-			</nav>
+            </nav>
+         </div>
       </div>
     </div>
 
@@ -225,7 +224,7 @@
                                       <div class="panel-body">
 
 		<div class="col-md-12 column" style="display:none" id="addreturnmodal" >
-            <form class="form-horizontal">
+            <form class="form-horizontal" enctype="multipart/form-data">
               <div class="form-group">
                 <label  class="col-sm-2 control-label">回报类型</label>
                 <div class="col-sm-10">
@@ -257,12 +256,35 @@
                   <label class="control-label">支持jpg、jpeg、png、gif格式，大小不超过2M，建议尺寸：760*510px选择文件</label>
                 </div>
                   <script>
+                      // 图片的上传
                      $(function () {
-                         $("#sayclick").click(function () {
-                             $("#uploadsayFile").click();
+                         // $("#sayclick").click(function () {
+                         //     $("#uploadsayFile").click();
+                         // })
+                         $("#uploadsayFile").change(function () {
+                             var local= "http://localhost:8080/";
+                             var formData = new FormData();
+                             formData.append("sayFile",this.files[0]);
+                             $.ajax({
+                                 url: local+ "raisefunding/uploadsayFile" ,
+                                 data: formData,
+                                 type:"post",
+                                 contentType: false,
+                                 processData: false,
+                                 success:function (datas) {
+                                     // 成功
+                                     if (datas.result=='SUCCESS'){
+                                         alert("图片已成功上传");
+                                     }else{
+                                         alert("图片上传错误");
+                                     }
+
+                                 }
+                             });
                          })
                      })
                   </script>
+
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" value="0">回报数量（名）</label>
@@ -345,7 +367,7 @@
                         <div class="panel-footer" style="text-align:center;">
                             <!--<button type="button" class="btn  btn-default btn-lg" onclick="window.location.href='start-step-1.html'">上一步</button>-->
                             <button type="button" class="btn  btn-warning btn-lg" id="nextstep" style="display:none"  onclick="window.location.href='start-step-3.html'">下一步</button>
-                            <a class="btn" > 预览 </a>
+                            <!--<a class="btn" > 预览 </a>-->
                         </div>
                     </div>
                 </div>
@@ -372,6 +394,15 @@
 	<script>
             $(function () {
                 var localhost = "http://localhost:8080/";
+                // 加载用户
+                $.ajax({
+                    url: localhost+"raisefunding/retuenUserInfo",
+                    type: "get",
+                    dataType:"JSON",
+                    success: function (datas) {
+                        $("#username").text(datas.data.loginacct);
+                    }
+                });
                 // 加载 页面回报的list
                 loadhtml();
                 $("#determine").click(function () {

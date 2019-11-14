@@ -245,8 +245,12 @@
                                     processData: false,
                                     success:function (datas) {
                                         // 成功
-                                        alert(datas.result);
-                                        alert(datas.message);
+                                        if (datas.result=='SUCCESS'){
+                                            alert("图片已成功上传");
+                                        }else{
+                                            alert("图片上传错误");
+                                        }
+
                                     }
                                 });
                           })
@@ -270,7 +274,6 @@
                             $("#uploadDetailFile").click();
                       }
                       $("#uploadDetailFile").change(function () {
-                          alert("选择了图片");
                           var local= "http://localhost:8080/";
                           var formData = new FormData();
                           filess = this.files;
@@ -284,8 +287,11 @@
                               contentType: false,
                               processData: false,
                               success:function (datas) {
-                                  // 成功
-                                  alert(datas.data);
+                                  if (datas.result=='SUCCESS'){
+                                      alert("图片已成功上传");
+                                  }else{
+                                      alert("图片上传错误");
+                                  }
                               }
                           });
                       })

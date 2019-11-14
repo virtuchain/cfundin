@@ -12,7 +12,7 @@ import java.util.Set;
 @Mapper
 public interface RaiseDao {
 
-    TProject inserPeojectInfo(TProject tProjectPO);
+    void inserPeojectInfo(TProject tProjectPO);
 
     void insertProTypeInfo(@Param("proId") Long proId, @Param("proTypeList")List proTypeList);
 
@@ -25,4 +25,8 @@ public interface RaiseDao {
     List<TType> queryTypePO();
 
     Set<TTag> selectTagByTypeId(Integer[] typeIdArray);
+
+    void insertDetailPicture(@Param("proId") Long proId,@Param("detailPicturePathList")List detailPicturePathList);
+
+    void inserttMemberLaunch(TMemberLaunchInfo tMemberLaunchInfoPO);
 }

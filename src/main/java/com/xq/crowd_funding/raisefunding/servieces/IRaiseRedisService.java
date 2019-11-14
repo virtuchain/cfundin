@@ -7,6 +7,7 @@ import com.xq.crowd_funding.login.bean.pojo.UserToken;
 import com.xq.crowd_funding.raisefunding.beans.vo.MemberConfirmInfoVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ReturnVO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -34,4 +35,6 @@ public interface IRaiseRedisService {
 
     // 根据 回报 id 删除回报信息
     ResultEntity<Object> removeReturnById(ResultEntity<String> resultEntity, Integer listid);
+
+    ResultEntity saveReturnsayFileToRedis(MultipartFile sayFile, UserToken userToken);
 }

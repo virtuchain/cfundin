@@ -39,6 +39,7 @@ public class RaiseThreeTepController extends  ConParentProperties {
     @PostMapping("raisefunding/saveMemberConfirmInfo")
     public ResultEntity saveMemberConfirmInfo(
             MemberConfirmInfoVO memberConfirmInfoVO,HttpServletRequest request){
+        System.out.println("memberConfirmInfoVO "+memberConfirmInfoVO.toString());
 
         UserToken userToken = TokenKeyUtils.getUserTokenByRequest(request);
 
@@ -57,25 +58,24 @@ public class RaiseThreeTepController extends  ConParentProperties {
      *  保存 projectpro到数据库
      * @return
      */
-
+    @PostMapping("raisefunding/saveAllProjectPro")
     public  ResultEntity<String> saveAllProjectPro(HttpServletRequest request){
 
         UserToken userToken = TokenKeyUtils.getUserTokenByRequest(request);
-
-        // 验证用户是否登录
 
         // 从 projectTempToken
         ResultEntity<String> resultEntity =
                 redisOperation.readRedisValueByKey(userToken.getRaiseToken());
 
-
+        // 验证用户是否登录
         if (ResultEntity.FAILED.equals(resultEntity.getResult())){
             return  ResultEntity.failed(resultEntity.getMessage());
         }
+
         // 得到 JSON数据，转化 成peojectpo对象
         ProjectVO projectVO = JSON.parseObject(resultEntity.getData(),ProjectVO.class);
 
         // 调用srevice 保存到数据库
-        return raiseDataImp.saveAllProToDatabase(projectVO, 17);
+        return raiseDataImp.saveAllProToDatabase(projectVO,userToken.getId());
     }
 }

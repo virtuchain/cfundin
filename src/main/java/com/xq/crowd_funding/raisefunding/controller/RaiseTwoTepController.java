@@ -11,7 +11,9 @@ import com.xq.crowd_funding.raisefunding.beans.vo.ProjectVO;
 import com.xq.crowd_funding.raisefunding.beans.vo.ReturnVO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,6 +48,31 @@ public class RaiseTwoTepController extends  ConParentProperties {
         }
 
         return redisServiceImp.saveProjectReturnToRedis(returnVO, resultEntity);
+    }
+
+    /**
+     * 保存回报里面的图片到 redis
+     * @param sayFile
+     * @param request
+     * @return
+     */
+    @PostMapping("raisefunding/uploadsayFile")
+    public  ResultEntity loadsayFile(
+            @RequestParam("headFile") MultipartFile sayFile, HttpServletRequest request){
+
+        // 排除空文件
+        if (sayFile.isEmpty()){
+            return  ResultEntity.failed("文件为空");
+        }
+        ResultEntity<String> resultEntity = pictureSerImp.uploadHeadPicture(sayFile);
+        if (ResultEntity.FAILED.equals(resultEntity.getResult())){
+            return ResultEntity.failed("上传失败");
+        }
+
+        //  得到session
+        UserToken userToken = TokenKeyUtils.getUserTokenByRequest(request);
+
+        return redisServiceImp.saveReturnsayFileToRedis(sayFile, userToken);
     }
 
     /**
