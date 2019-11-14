@@ -211,7 +211,7 @@
                             htm +='   <td>' +(index+1) + '</td>';
                             htm +='   <td><input type="checkbox" id="' + item.id + '"/>';
                             htm +='   <td>' + item.name + '</td>';
-                            htm +='   <td><button type="button" class="btn btn-success btn-xs" id="assignBtn" onclick="getRole(this)"><i class=" glyphicon glyphicon-check"></i></button>';
+                            htm +='   <td><button type="button" class="btn btn-success btn-xs" id="assignBtn" onclick=" window.location.href = \'assignPermission.html?id=\'+'+item.id+'"><i class=" glyphicon glyphicon-check"></i></button>';
                             htm +='   <button type="button" class="btn btn-primary btn-xs" id="updateBtn" onclick="upGetId(this)"><i class=" glyphicon glyphicon-pencil"></i></button>';
                             htm +='   <button type="button" class="btn btn-danger btn-xs" id="delBtn" onclick="delGetId(this)"><i class=" glyphicon glyphicon-remove"></i></button>';
                             htm +='   </td></tr>';
@@ -222,7 +222,7 @@
             }
 
             function getRole(){
-                window.location.href = "assignPermission.html";
+
             };
         </script>
   </body>

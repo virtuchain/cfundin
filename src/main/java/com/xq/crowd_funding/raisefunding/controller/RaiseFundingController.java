@@ -163,7 +163,9 @@ public class RaiseFundingController {
         }
 
         // 判断是否是失败的状态
-       ResultEntity<String> resultEntity = redisOperation.readRedisValueByKey(projectTempToken);
+       ResultEntity<String> resultEntity =
+               redisOperation.readRedisValueByKey(userToken.getRaiseToken());
+
         if (ResultEntity.FAILED.equals(resultEntity.getMessage())){
            return  ResultEntity.failed(resultEntity.getMessage());
         }
@@ -175,7 +177,7 @@ public class RaiseFundingController {
      * @return  ResultEntity<String>
      */
     @PostMapping("raisefunding/savereturn")
-    public  ResultEntity<String> saveProjectReturn(ReturnVO returnVO){
+    public  ResultEntity saveProjectReturn(ReturnVO returnVO){
         System.out.println("returnVO "+returnVO.toString());
         // 得到 project
         String proToken = returnVO.getProjectTempToken();

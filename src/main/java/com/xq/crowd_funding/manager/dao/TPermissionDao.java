@@ -22,4 +22,6 @@ public interface TPermissionDao {
     TPermission getPermissionById(@Param("id") Integer id);
 
     int delete(@Param("pojo") TPermission pojo);
+
+    List<Integer> queryPermissionByRoleId(@Param("roleid") Integer roleid);
 }

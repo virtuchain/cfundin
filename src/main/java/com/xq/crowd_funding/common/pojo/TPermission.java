@@ -15,6 +15,8 @@ public class TPermission {
   private String icon;
   private String url;
   private boolean open=true;
+  private boolean checked;
+  private Integer level;
   private List<TPermission> children;
 
 

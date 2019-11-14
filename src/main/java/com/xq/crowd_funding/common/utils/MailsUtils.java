@@ -5,18 +5,11 @@
 //import org.springframework.stereotype.Controller;
 //import org.springframework.web.bind.annotation.*;
 //
-//import javax.mail.*;
-//import javax.mail.internet.InternetAddress;
-//import javax.mail.internet.MimeMessage;
 //import java.security.GeneralSecurityException;
 //import java.util.Properties;
 //
 //import org.springframework.web.bind.annotation.RequestMapping;
-//import javax.mail.MessagingException;
 //
-//import javax.mail.Message;
-//import javax.mail.Session;
-//import javax.mail.Transport;
 //
 //@Controller
 //public class MailsUtils {
@@ -68,4 +61,3 @@
 //        }
 //
 //}
-//
