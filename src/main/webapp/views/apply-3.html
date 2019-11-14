@@ -104,7 +104,7 @@
                 if(datas.result =='FAILED'){
                     $("#changeDemo").text("验证码错误");
                 }
-            },
+            }
         })
     }
     function updateMenberStatus(){
@@ -112,9 +112,9 @@
             url :localhost+ "realname/UpdateReName",
             dataType : "json",//数据格式 
             type : "post",//请求方式
-            success:function () {
+            success:function (datas) {
                if(datas.result =='SUCCESS'){
-                   window.location.href='accttype.html';
+                   window.location.href='member.html';
                }else {
                    alert("认证失败");
                }

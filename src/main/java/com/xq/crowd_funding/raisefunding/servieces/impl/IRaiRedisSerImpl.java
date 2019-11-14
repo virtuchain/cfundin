@@ -16,7 +16,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,11 +38,9 @@ public class IRaiRedisSerImpl implements IRaiseRedisService {
         // 将token 放入  projectVO
         String raiseToken = TokenKeyUtils.getTokenAndUUID(TokenKeyUtils.REDIS_RAISE_KEY_PREFIX);
 
-        System.out.println("serimp初始化projectvo的token "+ raiseToken);
 
         projectVO.setProjectTempToken(raiseToken);
 
-        System.out.println("serimp初始化projectvo "+ projectVO.toString());
 
         // 将 projectVO 转化成 json 字符存入 redis
         String projectVOJSON = JSON.toJSONString(projectVO);
@@ -130,7 +128,7 @@ public class IRaiRedisSerImpl implements IRaiseRedisService {
         List<ReturnVO> returnVOList = projectVO.getReturnVOList();
 
         if (!CrowdUtils.conllectionCkeck(returnVOList)){
-            returnVOList = new LinkedList<>();
+            returnVOList = new ArrayList<>();
         }
         returnVOList.add(returnVO);
 
@@ -141,9 +139,8 @@ public class IRaiRedisSerImpl implements IRaiseRedisService {
         String  projectStr = JSON.toJSONString(projectVO);
 
         redisOperation.saveRedisKeyAndValue(
-                returnVO.getProjectTempToken(), projectStr, -1);
+                projectVO.getProjectTempToken(), projectStr, -1);
 
-        System.out.println("returnVOList "+returnVOList.toString());
 
         return ResultEntity.successWithData(returnVOList);
     }
@@ -166,7 +163,7 @@ public class IRaiRedisSerImpl implements IRaiseRedisService {
         String ProjectJSON = JSON.toJSONString(projectVO);
 
         return redisOperation.saveRedisKeyAndValue(
-                memberConfirmInfoVO.getProjectTempToken(),ProjectJSON,-1);
+                projectVO.getProjectTempToken(),ProjectJSON,-1);
     }
 
     /**
@@ -175,7 +172,6 @@ public class IRaiRedisSerImpl implements IRaiseRedisService {
      * @param listid
      * @return
      */
-
     @Override
     public ResultEntity<Object> removeReturnById(ResultEntity<String> resultEntity, Integer listid) {
 
@@ -184,9 +180,16 @@ public class IRaiRedisSerImpl implements IRaiseRedisService {
 
         List<ReturnVO> returnVOList = projectVO.getReturnVOList();
 
-        returnVOList.remove(listid);
 
-        System.out.println("list "+ returnVOList.toString());
+        // 删除元素
+        if (returnVOList.size()>listid){
+            // 如果元素 存在，删除
+
+            ReturnVO isremove = returnVOList.remove((int)listid);
+
+        //    System.out.println("删除的信息: " + isremove.toString());
+
+        }
 
         projectVO.setReturnVOList(returnVOList);
 

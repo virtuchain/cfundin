@@ -14,21 +14,10 @@ public class TMemberService implements IService {
     @Resource
     private TMemberDaoo tMemberDao;
 
-    public int insert(TMember pojo){
-        return tMemberDao.insert(pojo);
+    public void insert(TMember tMember){
+         tMemberDao.insert(tMember);
     }
 
-    public int insertList(List< TMember> pojos){
-        return tMemberDao.insertList(pojos);
-    }
-
-    public List<TMember> select(TMember pojo){
-        return tMemberDao.select(pojo);
-    }
-
-    public int update(TMember pojo){
-        return tMemberDao.update(pojo);
-    }
 
     public TMember selectUser( String loginacct){
         TMember tMember= null;
@@ -47,5 +36,17 @@ public class TMemberService implements IService {
     public void setUserType(Integer userType) {
         usertype=userType;
         System.out.println("---------service层的usertype"+usertype);
+    }
+
+    @Override
+    public String selectUsername(String logginacct) {
+        String username=tMemberDao.selectUsername(logginacct);
+        return username;
+    }
+
+    @Override
+    public String selectPhone(String Phone) {
+         Phone =tMemberDao.selectPhone(Phone);
+        return Phone;
     }
 }

@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserToken {
-
+    private long id;
     private String loginacct;
     private String userpswd;
     private String usertoken;
