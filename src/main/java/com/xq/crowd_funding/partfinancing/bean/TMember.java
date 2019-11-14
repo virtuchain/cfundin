@@ -25,5 +25,6 @@ public class TMember {
   private String realname;
   private String cardnum;
   private String accttype;
+  private  String phone;
 
 }

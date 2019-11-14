@@ -51,4 +51,9 @@ public class TPermissionServiceImp implements TPermissionService {
         return tPermissionDao.delete(pojo);
     }
 
+    @Override
+    public List<Integer> queryPermissionByRoleId(Integer roleid) {
+        return tPermissionDao.queryPermissionByRoleId(roleid);
+    }
+
 }

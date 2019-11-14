@@ -58,7 +58,10 @@
         SELECT <include refid="all_column"/>
         FROM t_permission where id=#{id}
     </select>
-
+    <select id="queryPermissionByRoleId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT permissionid
+        FROM t_role_permission where roleid=#{roleid}
+    </select>
 <!--auto generated Code-->
     <delete id="delete">
         DELETE FROM t_permission where id = #{pojo.id}

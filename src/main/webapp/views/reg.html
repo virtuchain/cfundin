@@ -49,14 +49,15 @@
                         <input type="button" value="获取验证码"  onclick="getVcode()"></input>
                     </div>
                     <div class="form-group has-success has-feedback">
-                        <input type="text" class="form-control" id="verifyCode"  name="verifyCode" placeholder="验证码">
+                        <input type="text" class="form-control" id="verifyCode"  name="verifyCode" placeholder="验证码"  >
+                         <input type="hidden" id="hidCode">
                     </div>
 
                 </div>
                 <div class="form-group has-success has-feedback">
                     <select class="form-control" id="usertype" name="usertype">
-                        <option value="1">企业</option>
-                        <option value="2">个人</option>
+                        <option value="1">会员</option>
+                        <option value="2">管理</option>
                     </select>
                 </div>
                 <div class="checkbox">
@@ -77,6 +78,48 @@
     <script src="../bootstrap/js/bootstrapValidator.js"></script>
   <script>
       $(function () {
+          $("#phone").on("blur",function () {
+              $.ajax({
+                  url:"/reg/on4",
+                  type:"post",
+                  data:{"phone":$("#phone").val()},
+                  success:function (reg) {
+                      if(reg.status=="success"){
+                          alert("此账户已存在")
+                      }
+                      if(reg.status=="false"){
+                          alert("此账户不存在")
+                          //
+                          $("#submit").on("click", function () {
+                              //开启验证
+                              $("#myForm").bootstrapValidator('validate');//提交验证
+                              if($("#myForm").data("bootstrapValidator").isValid()){
+                                  //表单提交的方法、比如ajax提交
+                                  //表单提交
+                                  if($("#verifyCode").val()==$("#hidCode").val()){
+                                      $.ajax({
+                                          url:"/reg/on1",
+                                          type1:"post",
+                                          dataType:"json",
+                                          data:$(".form-signin").serialize(),
+                                          success:function (res) {
+                                              alert("状态是"+res.status);
+                                              if(res.status=="success"){
+                                                  location.href="/views/login.html";
+                                              }
+                                          }
+                                      })
+                                  }else {
+                                      alert("请核对验证码是否正确")
+                                  }
+                              }
+                          })
+                          //
+                      }
+                  }
+              })
+          })
+           
           $('#myForm').bootstrapValidator({
               message: 'This value is not valid',
               feedbackIcons: {
@@ -136,25 +179,12 @@
               }
           });
 
-          $("#submit").on("click", function () {
-              //开启验证
-              $("#myForm").bootstrapValidator('validate');//提交验证
-              if($("#myForm").data("bootstrapValidator").isValid()){
-                  //表单提交的方法、比如ajax提交
-                  alert("Success....");
-                  //表单提交
-                  $.ajax({
-                      url:"/reg/on1",
-                      type1:"post",
-                      dataType:"json",
-                      data:$(".form-signin").serialize(),
-                      success:function (res) {
-                          alert("123456")
-                      }
-                  })
-              }
-          })
 
+          //
+          $("#verifyCode").on('change',function () { 
+              alert($("#verifyCode").val());
+              alert($("#hidCode").val());
+          })
       });
       //function sub（）{
       // }
@@ -171,10 +201,16 @@
                     "phone": $("#phone").val()
                 },
                 success: function (res) {
-                    alert("123")
+                    alert(res.code);
+                    $("#hidCode").attr("value",res.code);
+                    alert($("#hidCode").val());
+
                 }
             })
         }
+
+
+
   </script>
   </body>
 </html>

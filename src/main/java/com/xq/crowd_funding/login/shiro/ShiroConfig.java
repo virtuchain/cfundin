@@ -15,7 +15,7 @@ import java.util.Map;
  * Shiro的配置类
  */
 @Configuration
-public class ShiroConfig {
+public class  ShiroConfig {
 
     /**
      * 配置Shiro过滤器

@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
 	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="../css/font-awesome.min.css">
 	<link rel="stylesheet" href="../css/main.css">
@@ -168,7 +167,11 @@
 	<script src="../ztree/jquery.ztree.all-3.5.min.js"></script>
         <script type="text/javascript">
             $(function () {
-			    $(".list-group-item").click(function(){
+                //获取路径传过来的id
+                var urlMsg = parseUrl(window.location.search);
+                var id=urlMsg.id;
+                //异步进行修改
+                $(".list-group-item").click(function(){
 				    if ( $(this).find("ul") ) {
 						$(this).toggleClass("tree-closed");
 						if ( $(this).hasClass("tree-closed") ) {
@@ -181,33 +184,49 @@
 
 				var setting = {
                     check : {
-                        enable : true
+                        enable : true//在树的节点显示复选框
                     },
 					view: {
-						selectedMulti: false,
+						selectedMulti: false,//树的节点不允许点多个
 						addDiyDom: function(treeId, treeNode){
 							var icoObj = $("#" + treeNode.tId + "_ico"); // tId = permissionTree_1, $("#permissionTree_1_ico")
+							icoObj.attr("javascript:void(0)");
 							if ( treeNode.icon ) {
-								icoObj.removeClass("button ico_docu ico_open").addClass("fa fa-fw " + treeNode.icon).css("background","");
+                                icoObj.removeClass("button ico_docu ico_open").addClass(treeNode.icon).css("background","");
 							}
 						},
 					},
 					async: {
-						enable: true,
-						url:"tree.txt",
+						enable: true,//表示采用异步
+						url:"/userrole/treeData",
+						data:{"id":id},
 						autoParam:["id", "name=n", "level=lv"]
+						//自动传参，id代表treeNode的id
+						//name=n表示将treeNode的name改名称为n,既别名
+						//表示树的级别，lv是别名
 					},
-					callback: {
-						onClick : function(event, treeId, json) {
 
-						}
-					}
 				};
 				//$.fn.zTree.init($("#treeDemo"), setting); //异步访问数据
 
-				var d = [{"id":1,"pid":0,"seqno":0,"name":"系统权限菜单","url":null,"icon":"fa fa-sitemap","open":true,"checked":false,"children":[{"id":2,"pid":1,"seqno":0,"name":"控制面板","url":"dashboard.htm","icon":"fa fa-desktop","open":true,"checked":false,"children":[]},{"id":6,"pid":1,"seqno":1,"name":"消息管理","url":"message/index.htm","icon":"fa fa-weixin","open":true,"checked":false,"children":[]},{"id":7,"pid":1,"seqno":1,"name":"权限管理","url":"","icon":"fa fa-cogs","open":true,"checked":false,"children":[{"id":8,"pid":7,"seqno":1,"name":"用户管理","url":"user/index.htm","icon":"fa fa-user","open":true,"checked":false,"children":[]},{"id":9,"pid":7,"seqno":1,"name":"角色管理","url":"role/index.htm","icon":"fa fa-graduation-cap","open":true,"checked":false,"children":[]},{"id":10,"pid":7,"seqno":1,"name":"许可管理","url":"permission/index.htm","icon":"fa fa-check-square-o","open":true,"checked":false,"children":[]}]},{"id":11,"pid":1,"seqno":1,"name":"资质管理","url":"","icon":"fa fa-certificate","open":true,"checked":false,"children":[{"id":12,"pid":11,"seqno":1,"name":"分类管理","url":"cert/type.htm","icon":"fa fa-th-list","open":true,"checked":false,"children":[]},{"id":13,"pid":11,"seqno":1,"name":"资质管理","url":"cert/index.htm","icon":"fa fa-certificate","open":true,"checked":false,"children":[]}]},{"id":15,"pid":1,"seqno":1,"name":"流程管理","url":"process/index.htm","icon":"fa fa-random","open":true,"checked":false,"children":[]},{"id":16,"pid":1,"seqno":1,"name":"审核管理","url":"","icon":"fa fa-check-square","open":true,"checked":false,"children":[{"id":17,"pid":16,"seqno":1,"name":"实名认证人工审核","url":"process/cert.htm","icon":"fa fa-check-circle-o","open":true,"checked":false,"children":[]}]}]}];
-				$.fn.zTree.init($("#treeDemo"), setting, d);
+				$.fn.zTree.init($("#treeDemo"), setting);
             });
+
+            //将url把参数解析出来
+            function parseUrl(url) {
+                if (url.indexOf("?") == -1) {
+                    return {};
+                }
+                var query = url.split("?")[1];
+                var queryArr = query.split("&");
+                var obj = {};
+                queryArr.forEach(function (item) {
+                    var key = item.split("=")[0];
+                    var value = item.split("=")[1];
+                    obj[key] = decodeURIComponent(value);
+                });
+                return obj;
+            }
         </script>
   </body>
 </html>

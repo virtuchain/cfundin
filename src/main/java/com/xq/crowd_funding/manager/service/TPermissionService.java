@@ -23,4 +23,6 @@ public interface TPermissionService {
 
     int delete(TPermission pojo);
 
+    List<Integer> queryPermissionByRoleId(Integer roleid);
+
 }
