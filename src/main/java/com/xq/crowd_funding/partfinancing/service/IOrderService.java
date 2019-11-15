@@ -1,6 +1,6 @@
 package com.xq.crowd_funding.partfinancing.service;
 
-import com.xq.crowd_funding.partfinancing.bean.TOrder;
+import com.xq.crowd_funding.common.pojo.TOrder;
 
 import java.util.List;
 
@@ -19,8 +19,10 @@ public interface IOrderService {
 
     int addOrder(TOrder tOrder);
 
-    List<TOrder> queryTOrderById(Long id);
+    List<TOrder> queryTOrderById(Integer id);
 
-    int savaTOrder(TOrder tOrder, Long memberid);
+    int savaTOrder(TOrder tOrder, Integer memberid);
+
+    int updateStatus(Integer id);
 
 }

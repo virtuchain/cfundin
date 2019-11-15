@@ -1,5 +1,6 @@
-package com.xq.crowd_funding.common.pojo;
+package com.xq.crowd_funding.partfinancing.pojo;
 
+import com.xq.crowd_funding.common.pojo.TMemberAddress;
 
 public class TMember {
 
@@ -14,14 +15,17 @@ public class TMember {
   private String cardnum;
   private String accttype;
   private String phone;
+  //会员地址表
+  private TMemberAddress tMemberAddress;
 
-  public String getPhone() {
-    return phone;
+  public TMemberAddress gettMemberAddress() {
+    return tMemberAddress;
   }
 
-  public void setPhone(String phone) {
-    this.phone = phone;
+  public void settMemberAddress(TMemberAddress tMemberAddress) {
+    this.tMemberAddress = tMemberAddress;
   }
+
 
   public long getId() {
     return id;
@@ -110,6 +114,15 @@ public class TMember {
 
   public void setAccttype(String accttype) {
     this.accttype = accttype;
+  }
+
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
   }
 
 }

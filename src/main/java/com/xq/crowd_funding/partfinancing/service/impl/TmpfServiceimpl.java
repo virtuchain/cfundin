@@ -1,5 +1,6 @@
 package com.xq.crowd_funding.partfinancing.service.impl;
 
+import com.xq.crowd_funding.common.pojo.TMemberProjectFollow;
 import com.xq.crowd_funding.partfinancing.dao.TmpfDao;
 import com.xq.crowd_funding.partfinancing.service.ITmpfService;
 import org.springframework.stereotype.Service;
@@ -22,14 +23,24 @@ public class TmpfServiceimpl implements ITmpfService {
     TmpfDao tmpfDao;
 
     @Override
-    public int addTmpf(Long memberid, Long projectid) {
+    public TMemberProjectFollow queryByProid(Integer projectid, Integer memberid) {
+        return tmpfDao.queryByProid(projectid,memberid);
+    }
+
+    @Override
+    public int queryLength(Integer projectid) {
+        return tmpfDao.queryLength(projectid);
+    }
+
+    @Override
+    public int addTmpf(Integer memberid, Integer projectid) {
         int i = tmpfDao.addTmpf(memberid, projectid);
         return  i;
     }
 
     @Override
-    public int delTemf(Long memberid, Long projectid) {
-        int i = tmpfDao.addTmpf(memberid, projectid);
+    public int delTemf(Integer memberid, Integer projectid) {
+        int i = tmpfDao.delTemf(memberid, projectid);
         return i;
     }
 }

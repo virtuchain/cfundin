@@ -164,7 +164,7 @@
                                     <div class="col-md-12 column">
                                         <div class="alert alert-warning alert-dismissable" style="color:red;">
                                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                            <i class="glyphicon glyphicon-info-sign"></i> <strong >请在下单后15分钟内付款，否则您的订单会被自动关闭。</strong> 
+                                            <!--<i class="glyphicon glyphicon-info-sign"></i> <strong >请在下单后15分钟内付款，否则您的订单会被自动关闭。</strong>--> 
                                         </div>
                                     </div>
                                 </div>
@@ -180,7 +180,8 @@
                                     </blockquote>
                                 </div>
                                 <div class="col-md-12 column" style="padding:0 120px;">
-                                    <div class="radio">
+                                	<div  id="xx"></div>
+                                    <!--<div class="radio">
                                       <label>
                                         <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
                                         xxxxx 188****3342 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -191,54 +192,56 @@
                                         <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
                                         xxxxx 188****3342 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                                       </label>
-                                    </div>
+                                    </div>-->
                                     <div class="radio">
                                       <label>
                                         <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                        新地址
-                                      </label>
+                                    				新地址
+                                     		 </label>
                                     </div>
-                                    <div style="border:10px solid #f60;border-bottom-color: #eceeef;border-width: 10px;width:20px;margin-left:20px;margin-top:-20px;
+                                    <!--<div style="border:10px solid #f60;border-bottom-color: #eceeef;border-width: 10px;width:20px;margin-left:20px;margin-top:-20px;
                                              border-left-color: rgba(221, 221, 221, 0);
                                              border-top-color: rgba(221, 221, 221, 0);
                                              border-right-color: rgba(221, 221, 221, 0);
-                                    "></div>
-                                    <div class="panel panel-default" style="border-style: dashed;background-color:#eceeef">
-                                      <div class="panel-body">
-                                            <div class="col-md-12 column" >
-                                                <form class="form-horizontal">
-                                                  <div class="form-group">
-                                                    <label class="col-sm-2 control-label">收货人（*）</label>
-                                                    <div class="col-sm-10">
-                                                      <input type="text" class="form-control" style="width:200px;" placeholder="姓名：xxxx" >
-                                                    </div>
-                                                  </div>
-                                                  <div class="form-group">
-                                                    <label class="col-sm-2 control-label">手机（*）</label>
-                                                    <div class="col-sm-10">
-                                                      <input class="form-control" type="text" style="width:200px;" placeholder="请填写11位手机号码"></input>
-                                                    </div>
-                                                  </div>
-                                                  <div class="form-group">
-                                                    <label class="col-sm-2 control-label">地址（*）</label>
-                                                    <div class="col-sm-10">
-                                                      <input class="form-control" type="text" style="width:400px;" placeholder="请填写11位手机号码"></input>
-                                                    </div>
-                                                  </div>
-                                                  <div class="form-group">
-                                                    <label for="inputEmail3" class="col-sm-2 control-label"></label>
-                                                    <div class="col-sm-10">
-                                                          <button type="button" class="btn btn-primary">确认配送信息</button>
-                                                    </div>
-                                                  </div>
-                                                </form>
-                                            </div>
-                                      </div>
+                                    "></div>-->
+                                    <div id="lxr" style="display: none;">
+	                                    	<div class="panel panel-default" style="border-style: dashed;background-color:#eceeef">
+		                                      <div class="panel-body">
+	                                            <div class="col-md-12 column" >
+	                                                <form class="form-horizontal">
+	                                                  <div class="form-group">
+	                                                    <label class="col-sm-2 control-label">收货人（*）</label>
+	                                                    <div class="col-sm-10">
+	                                                      <input id="username" type="text" value="" class="form-control" style="width:200px;" placeholder="姓名：xxxx" >
+	                                                    </div>
+	                                                  </div>
+	                                                  <div class="form-group">
+	                                                    <label class="col-sm-2 control-label">手机（*）</label>
+	                                                    <div class="col-sm-10">
+	                                                      <input id="userphone" class="form-control"  type="text" value="" style="width:200px;" placeholder="请填写11位手机号码"></input>
+	                                                    </div>
+	                                                  </div>
+	                                                  <div class="form-group">
+	                                                    <label class="col-sm-2 control-label">地址（*）</label>
+	                                                    <div class="col-sm-10">
+	                                                      <input id="useraddrs" class="form-control"  type="text" value="" style="width:400px;" placeholder="请填写地址"></input>
+	                                                    </div>
+	                                                  </div>
+	                                                  <div class="form-group">
+	                                                    <label for="inputEmail3" class="col-sm-2 control-label"></label>
+	                                                    <div class="col-sm-10">
+	                                                          <button id="qrxx" type="button" class="btn btn-primary">确认配送信息</button>
+	                                                    </div>
+	                                                  </div>
+	                                                </form>
+	                                            </div>
+		                                      </div>
+	                                    </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="container-fluid">
+                        <!--<div class="container-fluid">
                             <div class="row clearfix">
                                 <div class="col-md-12 column">
                                     <blockquote style="border-left: 5px solid #f60;color:#f60;padding: 0 0 0 20px;">
@@ -281,7 +284,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="container-fluid">
                             <div class="row clearfix">
                                 <div class="col-md-12 column">
@@ -304,13 +307,13 @@
                                         </tr>
                                       </thead>
                                       <tbody>
-                                        <tr>
-                                          <td>活性富氢净水直饮机</td>
+                                        <tr id="xmxx">
+                                          <!--<td>活性富氢净水直饮机</td>
                                           <td>深圳市博实永道电子商务有限公司</td>
                                           <td>每满1750人抽取一台活性富氢净水直饮机，至少抽取一台。抽取名额（小数点后一位四舍五入）=参与人数÷1750人，由苏宁官方抽取。</td>
                                           <td>1</td>
                                           <td style="color:#F60">￥ 1.00</td>
-                                          <td>免运费</td>
+                                          <td>免运费</td>-->
                                         </tr>
                                       </tbody>
                                     </table>
@@ -334,18 +337,12 @@
                                 <div class="col-md-12 column">
                                         <div class="alert alert-warning alert-dismissable" style="text-align:right; border:2px solid #ffc287;">
                                             <ul style="list-style:none;" >
-                                                <li style="margin-top:10px;">支持金额：<span style="color:red;">￥1.00</span></li>
-                                                <li style="margin-top:10px;">配送费用：<span style="color:red;">￥0.00</span></li>
-                                                <li style="margin-top:10px;">优惠金额：<span style="color:red;">-￥0.00</span></li>
-                                                <li style="margin-top:10px;margin-bottom:10px;"><h2>支付总金额：<span style="color:red;">￥1.00</span></h2></li>
-                                                <li style="margin-top:10px;padding:5px;border:1px solid #F00;display:initial;background:#FFF;">
-                                                    <i class="glyphicon glyphicon-info-sign"></i> <strong>您需要先 <a href="#address">设置配送信息</a> ,再提交订单</strong> 
-                                                </li>
-                                                <li style="margin-top:10px;">
+                                                <li style="margin-top:10px;margin-bottom:10px;"><h2>支付总金额：<span id="zje" style="color:red;"></span></h2></li>
+                                                <!--<li style="margin-top:10px;">
                                                 请在下单后15分钟内付款，否则您的订单会被自动关闭。
-                                                </li>
+                                                </li>-->
                                                 <li style="margin-top:10px;">
-                                                <button disabled="disabled" type="button" class="btn btn-warning btn-lg" onclick="window.location.href='pay-step-3.html'"><i class="glyphicon glyphicon-credit-card"></i> 立即付款</button>
+                                                <button id="zf" type="button" class="btn btn-warning btn-lg"><i class="glyphicon glyphicon-credit-card"></i> 立即付款</button>
                                                 </li>
                                                 <li style="margin-top:10px;">
                                                   <div class="checkbox">
@@ -409,10 +406,170 @@
 	<script src="../script/docs.min.js"></script>
     <script src="../script/back-to-top.js"></script>
 	<script>
-$('#myTab a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
-	</script>
+		var localhost = "http://localhost:8080";
+		//项目Id
+		var a = 0;
+		//支持金额
+		var b = 0;
+		//数量
+		var sl = 0;
+		//单价
+		var dj = 0;
+		//收货地址
+		var dz = 0;
+		//收货人
+		var username = 0;
+		//收货人手机号
+		var userphone = 0;
+		function parseUrl(){
+                var url=location.href;
+                var i=url.indexOf('?');
+                if(i==-1)return;
+                var querystr=url.substr(i+1);
+                var arr1=querystr.split('&');
+                var arr2=new Object();
+                for  (i in arr1){
+                    var ta=arr1[i].split('=');
+                    arr2[ta[0]]=ta[1];
+                }
+                return arr2;
+           }
+		$(function(){
+ 			var v = parseUrl();//解析所有参数
+ 			//项目Id
+ 			a = v['a'];
+ 			//支持金额
+ 			b = v['b'];
+ 			//支持数量
+ 			sl = v['sl'];
+ 			queryTMemberById(1);
+   		queryReturn(a,b);
+   		var zje = sl*dj;
+   		$("#zje").append(zje);
+   		getXx();
+   		//添加订单
+   		$(document).on('click','#zf',function(){
+   			addOrder(a,b);
+   		})
+   		
+   		pay();
+ 			
+ 			//通过会员Id获取地址和电话
+ 			function queryTMemberById(id){
+				$.ajax({
+					contentType : "application/json;charset=UTF-8",
+					type:"get",
+					dataType: "json",
+	//				xhrFields:{withCredentials: true},//携带cookie请求
+					url:localhost+"/queryTMemberById/"+id,
+					async:true,
+					success:function(data){
+						$.each(data.data, function (i, result) {
+							dz = result.tMemberAddress.address;
+							username = result.username;
+							userphone = result.phone;
+							item = "<div class='radio'><label>"
+										 +"<input type='radio' name='optionsRadios' checked>"
+										 +result.username+result.phone+result.tMemberAddress.address
+										 +"</label></div>";
+							$("#xx").append(item);
+						})
+					}
+				});
+			}
+ 			
+ 			//项目信息
+ 			function queryReturn(projectid,rsupportmoney){
+        dj = rsupportmoney;
+				$.ajax({
+					contentType : "application/json;charset=UTF-8",
+					type:"get",
+					dataType: "json",
+	//				xhrFields:{withCredentials: true},//携带cookie请求
+					url:localhost+"/queryReturnById/"+projectid+"/"+rsupportmoney,
+					async:true,
+					success:function(data){
+						$('#section').empty();
+						var items;
+		        //判断运费
+		        var yf = "";
+		        if (data.data.freight==0) {
+		        	yf="全国包邮"
+		        }
+		        if (data.data.freight!=0) {
+		        	yf="运费"+data.data.freight;
+		        }
+            item = "<td>"+data.data.tProject.name+"</td>"
+						        +"<td>深圳市博实永道电子商务有限公司</td>"
+							      +"<td>"+data.data.content+"</td>"
+							      +"<td>"+sl+"</td>"
+							      +"<td style='color:#F60'>￥ "+rsupportmoney+"</td>"
+							      +"<td>"+yf+"</td>";
+	       	 	$('#xmxx').append(item);
+					}
+				});
+			}
+ 			
+ 			function getXx(){
+ 				$("input[name='optionsRadios'").on('click',function(){
+ 					if($("#lxr").css("display")=="none"){
+						$("#lxr").show(100);
+					}
+ 					else{
+						$("#lxr").hide(100);
+					}
+	 				})
+ 			}
+ 			
+ 			//添加订单
+ 			function addOrder(projectid,rsupportmoney){
+ 				//确认信息
+ 				$(document).on('click','#qrxx',function(){
+ 					//判断是否输入了空的新收件人
+	 				if ($("#username").val()=="" || $("#userphone").val()=="" || $("#useraddrs").val()=="" ) {
+	 					alert("新信息不能为空哦~~");
+	 				}else{
+	 					username = $("#username").val();
+	 					userphone = $("#userphone").val();
+	 					dz = $("#useraddrs").val();
+	 					alert(username+":"+dz+":"+userphone);
+	 				}
+ 				})
+// 				alert(projectid+":"+rsupportmoney+":"+sl+":"+dz+":"+userphone+":"+username);
+ 				
+ 				$.ajax({
+					contentType : "application/json;charset=UTF-8",
+					type:"post",
+					dataType: "json",
+	//				xhrFields:{withCredentials: true},//携带cookie请求
+					url:localhost+"/addOrder/"+projectid+"/"+rsupportmoney+"/"+sl+"/"+dz+"/"+userphone+"/"+username,
+					async:true,
+					success:function(data){
+						window.location.href=localhost+"/payment/pay";
+					}
+				});
+ 				}
+ 			
+ 			//跳转到支付界面
+/* 			function pay(){
+ 				$.ajax({
+					contentType : "application/json;charset=UTF-8",
+					type:"get",
+					dataType: "json",
+	//				xhrFields:{withCredentials: true},//携带cookie请求
+					url:localhost+"/payment/pay",
+					async:true,
+					success:function(data){
+							alert(111);
+					}
+				});
+ 			}*/
+ 			
+		})
+//$('#myTab a').click(function (e) {
+//e.preventDefault()
+//$(this).tab('show')
+//})
+</script>
   </body>
 </html>

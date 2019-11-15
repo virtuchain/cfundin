@@ -1,6 +1,6 @@
 package com.xq.crowd_funding.partfinancing.dao;
 
-import com.xq.crowd_funding.partfinancing.bean.TProject;
+import com.xq.crowd_funding.common.pojo.TProject;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -17,6 +17,6 @@ ClassName: TProjectDao
 public interface TProjectDao {
 
     @Select("select * from t_project where id=#{value}")
-    TProject queryPro(Long id);
+    TProject queryPro(Integer id);
 
 }

@@ -1,11 +1,10 @@
 package com.xq.crowd_funding.partfinancing.controller;
 
 import com.xq.crowd_funding.common.ResultEntity;
-import com.xq.crowd_funding.partfinancing.bean.TProject;
-import com.xq.crowd_funding.partfinancing.service.TProjectService;
+import com.xq.crowd_funding.common.pojo.TProject;
+import com.xq.crowd_funding.partfinancing.service.ITprojectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
 ClassName: TProjectController
@@ -23,12 +22,12 @@ queryPro：通过Id获取项目详情
 @RestController
 public class TProjectController {
     @Autowired
-    TProjectService tProjectService;
+    ITprojectService tProjectService;
 
-    @GetMapping("queryPro")
-    public ResultEntity<TProject> queryPro(Long id){
+    @GetMapping(value="/queryPro/{projectid}")
+    public ResultEntity<TProject> queryPro(@PathVariable("projectid") Integer projectid){
         //通过Id获取项目
-        TProject tProject = tProjectService.queryPro(id);
+        TProject tProject = tProjectService.queryPro(projectid);
         //将获取到的项目传到下一个界面
         return ResultEntity.successWithData(tProject);
     }

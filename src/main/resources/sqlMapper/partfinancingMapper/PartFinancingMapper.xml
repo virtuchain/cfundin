@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xq.crowd_funding.mapperpackage.PartFinancingDao">
+<mapper namespace="com.xq.crowd_funding.partfinancing.dao.TReturnDao">
+    <resultMap type="com.xq.crowd_funding.partfinancing.pojo.TReturn" id="queryPreturn" autoMapping="true">
+        <collection property="tProject" ofType="com.xq.crowd_funding.common.pojo.TProject" autoMapping="true" ></collection>
+    </resultMap>
+
+    <select id="queryReturn" resultMap="queryPreturn"  parameterType="java.lang.Integer">
+		SELECT * FROM t_project p LEFT JOIN t_return r ON p.id = r.projectid WHERE r.projectid = #{value };
+	</select>
+
+    <select id="queryReturnById" resultMap="queryPreturn"  parameterType="java.lang.Integer">
+		SELECT * FROM t_project p LEFT JOIN t_return r ON p.id = r.projectid WHERE r.projectid = #{projectid } and r.rsupportmoney = #{rsupportmoney};
+	</select>
 
 </mapper>

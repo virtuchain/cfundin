@@ -72,6 +72,7 @@
 	</style>
   </head>
   <body>
+  	<div id="projectid"/>
  <div class="navbar-wrapper">
       <div class="container">
 			<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -182,19 +183,19 @@
                                         </tr>
                                       </thead>
                                       <tbody>
-                                        <tr>
-                                          <td>活性富氢净水直饮机</td>
+                                        <tr id="ddy">
+                                          <!--<td>活性富氢净水直饮机</td>
                                           <td>深圳市博实永道电子商务有限公司</td>
                                           <td>每满1750人抽取一台活性富氢净水直饮机，至少抽取一台。抽取名额（小数点后一位四舍五入）=参与人数÷1750人，由苏宁官方抽取。</td>
                                           <td><input type="text" class="form-control" style="width:60px;" value="1"></td>
                                           <td style="color:#F60">￥ 1.00</td>
-                                          <td>免运费</td>
+                                          <td>免运费</td>-->
                                         </tr>
                                       </tbody>
                                     </table>
                                     <div style="float:right;">
-                                    <p>总价(含运费)：<span style="font-size:16px;color:#F60;">￥1.00</span></p>
-                                    <button type="button" class="btn btn-warning btn-lg" style="float:right;" onclick="window.location.href='pay-step-2.html'"><i class="glyphicon glyphicon-credit-card"></i> 去结算</button>
+                                    <p>总价(含运费)：<span id="zj" style="font-size:16px;color:#F60;"><!--￥1.00--></span></p>
+                                    <button type="button" class="btn btn-warning btn-lg" style="float:right;" onclick="window.location.href='pay-step-2.html?a='+a+'&b='+b+'&sl='+sl"><i class="glyphicon glyphicon-credit-card"></i> 去结算</button>
                                     </div>
                                 </div>
                                 
@@ -247,11 +248,88 @@
     <script src="../bootstrap/js/bootstrap.min.js"></script>
 	<script src="../script/docs.min.js"></script>
     <script src="../script/back-to-top.js"></script>
-	<script>
-$('#myTab a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
+	<script type="text/javascript">	
+		var localhost = "http://localhost:8080";
+		//项目Id
+		var a = 0;
+		//支持金额
+		var b = 0;
+		//单价
+		var dj = 0;
+		//回报数量
+		var sl = 0;
+		$(function(){
+			
+			function parseUrl(){
+                var url=location.href;
+                var i=url.indexOf('?');
+                if(i==-1)return;
+                var querystr=url.substr(i+1);
+                var arr1=querystr.split('&');
+                var arr2=new Object();
+                for  (i in arr1){
+                    var ta=arr1[i].split('=');
+                    arr2[ta[0]]=ta[1];
+                }
+                return arr2;
+            }
+ 			var v = parseUrl();//解析所有参数
+ 			a = v['a'];
+ 			b = v['b'];
+ 			queryReturn(a,b);
+ 			//改变数量
+ 			$(document).on('change','#sl',function(){
+ 				$("#zj").empty();
+ 				sl = $("#sl").val();
+ 				var zjg = ($("#sl").val()*dj);
+ 				$("#zj").append(zjg);
+ 			})
+ 			
+// 			alert(v['a']);//就是你要的结果
+//			alert(v['b']);
+//			var Ohref=window.location.href;
+//			var projectid=Ohref.split("?a=");
+//			alert(projectid[1]);
+			
+			
+			function queryReturn(projectid,rsupportmoney){
+				$.ajax({
+					contentType : "application/json;charset=UTF-8",
+					type:"get",
+					dataType: "json",
+	//				xhrFields:{withCredentials: true},//携带cookie请求
+					url:localhost+"/queryReturnById/"+projectid+"/"+rsupportmoney,
+					async:true,
+					success:function(data){
+						$('#section').empty();
+						var items;
+		        //判断运费
+		        var yf = "";
+		        if (data.data.freight==0) {
+		        	yf="全国包邮"
+		        }
+		        if (data.data.freight!=0) {
+		        	yf="运费"+data.data.freight;
+		        }
+		        dj = data.data.rsupportmoney;
+		        sl = 1;
+            item = "<td>"+data.data.tProject.name+"</td>"
+						        +"<td>深圳市博实永道电子商务有限公司</td>"
+							      +"<td>"+data.data.content+"</td>"
+							      +"<td><input id='sl' type='text' class='form-control' style='width:60px;' value='1'></td>"
+							      +"<td style='color:#F60'>￥ "+data.data.rsupportmoney+"</td>"
+							      +"<td>"+yf+"</td>";
+						$("#zj").append(dj);
+	       	 	$('#ddy').append(item);
+					}
+				});
+			}
+		})
+		
+//$('#myTab a').click(function (e) {
+//e.preventDefault()
+//$(this).tab('show')
+//})
 	</script>
   </body>
 </html>

@@ -1,6 +1,6 @@
 package com.xq.crowd_funding.partfinancing.dao;
 
-import com.xq.crowd_funding.partfinancing.bean.TOrder;
+import com.xq.crowd_funding.common.pojo.TOrder;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -13,6 +13,7 @@ ClassName: TOrder
  addOrder:添加订单
  queryTOrderById:根据用户ID查看订单
  savaTOrder:修改订单地址
+ updateStatus:修改状态
 @Description: TODO
 @Author: GuoXinZhang
 @Date: 10:45
@@ -25,8 +26,11 @@ public interface TOrderDao {
     int addOrder(TOrder tOrder);
 
     @Select("select * from t_order where memberid=#{value}")
-    List<TOrder> queryTOrderById(Long id);
+    List<TOrder> queryTOrderById(Integer id);
 
     @Update("update t_order set address=#{address} where memberid=#{memberid}")
-    int savaTOrder(TOrder tOrder, Long memberid);
+    int savaTOrder(TOrder tOrder, Integer memberid);
+
+    @Update("UPDATE t_order SET `status`=1 WHERE id=#{value}")
+    int updateStatus(Integer id);
 }

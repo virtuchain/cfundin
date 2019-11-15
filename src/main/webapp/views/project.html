@@ -9,6 +9,10 @@
 	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="../css/font-awesome.min.css">
 	<link rel="stylesheet" href="../css/theme.css">
+	<script src="../jquery/jquery-2.1.1.min.js"></script>
+  <script src="../bootstrap/js/bootstrap.min.js"></script>
+	<script src="../script/docs.min.js"></script>
+  <script src="../script/back-to-top.js"></script>
 	<style>
 #footer {
     padding: 15px 0;
@@ -111,8 +115,9 @@
         <div class="container">
             <div class="row clearfix">
                 <div class="col-md-12 column">
-                    <div class="jumbotron nofollow" style="    padding-top: 10px;">
-                        <h3>
+                    <div class="jumbotron nofollow" style="    padding-top: 10px;" id="spxq">
+                    <div id='gz' style='float:right;'></div>
+                      <!--  <h3>
                             酷驰触控龙头，智享厨房黑科技
                         </h3>
                         <div style="float:left;width:70%;">
@@ -120,7 +125,7 @@
                         </div>
                         <div style="float:right;">
                             <button type="button" class="btn btn-default"><i style="color:#f60" class="glyphicon glyphicon-heart"></i> 关注 111</button>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
@@ -135,8 +140,9 @@
                             <img alt="140x140" width="740" src="../img/product_detail_body.jpg" />
                            
                         </div>
-                        <div class="col-md-4 column">
-                            <div class="panel panel-default" style="border-radius: 0px;">
+                        <div class="col-md-4 column" id="xmjd">
+                        	<div id="gsxq" class="col-md-9 column"></div>
+                            <!--<div class="panel panel-default" style="border-radius: 0px;">
                                 <div class="panel-heading" style="background-color: #fff;border-color: #fff;">
                                     <span class="label label-success"><i class="glyphicon glyphicon-tag"></i> 众筹中</span>
                                 </div>
@@ -179,11 +185,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
-					<div class="panel panel-default" style="border-radius: 0px;">
-						<div class="panel-heading">
-							<h3 >
+					<div id="hbnr" class="panel panel-default" style="border-radius: 0px;">
+						<!--<div class="panel-heading">
+							<h3>
 								￥1.00 <span style="float:right;font-size:12px;">无限额，447位支持者</span>
 							</h3>
 						</div>
@@ -193,10 +199,10 @@
                             <button type="button" class="btn  btn-warning btn-lg" onclick="window.location.href='pay-step-1.html'">支持</button>
                             <br><br>
                             <p>感谢您的支持，在众筹开始后，您将以79元的优惠价格获得“遇见彩虹?”智能插座一件（参考价208元）。</p>
-						</div>
+						</div>-->
 					</div>
                     
-					<div class="panel panel-default" style="border-radius: 0px;">
+					<!--<div class="panel panel-default" style="border-radius: 0px;">
 						<div class="panel-heading">
 							<h3 >
 								￥149.00 <span style="float:right;font-size:12px;">限额2000位，剩余1966位</span>
@@ -209,7 +215,7 @@
                             <br><br>
                             <p>感谢您的支持，在众筹开始后，您将以79元的优惠价格获得“遇见彩虹?”智能插座一件（参考价208元）。</p>
 						</div>
-					</div>
+					</div>-->
 					<div class=" panel panel-default" style="border-radius: 0px;">
 						<div class="panel-heading">
 							<h3 >
@@ -274,23 +280,25 @@
           <div class="modal-body">
 <div class="container-fluid">
 	<div class="row clearfix">
-		<div class="col-sm-3 col-md-3 column" id="myScrollspy">
-            <ul class="nav nav-tabs nav-stacked">
-                <li class="active"><a href="#section-1">￥1.00</a></li>
+		<div class="col-sm-3 col-md-3 column" id="myScrollspy" >
+						<!--有几个选项-->
+            <ul id="zxx" class="nav nav-tabs nav-stacked">
+                <!--<li class="active"><a href="#section-1">￥1.00</a></li>
                 <li class="active"><a href="#section-2">￥149.00</a></li>
                 <li class="active"><a href="#section-3">￥249.00</a></li>
                 <li class="active"><a href="#section-4">￥549.00</a></li>
-                <li class="active"><a href="#section-5">￥1999.00</a></li>
+                <li class="active"><a href="#section-5">￥1999.00</a></li>-->
             </ul>
 		</div>
 		<div id="navList" class="col-sm-9 col-md-9 column" style="height:400px;overflow-y:auto;">
-            <h2 id="section-1" style="border-bottom:1px dashed #ddd;" ><span style="font-size:20px;font-weight:bold;">￥1.00</span><span style="font-size:12px;margin-left:60px;">无限额，223位支持者</span></h2>
+            <h2 id="section" style="border-bottom:1px dashed #ddd;" >
+    	<!--<span style="font-size:20px;font-weight:bold;">￥1.00</span><span style="font-size:12px;margin-left:60px;">无限额，223位支持者</span></h2>
             <p>配送费用：全国包邮</p>
             <p>预计发放时间：项目筹款成功后的30天内</p>
             <button type="button" class="btn  btn-warning btn-lg " onclick="window.location.href='pay-step-1.html'">支持</button>
             <br><br>
-            <p>每满1750人抽取一台活性富氢净水直饮机，至少抽取一台。抽取名额（小数点后一位四舍五入）=参与人数÷1750人，由苏宁官方抽取。</p>
-            <hr>
+            <p>每满1750人抽取一台活性富氢净水直饮机，至少抽取一台。抽取名额（小数点后一位四舍五入）=参与人数÷1750人，由苏宁官方抽取。</p>-->
+            <!--<hr>
             <h2 id="section-2" style="border-bottom:1px dashed #ddd;" ><span style="font-size:20px;font-weight:bold;">￥149.00</span><span style="font-size:12px;margin-left:60px;">无限额，223位支持者</span></h2>
             <p>配送费用：全国包邮</p>
             <p>预计发放时间：项目筹款成功后的30天内</p>
@@ -317,7 +325,7 @@
             <p>预计发放时间：项目筹款成功后的30天内</p>
             <button type="button" class="btn  btn-warning btn-lg " onclick="window.location.href='pay-step-1.html'">支持</button>
             <br><br>
-            <p>每满1750人抽取一台活性富氢净水直饮机，至少抽取一台。抽取名额（小数点后一位四舍五入）=参与人数÷1750人，由苏宁官方抽取。</p>
+            <p>每满1750人抽取一台活性富氢净水直饮机，至少抽取一台。抽取名额（小数点后一位四舍五入）=参与人数÷1750人，由苏宁官方抽取。</p>-->
             </div>
         </div>
 	</div>
@@ -326,16 +334,324 @@
         </div>
       </div>
     </div>
-    
-    <script src="../jquery/jquery-2.1.1.min.js"></script>
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
-	<script src="../script/docs.min.js"></script>
-    <script src="../script/back-to-top.js"></script>
-	<script>
-    $(".prjtip img").css("cursor", "pointer");
+  </body>
+  <script>
+		var localhost = "http://localhost:8080";
+		//项目Id
+		var a=1;
+		//支持金额
+		var b = 0;
+		
+		function dd(rsupportmoney){
+				b = rsupportmoney;
+				queryretrunById(a,rsupportmoney);
+			}
+		
+		//动态更改众筹内容
+			function queryretrunById(projectid,rsupportmoney){
+					$.ajax({
+					contentType : "application/json;charset=UTF-8",
+					type:"get",
+					dataType: "json",
+	//				xhrFields:{withCredentials: true},//携带cookie请求
+					url:localhost+"/queryReturnById/"+projectid+"/"+rsupportmoney,
+					async:true,
+					success:function(data){
+						$('#section').empty();
+						var items;
+		        //判断限额多少位
+    				var ss = "";
+		        if (data.data.purchase==0) {
+		        	ss="无限制";
+		        }
+		        if (data.data.purchase!=0) {
+		        	ss="最大"+data.data.purchase;
+		        }
+		        //判断运费
+		        var yf = "";
+		        if (data.data.freight==0) {
+		        	yf="全国包邮"
+		        }
+		        if (data.data.freight!=0) {
+		        	yf="运费"+data.data.freight;
+		        }
+			        //显示一个选项
+	            item = "<span style='font-size:20px;font-weight:bold;'>￥"+data.data.rsupportmoney+"</span><span style='font-size:12px;margin-left:60px;'>"+ss+"，"+data.data.tProject.supporter+"位支持者</span></h2>"
+            +"<p>配送费用："+yf+"</p>"
+            +"<p>预计发放时间：项目筹款成功后的30天内</p>"
+            +"<button id='zcl' type='button' class='btn  btn-warning btn-lg'>支持</button><br><br>"
+            +"<p>"+data.data.tProject.remark+"。</p>";
+			       
+		       	$('#section').append(item);
+					}
+				});
+			}
+		
+		$(function(){
+				//获取从分类页面传递过来的项目Id
+        getPro(a);
+        getTmpf(a);
+        queryLength(a);
+        getProjd(a);
+        //查看会员信息
+//      queryTmemer(a);
+//			查看回报内容
+				queryReturn(a);
+        //点击关注
+        $(document).on('click','#gz',function(){
+        	if ($('#gzrs').val()=='no') {
+        		addTmpf(a);
+        		getTmpf(a);
+			    queryLength(a);
+        	}
+        	if ($('#gzrs').val()=='yes') {
+        		delTmpf(a);
+        		getTmpf(a);
+			    queryLength(a);
+        	}
+        	//重新获取关注信息和人数
+			    getTmpf(a);
+			    queryLength(a);
+        })
+        
+        //点击立即支持
+        $(document).on('click','#ljzc',function(){
+        	queryZxx(a);
+        })
+        
+        //点击zcl按钮
+        $(document).on('click','#zcl',function(){
+        	 window.location.href = "pay-step-1.html?a="+a+"&b="+b;
+        })
+        
+		//通过商品Id获取项目详情
+		function getPro(projectid){
+			$.ajax({
+				contentType : "application/json;charset=UTF-8",
+				type:"get",
+				dataType: "json",
+//				xhrFields:{withCredentials: true},//携带cookie请求
+				url:localhost+"/queryPro/"+projectid,
+				async:true,
+				success:function(data){
+					var items;
+	        $.each(data, function (i, result) {
+		            item = "<h3>"+result.name+"</h3>"
+		            +"<div style='float:left;width:70%;'>"+result.remark+"</div>";
+		        })
+	        			$('#spxq').append(item);
+				}
+			});
+		}
+		
+		//获取商品Id和用户Id，判断是否已经关注来判断关注按钮的样式<i style='color:#f60' class='glyphicon glyphicon-heart'></i> 关注 
+		function getTmpf(projectid){
+			$.ajax({
+				contentType : "application/json;charset=UTF-8",
+				type:"get",
+				dataType: "json",
+				url:localhost+"/queryByProid/"+projectid,
+				async:true,
+				success:function(data){
+					var item;
+					if (data.data.memberid==000) {
+						item = "<button id='gzrs' value='no' type='button' class='btn btn-default'><i style='color:#f60' class='glyphicon glyphicon-heart'></i> 关注 </button>";
+					}
+					if(data.data.memberid!=000){
+						item = "<button id='gzrs' value='yes' type='button' class='btn btn-default'><i style='color:red' class='glyphicon glyphicon-heart'></i> 已关注 </button>";
+					}
+					$("#gz").empty();
+					$('#gz').append(item);
+					}
+			});
+		}
+		
+		//获取关注此项目的总人数
+		function queryLength(projectid){
+			$.ajax({
+				contentType : "application/json;charset=UTF-8",
+				type:"get",
+				dataType: "json",
+				url:localhost+"/queryLength/"+projectid,
+				async:true,
+				success:function(data){
+					if (data.data==1000000000) {
+						$("#gzrs").append(0);
+					}else{
+						$("#gzrs").append(data.data);
+					}
+					}
+				})
+		}
+		
+		//点击关注
+		function addTmpf(projectid){
+			$.ajax({
+				contentType : "application/json;charset=UTF-8",
+				type:"post",
+				dataType: "json",
+				url:localhost+"/addTmpf/"+projectid,
+				async:true,
+				success:function(data){
+						$("#gz").empty();
+					}
+				})
+		}
+		
+		//再次点击关注则取消关注
+		function delTmpf(projectid){
+			$.ajax({
+				contentType : "application/json;charset=UTF-8",
+				type:"delete",
+				dataType: "json",
+				url:localhost+"/delTmpf/"+projectid,
+				async:true,
+				success:function(data){
+						$("#gz").empty();
+					}
+				})
+		}
+		
+			//获取项目进度
+			function getProjd(projectid){
+			$.ajax({
+				contentType : "application/json;charset=UTF-8",
+				type:"get",
+				dataType: "json",
+//				xhrFields:{withCredentials: true},//携带cookie请求
+				url:localhost+"/queryPro/"+projectid,
+				async:true,
+				success:function(data){
+					var items;
+	        $.each(data, function (i, result) {
+		            item = "<div class='panel panel-default' style='border-radius: 0px;'>"+
+                        +"<div class='panel-heading' style='background-color: #fff;border-color: #fff;'>"
+                        +"<span class='label label-success'><i class='glyphicon glyphicon-tag'></i> 众筹中</span>"
+                        +"</div>"
+                        +"<div class='panel-body'><h3><br/>已筹资金：￥"+data.data.supportmoney
+                        +"</h3><p><span>目标金额 ： "+data.data.money+"</span><span style='float:right;'>达成 ： "
+                        +(data.data.supportmoney/data.data.money)*100+"%</span></p>"
+                        +"<div class='progress' style='height:10px; margin-bottom: 5px;'>"
+                        +"<div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='60' aria-valuemin='0' aria-valuemax='100' style='width: "+(data.data.supportmoney/data.data.money)*100+"%;'></div>"
+                        +"</div>"
+                        //时间计算
+                        +"<p>剩余"+15+" 天</p>"
+                        +" <div>"
+                        +"<p><span>已有"+data.data.supporter+"人支持该项目</p>"
+                        //给立即支持按钮添加点击事件
+                        +"<button id='ljzc' type='button' class='btn  btn-warning btn-lg btn-block' data-toggle='modal' data-target='#myModal'>立即支持</button>"
+                        +"</div></div>"
+                        +"<div class='panel-footer' style='background-color: #fff;border-top: 1px solid #ddd;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;'>"
+                        +"<div class='container-fluid'>"
+                        +"<div class='row clearfix'>"
+                        +"<div class='col-md-9 column'>"
+		                		+"</div></div></div></div></div>";
+		        })
+	        			$('#xmjd').append(item);
+				}
+			});
+		}
+			
+			//获取发起众筹的公司详情
+			function queryTmemer(projectid){
+				$.ajax({
+				contentType : "application/json;charset=UTF-8",
+				type:"get",
+				dataType: "json",
+//				xhrFields:{withCredentials: true},//携带cookie请求
+				url:localhost+"/queryTmemer/"+projectid,
+				async:true,
+				success:function(data){
+					var items;
+	        $.each(data, function (i, result) {
+		            item = "<div class=''><h4>"
+        								+"<b>"+result.username+"</b> <span style='loat:right;font-size:12px;' class='label label-success'>已认证</span>"
+    										+"</h4><p style='font-size:12px'>"
+        								+"酷驰是一家年轻的厨卫科技公司，我们有一支朝气蓬勃，有激情、有想法、敢实践的团队。</p>"
+    										+"<p style='font-size:12px'>"
+    										+"客服电话:"+result.phone+"</p></div>";
+		        })
+	        			$('#gsxq').append(item);
+				}
+			});
+			}
+			
+			//回报方式信息
+			function queryReturn(projectid){
+				$.ajax({
+				contentType : "application/json;charset=UTF-8",
+				type:"get",
+				dataType: "json",
+//				xhrFields:{withCredentials: true},//携带cookie请求
+				url:localhost+"/queryReturn/"+projectid,
+				async:true,
+				success:function(data){
+					var items;
+	        $.each(data.data, function (i, result) {
+	        			//判断限额多少位
+	        			var ss = "";
+				        if (result.purchase==0) {
+				        	ss="无限制"
+				        }
+				        if (result.purchase!=0) {
+				        	ss="最大"+result.purchase;
+				        }
+				        //判断运费
+				        var yf = "";
+				        if (result.freight==0) {
+				        	yf="全国包邮"
+				        }
+				        if (result.freight!=0) {
+				        	yf="运费"+result.freight;
+				        }
+				        //有几个选项
+		            item = "<div class='panel-heading'><h3>￥" + result.rsupportmoney+ "<span id='xg' style='float:right;font-size:12px;'>"+ss+"，"+result.tProject.supporter+"位支持者</span>"
+								+"</h3></div><br><div class='panel-body'><p>配送费用："+yf+"</p>"
+               	+"<p>预计发放时间：项目筹款成功后的50天内</p>"
+                +"<button type='button' class='btn  btn-warning btn-lg' onclick='window.location.href='pay-step-1.html'>支持</button>"
+                +"<br><br><p>感谢您的支持，在众筹开始后，"+result.content+"。</p>"
+								+"</div>";
+	        			$('#hbnr').append(item);
+		       })
+				}
+			});
+			}
+			
+			
+			
+			//点击立即支持
+			function queryZxx(projectid){
+				$.ajax({
+				contentType : "application/json;charset=UTF-8",
+				type:"get",
+				dataType: "json",
+//				xhrFields:{withCredentials: true},//携带cookie请求
+				url:localhost+"/queryReturn/"+projectid,
+				async:true,
+				success:function(data){
+					$('#zxx').empty();
+					var items;
+	        $.each(data.data, function (i, result) {
+		        //有几个选项section-
+		        //<li><button id='jq' type='button' value='"+result.id+"'>￥"++"</button></li>
+            item = "<li class='active'><input onclick='dd(this.value)' type='button' value='"+result.rsupportmoney+"'></li>";
+	       	 	$('#zxx').append(item);
+		       })
+				}
+			});
+			}
+        })
+	
+		/*<div class='col-md-3 column' style='padding:0;'>
+    <img alt='140x140' src='../img/services-box2.jpg' data-holder-rendered='true' style='width: 80px; height: 80px;'>
+		</div>*/
+		</script>
+		
+    /*$(".prjtip img").css("cursor", "pointer");
     $(".prjtip img").click(function(){
         window.location.href = 'project.html';
-    });
-	</script>
-  </body>
+    });*/
+   
+   
+    
 </html>
