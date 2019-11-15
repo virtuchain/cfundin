@@ -211,7 +211,6 @@
                                         </tr>
                                       </thead>
                                       <tbody id="tbodys">
-
                                       </tbody>
                                     </table>
                                     <button type="button" id="addreturn" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus"></i> 添加回报</button>
@@ -258,9 +257,9 @@
                   <script>
                       // 图片的上传
                      $(function () {
-                         // $("#sayclick").click(function () {
-                         //     $("#uploadsayFile").click();
-                         // })
+                          $("#sayclick").click(function () {
+                             $("#uploadsayFile").click();
+                          })
                          $("#uploadsayFile").change(function () {
                              var local= "http://localhost:8080/";
                              var formData = new FormData();
