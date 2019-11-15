@@ -138,10 +138,10 @@
 		<input type="hidden" id="total" name="total" />
 
       <div class="input-group-addon">查询条件</div>
-      <input class="form-control has-success" type="text" id="SelectText" placeholder="请输入查询条件">
+      <input class="form-control has-success" type="text" id="queryText" placeholder="请输入查询账号">
     </div>
   </div>
-  <button type="button" class="btn btn-warning" id="selectBtn"><i class="glyphicon glyphicon-search"></i> 查询</button>
+  <button type="button" class="btn btn-warning" id="queryBtn"><i class="glyphicon glyphicon-search"></i> 查询</button>
 </form>
 <button type="button" class="btn btn-danger" style="float:right;margin-left:10px;" id="deleteBtns"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
 <button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='add.html'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
@@ -151,7 +151,8 @@
             <table class="table  table-bordered" id="tab">
               <thead>
                 <tr >
-                  <th width="30">#</th>
+                    <th width="30">#</th>
+                  <th width="60">用户ID</th>
 				  <th width="30"><input type="checkbox"  id="allcheckbox"></th>
                   <th>账号</th>
                   <th>名称</th>
@@ -159,18 +160,12 @@
                   <th width="100">操作</th>
                 </tr>
               </thead>
-
+                <tbody id="tbo">
+                </tbody>
 			  <tfoot>
 			     <tr >
 				     <td colspan="6" align="center">
-						<ul class="pagination">
-							    <li  ><a href="#" id="firstPage">首页<span class="sr-only">(current)</span></a></li>
-								<li><a href="#" id="prePage">上一页<span class="sr-only">(current)</span></a></li>
-								<li><a href="#">1 <span class="sr-only">(current)</span></a></li>
-								<li><a href="#" id="nextPage">下一页</a></li>
-							    <li><a href="#" id="endPage">尾页<span class="sr-only">(current)</span></a></li>
-								<li class="active"><a href="#">当前页：<span id="page"></span></a></li>
-							    <li class="active"><a href="#">总条数：<span id="totalRow"></span></a></li></li>
+						<ul  class="pagination">
 
 						</ul>
 					 </td>
@@ -191,156 +186,180 @@
         <script type="text/javascript">
 
             $(function () {
-                function getList() {
+                getList(1);
+                $(".list-group-item").click(function () {
+                    if ($(this).find("ul")) {
+                        $(this).toggleClass("tree-closed");
+                        if ($(this).hasClass("tree-closed")) {
+                            $("ul", this).hide("fast");
+                        } else {
+                            $("ul", this).show("fast");
+                        }
+                    }
+                });
+            });
+                //加载数据
+                function getList(pageno) {
                     $.ajax({
-                        type: "get",
-                        url: "/manager/user",
+                        type: "post",
+                        url: "/manager/index",
+                        data:{
+                            "pageno":pageno,
+                            "pagesize":10
+                        },
                         datatype: "json",
                         success: function (data) {
-                            var html;
-                            $.each(data.list, function (index, item) {
-                                html = '<tbody><tr><td>' + item.id + '</td><td><input type="checkbox" id="'+item.id+'"/><td>' + item.loginacct + '</td><td>' + item.username + '</td><td>' + item.email + '</td><td>' +
-                                    '<button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>\n' +
-                                    '<button type="button" class="btn btn-primary btn-xs" id="updateBtn" onclick="upGetId(this)"><i class=" glyphicon glyphicon-pencil"></i></button>\n' +
-                                    '<button type="button" class="btn btn-danger btn-xs" id="delBtn" onclick="delGetId(this)"><i class=" glyphicon glyphicon-remove"></i></button>\n' +
-                                    '</td><tboty>';
-                                $('#tab').append(html);
-                                //设置当前页数
-                                $("#pageNum").val(data.pageNum);
-                                //设置总条数
-                                $("#total").val(data.total);
-                                /*  alert(data.pageNum+" "+data.total);
-                               console.log("data.pageNum="+data.pageNum+", data.total="+data.total); */
-                                //设置当前页数显示
-                                $("#page").text(data.pageNum);
-                                //总条数显示
-                                $("#totalRow").text(data.total);
-                            })
+                            var html='';
+                            var page=data;
+                            $.each(page.datas, function (index, item) {
+                                html +='<tr>';
+                                html +='   <td>' +(index+1) + '</td>';
+                                html +='   <td>' +item.id + '</td>';
+                                html +='   <td><input type="checkbox" id="' + item.id + '"/>';
+                                html +='   <td>' + item.loginacct + '</td>';
+                                html +='   <td>' + item.username + '</td>';
+                                html +='   <td>' + item.email + '</td>';
+                                html +='   <td><button type="button" class="btn btn-success btn-xs" id="assignBtn" onclick="assignRole(this)"><i class=" glyphicon glyphicon-check"></i></button>';
+                                html +='   <button type="button" class="btn btn-primary btn-xs" id="updateBtn" onclick="upGetId(this)"><i class=" glyphicon glyphicon-pencil"></i></button>';
+                                html +='   <button type="button" class="btn btn-danger btn-xs" id="delBtn" onclick="delGetId(this)"><i class=" glyphicon glyphicon-remove"></i></button>';
+                                html +='   </td></tr>';
+                            });
+                            $('#tbo').html(html);
+                            var pageBar="";
+                            if(page.pageno==1){
+                                pageBar+='<li class="disabled"><a href="#" id="prePage">首页<span class="sr-only">(current)</span></a></li>';
+                            }else{
+                                pageBar+='<li><a href="#" onclick="getList(1)">首页<span class="sr-only">(current)</span></a></li>';
+                            }
+                            if(page.pageno==1){
+                                pageBar+='<li class="disabled"><a href="#" id="prePage">上一页<span class="sr-only">(current)</span></a></li>';
+                            }else{
+                                pageBar+='<li><a href="#" onclick="getList('+(page.pageno-1)+')">上一页<span class="sr-only">(current)</span></a></li>';
+                            }
+                            for (var i=1;i<=page.totalno;i++){
+                                pageBar+='<li ';
+                                if(page.pageno==i){
+                                    pageBar+='class="active"';
+                                }
+                                pageBar+='><a href="#" onclick="getList('+i+')">'+i+'<span class="sr-only">(current)</span></a></li>';
+                            }
+                            if (page.pageno==page.totalno){
+                                pageBar+='<li class="disabled"><a href="#">下一页</a></li>';
+                            } else{
+                                pageBar+='<li><a href="#" onclick="getList('+(page.pageno+1)+')">下一页</a></li>';
+                            }
+                            if (page.pageno==page.totalno){
+                                pageBar+='<li class="disabled"><a href="#">尾页</a></li>';
+                            } else{
+                                pageBar+='<li><a href="#" onclick="getList('+(page.totalno)+')">尾页</a></li>';
+                            }
+                            $(".pagination").html(pageBar);
+
                         }
                     })
                 }
 
-                //首页事件
-                $("#firstPage").on("click",function(){
-                    //设置当前页数
-                    $("#pageNum").val(1);
-                    getList();
-                })
-                //上一页事件
-                $("#prePage").on("click",function(){
-                    var pageNum=$("#pageNum").val();
-                    var pre=pageNum>1?parseInt(pageNum-1):pageNum;
-                    //设置当前页数
-                    $("#pageNum").val(pre);
-                    getList();
-                })
-                //下一页事件
-                $("#nextPage").on("click",function(){
-                    var pageNum=$("#pageNum").val();
-                    var next=pageNum==parseInt($("#total").val()/3)?pageNum:parseInt(pageNum)+1;
-                    //设置当前页数
-                    $("#pageNum").val(next);
-                    getList();
-                })
-                //尾页事件
-                $("#endPage").on("click",function(){
-                    var end=parseInt($("#total").val()/3);
-                    //设置当前页数
-                    $("#pageNum").val(end);
-                    getList();
-                })
-				getList();
-
-			    $(".list-group-item").click(function(){
-				    if ( $(this).find("ul") ) {
-						$(this).toggleClass("tree-closed");
-						if ( $(this).hasClass("tree-closed") ) {
-							$("ul", this).hide("fast");
-						} else {
-							$("ul", this).show("fast");
-						}
-					}
-				});
-
-            });
-            //模糊查询
-			$("#selectBtn").click(function () {
-			    var loginacct=$("#SelectText").val();
-			    alert(loginacct);
-			    $.ajax({
-					type:"post",
-					url:"/manager/SelectLoginacct?"+loginacct,
-					typepost:"json",
-					success:function () {
-                        if(data.result=='SUCCESS'){
-                            window.location.href="user.html";
-                        }
-                        if(data.result=='FAILED')alert("查询失败！");
-                        window.location.href="user.html";
-                    }
-				})
-            })
-
-            function upGetId(obj){
-                //新增获取用户id
-                var Upid=$(obj).parent().prev().prev().prev().prev().prev().html();
-                //跳转到修改页面
-                window.location.href="edit.html?id="+Upid;
-            }
-            function delGetId(obj){
-                //删除获取用户id
-                var id=$(obj).parent().prev().prev().prev().prev().prev().html();
+                //模糊查询
+                $("#queryBtn").click(function () {
+                    var queryText = $("#queryText").val();
                     $.ajax({
-                    type:"delete",
-                    url:"/manager/deleteUser",
-					data:{"id":id},
-                    typepost:"json",
-                    success:function (data) {
-                        if(data.result=='SUCCESS'){
-                            alert("删除成功~");
-                            window.location.href="user.html";
-                        }
-                        if(data.result=='FAILED')alert("删除失败！");
-                        window.location.href="user.html";
-                    }
-                })
+                        type: "post",
+                        url: "/manager/queryLike",
+                        data: {"queryText":queryText},
+                        datatype: "json",
+                        success: function (data) {
+                            if (data.result == 'SUCCESS') {
+                                var html = '';
+                                $.each(data.data, function (index, item) {
+                                    html += '<tr>';
+                                    html += '   <td>' + (index + 1) + '</td>';
+                                    html += '   <td>' + item.id + '</td>';
+                                    html += '   <td><input type="checkbox" id="' + item.id + '"/>';
+                                    html += '   <td>' + item.loginacct + '</td>';
+                                    html += '   <td>' + item.username + '</td>';
+                                    html += '   <td>' + item.email + '</td>';
+                                    html += '   <td><button type="button" class="btn btn-success btn-xs" id="assignBtn" onclick="assignRole(this)"><i class=" glyphicon glyphicon-check"></i></button>';
+                                    html += '   <button type="button" class="btn btn-primary btn-xs" id="updateBtn" onclick="upGetId(this)"><i class=" glyphicon glyphicon-pencil"></i></button>';
+                                    html += '   <button type="button" class="btn btn-danger btn-xs" id="delBtn" onclick="delGetId(this)"><i class=" glyphicon glyphicon-remove"></i></button>';
+                                    html += '   </td>';
+                                });
+                                $('#tbo').html(html);
+                                $(".pagination").html("");
+                            }
+                            if (data.result == 'FAILED') alert(data.message);
 
+                        }
+                    })
+
+                });
+
+                function upGetId(obj) {
+                    //修改获取用户id
+                    var Upid = $(obj).parent().prev().prev().prev().prev().prev().html();
+                    //跳转到修改页面
+                    window.location.href = "edit.html?id=" + Upid;
+                }
+
+                function delGetId(obj) {
+                    //删除获取用户id
+                    var id = $(obj).parent().prev().prev().prev().prev().prev().html();
+
+                    $.ajax({
+                        type: "delete",
+                        url: "/manager/deleteUser",
+                        data: {"id": id},
+                        typepost: "json",
+                        success: function (data) {
+                            if (data.result == 'SUCCESS') {
+                                alert("删除成功~");
+                                window.location.href = "user.html";
+                            }
+                            if (data.result == 'FAILED') alert("删除失败！");
+                            window.location.href = "user.html";
+                        }
+                    })
+
+                }
+
+                //点击全选
+                $("#allcheckbox").click(function () {
+                    //获取全选框的状态
+                    var checkedStatus = this.checked;
+                    //让下面的checkbox等于上面全选的状态
+                    $("tbody tr td input[type='checkbox']").prop("checked", checkedStatus);
+                });
+                //点击批量删除按钮
+                $("#deleteBtns").click(function () {
+                    //获取tbody被选中的checkbox对象
+                    var selectCheckbox = $("tbody tr td input:checked");
+                    //循环获得被选中的列的id
+                    var idStr = "";//拼接成需要传输的格式
+                    $.each(selectCheckbox, function (i, n) {
+                        if (i != 0) {
+                            idStr += "&";
+                        }
+                        idStr += "id=" + n.id;
+                    });
+                    $.ajax({
+                        type: "delete",
+                        url: "/manager/deleteUsers",
+                        data: idStr,
+                        typepost: "json",
+                        success: function (data) {
+                            if (data.result == 'SUCCESS') {
+                                alert("删除成功~");
+                                window.location.href = "user.html";
+                            }
+                            if (data.result == 'FAILED') alert(data.message);
+                            window.location.href = "user.html";
+                        }
+                    })
+                });
+
+            function assignRole(obj) {
+                var userid = $(obj).parent().prev().prev().prev().prev().prev().html();
+                window.location.href = "assignRole.html?userid="+userid;
             }
-            //点击全选
-            $("#allcheckbox").click(function () {
-                //获取全选框的状态
-                var checkedStatus=this.checked;
-                //让下面的checkbox等于上面全选的状态
-                $("tbody tr td input[type='checkbox']").attr("checked",checkedStatus);
-            })
-			//点击批量删除按钮
-			$("#deleteBtns").click(function () {
-			    //获取tbody被选中的checkbox对象
-                var selectCheckbox=$("tbody tr td input:checked");
-                //循环获得被选中的列的id
-				var idStr="";//拼接成需要传输的格式
-                 $.each(selectCheckbox,function (i,n) {
-                     if (i!=0){
-                         idStr+="&";
-					 }
-				 	    idStr += "id="+n.id;
-                  });
-                $.ajax({
-                    type:"delete",
-                    url:"/manager/deleteUsers",
-                    data:idStr,
-                    typepost:"json",
-                    success:function (data) {
-                        if(data.result=='SUCCESS'){
-                            alert("删除成功~");
-                            window.location.href="user.html";
-                        }
-                        if(data.result=='FAILED')alert(data.message);
-                        window.location.href="user.html";
-                    }
-                })
-            })
-
         </script>
   </body>
 </html>

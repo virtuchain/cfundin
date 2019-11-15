@@ -7,11 +7,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper
 public interface RaiseDao {
 
-    TProject inserPeojectInfo(TProject tProjectPO);
+    void inserPeojectInfo(TProject tProjectPO);
 
     void insertProTypeInfo(@Param("proId") Long proId, @Param("proTypeList")List proTypeList);
 
@@ -23,5 +24,9 @@ public interface RaiseDao {
 
     List<TType> queryTypePO();
 
-    List<TTag>  queryTagePO();
+    Set<TTag> selectTagByTypeId(Integer[] typeIdArray);
+
+    void insertDetailPicture(@Param("proId") Long proId,@Param("detailPicturePathList")List detailPicturePathList);
+
+    void inserttMemberLaunch(TMemberLaunchInfo tMemberLaunchInfoPO);
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.xq.crowd_funding.manager.dao.TUserDao">
 
 <!--auto generated Code-->
-    <resultMap id="AllColumnMap" type="com.xq.crowd_funding.manager.bean.TUser">
+    <resultMap id="AllColumnMap" type="com.xq.crowd_funding.common.pojo.TUser">
         <result column="id" property="id"/>
         <result column="loginacct" property="loginacct"/>
         <result column="userpswd" property="userpswd"/>
@@ -67,12 +67,24 @@
         -- LIMIT 1000
     </select>
 
-<!--auto generated Code-->
-    <delete id="delete">
-        DELETE FROM t_user where id = #{pojo.id}
-    </delete>
+    <select id="queryList" resultType="com.xq.crowd_funding.common.pojo.TUser">
+    SELECT <include refid="all_column"/>
+    FROM t_user limit #{startIndex},#{pagesize}
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM t_user
+    </select>
 
     <delete id="deleteUsers">
         DELETE FROM t_user where id = #{pojo.id}
     </delete>
+
+    <!-- 模糊查询 -->
+    <select id="queryLike" parameterType="java.lang.String"
+            resultType="com.xq.crowd_funding.common.pojo.TUser">
+
+        SELECT <include refid="all_column"/>
+        FROM t_user where loginacct like '%${queryText}%'
+    </select>
 </mapper>

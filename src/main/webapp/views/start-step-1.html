@@ -78,31 +78,6 @@
   <script src="../script/docs.min.js"></script>
   <script src="../script/back-to-top.js"></script>
   <body>
- <div class="navbar-wrapper">
-      <div class="container">
-			<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-			  <div class="container">
-				<div class="navbar-header">
-				  <a class="navbar-brand" href="index.html" style="font-size:32px;">尚筹网-创意产品众筹平台</a>
-				</div>
-            <div id="navbar" class="navbar-collapse collapse" style="float:right;">
-              <ul class="nav navbar-nav">
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> 张三<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="member.html"><i class="glyphicon glyphicon-scale"></i> 会员中心</a></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
-                    <li class="divider"></li>
-                    <li><a href="index.html"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-			  </div>
-			</nav>
-      </div>
-    </div>
-
     <div class="container theme-showcase" role="main">
         <div class="container">
             <div class="row clearfix">
@@ -117,7 +92,7 @@
                                     <a rel="nofollow" href="projects.html"><i class="glyphicon glyphicon-th-large"></i> 项目总览</a>
                                 </li>
                                 <li class="active">
-                                    <a rel="nofollow" href="javascript:;"><i class="glyphicon glyphicon-edit"></i> 发起项目</a>
+                                    <a rel="nofollow" href="javascript:"><i class="glyphicon glyphicon-edit"></i> 发起项目</a>
                                 </li>
                                 <li>
                                     <a rel="nofollow" href="minecrowdfunding.html"><i class="glyphicon glyphicon-user"></i> 我的众筹</a>
@@ -209,61 +184,45 @@
             <form class="form-horizontal">
               <div class="form-group">
                 <label  class="col-sm-2 control-label">分类信息</label>
+
                 <div class="col-sm-10" id="type">
-                    [最多四个，最少一个]</br></br>
+                    [最多三个，最少一个]</br></br>
                 </div>
               </div>
               <div class="form-group">
                 <label  class="col-sm-2 control-label">标签</label>
                 <div class="col-sm-10">
-                    <ul style="list-style:none;padding-left:0;">
-                        <li style="margin:10px 0">[手机]
-                            <span class="label-txt" >手机</span> <span class="label-txt">快充</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span>
-                        </li>
-                        <li style="margin:10px 0">[数码]
-                            <span   class="label-txt" >文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span>
-                        </li>
-                        <li style="margin:10px 0">[电脑]
-                            <span   class="label-txt" >文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span>
-                        </li>
+                    <ul style="list-style:none;padding-left:0;" >
+                        <li style="margin:10px 0" id="tag1"></li>
+                        <li style="margin:10px 0" id="tag2"></li>
+                        <li style="margin:10px 0" id="tag3"></li>
                     </ul>
                 </div>
               </div>
-                <script>
-                // 点击标签，切换背景图片
-                    $(function () {
-                        $("span").click(function () {
-                            if(this.getAttribute('style')=='background-color:#DD8E11'){
-                                this.setAttribute('style','background-color:whitesmoke');
-                            }else {
-                                this.setAttribute('style','background-color:#DD8E11');
-                            }
-                        })
-                    })
-                </script>
+
               <div class="form-group">
                 <label class="col-sm-2 control-label">项目名称</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" >
+                  <input type="text" name="name" class="form-control" >
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">一句话简介</label>
                 <div class="col-sm-10">
-                  <textarea class="form-control" rows="5"></textarea>
+                  <textarea class="form-control" name="remark" rows="5"></textarea>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">筹资金额（元）</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" style="width:100px;" >
+                  <input type="number" name="money" min="100" max="1000000000" class="form-control" style="width:100px;" >
                   <label class="control-label">筹资金额不能低于100元,不能高于1000000000元</label>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">筹资天数（天）</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" style="width:100px;" >
+                  <input type="number" name="day" class="form-control" style="width:100px;" >
                   <label class="control-label">一般10-90天，建议30天</label>
                 </div>
               </div>
@@ -286,8 +245,12 @@
                                     processData: false,
                                     success:function (datas) {
                                         // 成功
-                                        alert(datas.result);
-                                        alert(datas.message);
+                                        if (datas.result=='SUCCESS'){
+                                            alert("图片已成功上传");
+                                        }else{
+                                            alert("图片上传错误");
+                                        }
+
                                     }
                                 });
                           })
@@ -311,7 +274,6 @@
                             $("#uploadDetailFile").click();
                       }
                       $("#uploadDetailFile").change(function () {
-                          alert("选择了图片");
                           var local= "http://localhost:8080/";
                           var formData = new FormData();
                           filess = this.files;
@@ -325,8 +287,11 @@
                               contentType: false,
                               processData: false,
                               success:function (datas) {
-                                  // 成功
-                                  alert(datas.data);
+                                  if (datas.result=='SUCCESS'){
+                                      alert("图片已成功上传");
+                                  }else{
+                                      alert("图片上传错误");
+                                  }
                               }
                           });
                       })
@@ -344,25 +309,25 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">自我介绍</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="一句话自我介绍，不超过40字">
+                  <input type="text" class="form-control" name="memberLauchInfoVO.descriptionSimple" placeholder="一句话自我介绍，不超过40字">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">详细自我介绍</label>
                 <div class="col-sm-10">
-                  <textarea class="form-control" rows="5" placeholder="向支持者详细介绍你自己或你的团队及项目背景，让支持者在最短时间内了解你，不超过160字"></textarea>
+                  <textarea class="form-control" rows="5" name="memberLauchInfoVO.descriptionDetail" placeholder="向支持者详细介绍你自己或你的团队及项目背景，让支持者在最短时间内了解你，不超过160字"></textarea>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">联系电话</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="此信息不会显示在项目页面">
+                  <input type="text" class="form-control" name="memberLauchInfoVO.phoneNum" placeholder="此信息不会显示在项目页面">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">客服电话</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="此信息显示在项目页面">
+                  <input type="text" class="form-control" name="memberLauchInfoVO.serviceNum" placeholder="此信息显示在项目页面">
                 </div>
               </div>
             </form>
@@ -371,7 +336,7 @@
 </div>
                         </div>
                         <div class="panel-footer" style="text-align:center;">
-                            <button type="button" class="btn  btn-warning btn-lg" onclick="window.location.href='start-step-2.html'">下一步</button>
+                            <button type="button" class="btn  btn-warning btn-lg" id="start_step_1_next" >下一步</button>
                         </div>
                     </div>
                 </div>
@@ -398,19 +363,24 @@
     </div> <!-- /container -->
 
 	<script>
-        // $('#myTab a').click(function (e) {
-        //     // idcode
-        //   e.preventDefault()
-        //   $(this).tab('show')
-        // });
-       $(function () {
+        var localhost = "http://localhost:8080";
+        $(function () {
            getHtmlListInfo();
 
-           $(function () {
-               $("input[name='typeIdList']").change(function () {
-                   alert("点击了多选");
+           $("#start_step_1_next").click(function () {
+
+               $.ajax({
+                   type:"POST",
+                   url:localhost+"/raisefunding/saveinfostepone",
+                   data:$("form").serialize(),
+                   datatype: "json",
+                   success: function (datas) {
+                       if (datas.result=='SUCCESS'){
+                           window.location.href='start-step-2.html';
+                       }
+                   }
                })
-           })
+           });
        });
         // 解析 URL
         function parseUrl(url){
@@ -429,28 +399,73 @@
         }
         // 获取页面数据
         function  getHtmlListInfo() {
-            var localhost = "http://localhost:8080";
             $.ajax({
                 url:localhost+"/raisefunding/gethtmldata",
-                method:"get",
+                type:"get",
                 async:true,
                 success:function(datas){
                     var typeStr= "";
-                    var tagStr = "";
                     console.log(datas.data);
-                    $.each(datas.data.ttypepo,function (felindexs, items) {
+                    $.each(datas.data,function (felindexs, items) {
                         typeStr +=  "<label class='radio-inline'>" +
-                        "<input type='checkbox'  name='typeIdList' id='inlineRadio1'" +
+                        "<input type='checkbox' onclick='ckeckboxclick(this)' name='typeIdList' id='inlineRadio'" +
                             "value="+items.id+">"+items.name+"</label>";
                     });
                     $("#type").append(typeStr);
-                    $.each(datas.data.ttagpo,function ( indexs, items) {
-                        // tagStr =
-                    })
                 }
             });
         }
+        function ckeckboxclick() {
+            var localhost = "http://localhost:8080";
+          // 最多选中三个
+            $('input[type=checkbox]').click(function () {//checkbox的input标签点击事件
+                $("input[name='typeIdList']").attr('disabled', true);//设置name为apk[]的input标签的属性为true,表示不可选
+                if ($("input[name='typeIdList']:checked").length >= 3) {//选中个数大于3
+                    $("input[name='typeIdList']:checked").attr('disabled', false);
+                } else {
+                    $("input[name='typeIdList']").attr('disabled', false);
+                }
+            });
+            // 根据选中的值去找标签
+            var typeIdArray = [];
+            $("input[name='typeIdList']:checked").each(function(){
+                    typeIdArray.push($(this).val());
+            });
+            $("#tag1").empty();
+            $("#tag2").empty();
+            $("#tag3").empty();
+            if (typeIdArray.length>0) {
+                var idex =0;
+            console.log("typeIdArray "+typeIdArray);
+            $.ajax({
+                url:localhost+"/raisefunding/gettag",
+                type:"POST",
+                data:JSON.stringify(typeIdArray),
+                contentType: "application/json; charset=utf-8",
+                success:function(datas){
+                        $.each(datas.data,function ( indexs,items ) {
+                            idex++;
+                        if (idex<6){
+                            $("#tag1").append("<span onclick='tagbiaoqian(this)' class='label-txt'>"+items.name+"<input type='hidden' name='tagIdList' value="+items.id+" /></span>");
+                        }else if (idex<12) {
+                            $("#tag2").append("<span onclick='tagbiaoqian(this)' class='label-txt'>"+items.name+"<input type='hidden' name='tagIdList' value="+items.id+" /></span>");
+                        }else{
+                            $("#tag3").append("<span onclick='tagbiaoqian(this)' class='label-txt'>"+items.name+"<input type='hidden' name='tagIdList' value="+items.id+" /></span>");
+                        }
 
+                    })
+                }
+            });
+            }
+        }
+       // 点击标签，切换背景图片
+       function tagbiaoqian(obj){
+               if(obj.getAttribute('style')=='background-color:#DD8E11'){
+                   obj.setAttribute('style','background-color:whitesmoke');
+               }else {
+                   obj.setAttribute('style','background-color:#DD8E11');
+               }
+       }
 	</script>
 
   </body>

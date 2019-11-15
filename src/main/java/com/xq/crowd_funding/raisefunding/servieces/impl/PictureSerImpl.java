@@ -59,8 +59,8 @@ public class PictureSerImpl implements PictureServer {
            e.printStackTrace();
        }
        // 头图片路径
-        String headPicturePath = bucketName+"/"+newfolderName+"/"+newFileName;
-        System.out.println("headPicturePath "+headPicturePath);
+        String headPicturePath = newfolderName+"/"+newFileName;
+
         return ResultEntity.successWithData(headPicturePath);
     }
 
@@ -86,7 +86,7 @@ public class PictureSerImpl implements PictureServer {
                        endpoint,accessKeyId,accessKeySecret,newFileName,
                        newfolderName,bucketName,inputStream);
                // 详情图片路径
-               detailicturePathList.add(bucketName+"/"+newfolderName+"/"+newFileName);
+               detailicturePathList.add(newfolderName+"/"+newFileName);
            }catch (Exception e){
                e.printStackTrace();
            }

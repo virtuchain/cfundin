@@ -1,25 +1,18 @@
 package com.xq.crowd_funding.manager.controller;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+
 import com.xq.crowd_funding.common.ResultEntity;
+import com.xq.crowd_funding.common.pojo.TUser;
 import com.xq.crowd_funding.common.utils.Const;
 import com.xq.crowd_funding.common.utils.CrowdUtils;
 import com.xq.crowd_funding.common.utils.MD5Utils;
-import com.xq.crowd_funding.manager.bean.TUser;
+import com.xq.crowd_funding.common.utils.Page;
 import com.xq.crowd_funding.manager.service.TUserService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sound.midi.Soundbank;
-import javax.xml.bind.SchemaOutputResolver;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * @author Maozhihao
@@ -28,35 +21,48 @@ import java.util.Map;
 @RestController
 @RequestMapping("/manager")
 public class UserController {
+
     @Autowired
     private TUserService tUserService;
 
-
-   @GetMapping("/user") //查询所有用户方法
-   @ResponseBody
-    public PageInfo<TUser> queryUsers(TUser pojo){
-       PageHelper.startPage(1,10);
-       List<TUser> list = tUserService.select(pojo);
-       PageInfo<TUser> p=new PageInfo<TUser>(list);
-       return p;
-    }
-    @GetMapping("/likeLoginacct")//模糊查询用户
+    //==================分页查询======================================================
+    @RequestMapping("/index")
     @ResponseBody
-    public ResultEntity<String> likeUser(){
-       return null;
+    public Page index(@RequestParam(value = "pageno")Integer pageno,
+                      @RequestParam(value = "pagesize")Integer pagesize, TUser pojo){
+        //调用查询page类里的内容
+        Page page=tUserService.queryPage(pageno,pagesize,pojo);
+        //返回page数据
+        return page;
     }
+//===========================模糊查询=============================================================
+    @PostMapping("/queryLike")
+    @ResponseBody
+    public ResultEntity querylike(String queryText) {
+        //判断模糊查询条件在空的条件下
+        System.out.println("queryText======"+queryText);
+        if (queryText == null || "".equals(queryText)) {
+            return ResultEntity.failed("请输入查询内容");
+        } else {
+            System.out.println("进入控制层");
+            List<TUser> tUserList = tUserService.queryLike(queryText);
+            System.out.println(tUserList);
+            return ResultEntity.successWithData(tUserList);
+        }
+    }
+    //==========================删除用户==================================================
     @DeleteMapping("/deleteUser")
     @ResponseBody
     public  ResultEntity<String> deleteUser(TUser pojo){
-        System.out.println("id"+pojo);
-       int i=tUserService.delete(pojo);
-        System.out.println("删除数据条数"+i);
+        //调用删除方法
+       int i=tUserService.deleteUsers(pojo);
         if ( i >= 1 ){
             return ResultEntity.successNoData();
         }else {
             return ResultEntity.failed("失败");
         }
     }
+    //=========================批量删除================================================
     @DeleteMapping("/deleteUsers")
     @ResponseBody
     public  ResultEntity<String> deleteUsers(Integer[] id){
@@ -80,11 +86,15 @@ public class UserController {
             return ResultEntity.failed("删除失败~");
         }
     }
+    //=========================新增用户======================================================
     @PostMapping("/insertUser")
     @ResponseBody//添加用户
     public ResultEntity<String> insertUser(TUser pojo){
-        pojo.setCreatetime(CrowdUtils.returnDateStr());//获取当前时间
-        pojo.setUserpswd(MD5Utils.digest(Const.PASSWORD));//进行MD5加密
+        //获取当前时间
+        pojo.setCreatetime(CrowdUtils.returnDateStr());
+        //密码进行MD5加密
+        pojo.setUserpswd(MD5Utils.digest(Const.PASSWORD));
+        //调用添加方法
        int i = tUserService.insert(pojo);
        if ( i >= 1 ){
            return ResultEntity.successNoData();
@@ -92,10 +102,11 @@ public class UserController {
            return ResultEntity.failed("失败");
        }
     }
-
+    //========================修改用户信息============================================
     @RequestMapping("/UpdateUser")
-    @ResponseBody//修改用户信息
+    @ResponseBody
     public  ResultEntity toUpdate(TUser pojo){
+        //调用修改方法
        int i=tUserService.update(pojo);
         if ( i >= 1 ){
             return ResultEntity.successNoData();

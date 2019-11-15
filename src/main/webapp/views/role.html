@@ -152,97 +152,9 @@
                   <th width="100">操作</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-				  <td><input type="checkbox"></td>
-                  <td>PM - 项目经理</td>
-                  <td>
-				      <button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>
-				      <button type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>
-					  <button type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>
-				  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-				  <td><input type="checkbox"></td>
-                  <td>SE - 软件工程师</td>
-                  <td>
-				      <button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>
-				      <button type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>
-					  <button type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>
-				  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-				  <td><input type="checkbox"></td>
-                  <td>PG - 程序员</td>
-                  <td>
-				      <button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>
-				      <button type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>
-					  <button type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>
-				  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-				  <td><input type="checkbox"></td>
-                  <td>TL - 组长</td>
-                  <td>
-				      <button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>
-				      <button type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>
-					  <button type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>
-				  </td>
-                </tr>
-                <tr>
-                  <td>5</td>
-				  <td><input type="checkbox"></td>
-                  <td>GL - 组长</td>
-                  <td>
-				      <button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>
-				      <button type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>
-					  <button type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>
-				  </td>
-                </tr>
-                <tr>
-                  <td>6</td>
-				  <td><input type="checkbox"></td>
-                  <td>QA - 品质保证</td>
-                  <td>
-				      <button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>
-				      <button type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>
-					  <button type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>
-				  </td>
-                </tr>
-                <tr>
-                  <td>7</td>
-				  <td><input type="checkbox"></td>
-                  <td>QC - 品质控制</td>
-                  <td>
-				      <button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>
-				      <button type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>
-					  <button type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>
-				  </td>
-                </tr>
-                <tr>
-                  <td>8</td>
-				  <td><input type="checkbox"></td>
-                  <td>SA - 软件架构师</td>
-                  <td>
-				      <button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>
-				      <button type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>
-					  <button type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>
-				  </td>
-                </tr>
-                <tr>
-                  <td>8</td>
-				  <td><input type="checkbox"></td>
-                  <td>CMO / CMS - 配置管理员</td>
-                  <td>
-				      <button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>
-				      <button type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>
-					  <button type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>
-				  </td>
-                </tr>
+              <tbody id="tbo">
+
+
               </tbody>
 			  <tfoot>
 			     <tr >
@@ -273,6 +185,7 @@
 	<script src="../script/docs.min.js"></script>
         <script type="text/javascript">
             $(function () {
+                getList();
 			    $(".list-group-item").click(function(){
 				    if ( $(this).find("ul") ) {
 						$(this).toggleClass("tree-closed");
@@ -284,10 +197,33 @@
 					}
 				});
             });
-            
-            $("tbody .btn-success").click(function(){
-                window.location.href = "assignPermission.html";
-            });
+            //加载数据
+            function getList() {
+                $.ajax({
+                    type: "post",
+                    url: "/userrole/getList",
+                    datatype: "json",
+                    success: function (datas) {
+                        console.log(datas.data);
+                        var htm='';
+                        $.each(datas.data, function (index, item) {
+                            htm +='<tr>';
+                            htm +='   <td>' +(index+1) + '</td>';
+                            htm +='   <td><input type="checkbox" id="' + item.id + '"/>';
+                            htm +='   <td>' + item.name + '</td>';
+                            htm +='   <td><button type="button" class="btn btn-success btn-xs" id="assignBtn" onclick=" window.location.href = \'assignPermission.html?id=\'+'+item.id+'"><i class=" glyphicon glyphicon-check"></i></button>';
+                            htm +='   <button type="button" class="btn btn-primary btn-xs" id="updateBtn" onclick="upGetId(this)"><i class=" glyphicon glyphicon-pencil"></i></button>';
+                            htm +='   <button type="button" class="btn btn-danger btn-xs" id="delBtn" onclick="delGetId(this)"><i class=" glyphicon glyphicon-remove"></i></button>';
+                            htm +='   </td></tr>';
+                        });
+                        $('#tbo').html(htm);
+                    }
+                })
+            }
+
+            function getRole(){
+
+            };
         </script>
   </body>
 </html>
